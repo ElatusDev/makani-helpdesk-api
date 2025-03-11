@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  title: Employee Services API
+  version: 1.0.0
+  description: API for managing people in the Makani system
+
+paths:
+  /employee:
+    post:
+      operationId: postEmployee
+      summary: Create a new employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeCreateRequest'
+      responses:
+        '201':
+          description: Employee created successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Employee not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Retrieve an employee by ID
+      operationId: getEmployeeById
+      parameters:
+        - in: query
+          name: employeeId
+          schema:
+            type: integer
+          required: true
+          description: ID of the employee to retrieve
+      responses:
+        '200':
+          description: Employee retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+        '404':
+          description: Employee not found
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    EmployeeBase:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Employee's first name
+        lastName:
+          type: string
+          description: Employee's lastname
+        birthDate:
+          type: string
+          description: Employee's birthdate
+        email:
+          type: string
+          format: email
+          description: Employee's email address
+        phone:
+          type: string
+          description: Employee's phone number
+        address:
+          type: string
+          description: Employee's address
+        zipCode:
+          type: string
+          description: Employee's zip code
+        employeeType:
+          type: string
+          description: Type of employee
+        usernameToken:
+          type: string
+          description: Username token for authentication
+        passwordToken:
+          type: string
+          description: Password token for authentication
+    EmployeeCreateRequest:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/EmployeeBase'
+      required:
+        - name
+        - email
+        - phone
+        - address
+        - zipCode
+        - employeeType
+        - usernameToken
+        - passwordToken
+    EmployeeResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/EmployeeBase'
+      properties:
+        employeeId:
+          type: integer
+          description: Employee ID
+      required:
+        - firstName
+        - lastName
+        - birthDate
+        - email
+        - phone
+        - address
+        - zipCode
+        - employeeType
+        - usernameToken
+        - passwordToken
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+

@@ -1,0 +1,11 @@
+.idea
+
+### maven modules ###
+application/target/
+communication/target/
+coordination/target/
+people/target/
+treasury/target/
+
+### Mac OS ###
+.DS_Store

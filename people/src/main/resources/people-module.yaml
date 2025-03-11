@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: People API
+  version: 1.0.0
+  description: People API for managing people in the Makani system
+
+paths:
+  /employee:
+    $ref: "./employee.yaml#/paths/~1employee"
+  /instructor:
+    $ref: "./instructor.yaml#/paths/~1instructor"
+  /customer:
+    $ref: "./customer.yaml#/paths/~1adultStudents"
+
+components:
+  schemas:
+    Employee:
+      $ref: './employee.yaml#/components/schemas'
+    Instructor:
+      $ref: './instructor.yaml#/components/schemas'
+    Customer:
+      $ref: './customer.yaml#/components/schemas'
