@@ -46,8 +46,9 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: 
+        run: |
           mvn -B clean verify sonar:sonar \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.projectKey=makani-helpdesk-api \
-            -Dsonar.projectBaseDir=$(pwd)
+            -Dsonar.projectKey=ElatusDev_makani-helpdesk-api \
+            -Dsonar.projectBaseDir=$(pwd) \
+            -Dsonar.branch.name=${{ github.ref_name }}
