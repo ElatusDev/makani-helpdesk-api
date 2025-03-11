@@ -49,5 +49,5 @@ jobs:
         run: 
           mvn -B clean verify sonar:sonar \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.projectKey=ElatusDev_makani-helpdesk-api \
+            -Dsonar.projectKey=makani-helpdesk-api \
             -Dsonar.projectBaseDir=$(pwd)
