@@ -35,6 +35,8 @@
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
         <modelmapper.version>3.2.2</modelmapper.version>
+        <sonar.organization>elatusdev</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <modules>
