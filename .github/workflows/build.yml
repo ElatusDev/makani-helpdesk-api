@@ -52,4 +52,4 @@ jobs:
             -Dsonar.projectKey=ElatusDev_makani-helpdesk-api \
             -Dsonar.projectBaseDir=$(pwd) \
             -Dsonar.branch.name=${{ github.ref_name }} \
-            -Dsonar.organization=ElatusDev
+            -Dsonar.organization=elatusdev
