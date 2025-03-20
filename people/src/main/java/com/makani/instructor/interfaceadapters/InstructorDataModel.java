@@ -21,7 +21,7 @@ import java.io.Serializable;
 @Component
 @Entity
 @Table(name = "instructor")
-public class Instructor extends AbstractPerson implements Serializable {
+public class InstructorDataModel extends AbstractPerson implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
