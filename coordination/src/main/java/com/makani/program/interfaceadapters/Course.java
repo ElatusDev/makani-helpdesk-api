@@ -1,6 +1,5 @@
-package com.makani.domain.coordination.program;
+package com.makani.program.interfaceadapters;
 
-import com.makani.domain.people.instructor.Instructor;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import openapi.makani.domain.people.dto.Instructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

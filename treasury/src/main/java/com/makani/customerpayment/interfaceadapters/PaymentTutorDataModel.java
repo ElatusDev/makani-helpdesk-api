@@ -1,7 +1,7 @@
-package com.makani.domain.treasury.customerpayment;
+package com.makani.customerpayment.interfaceadapters;
 
-import com.makani.domain.people.customer.Tutor;
-import com.makani.domain.treasury.membership.interfaceadapters.Membership;
+import com.makani.customer.interfaceadapters.Tutor;
+import com.makani.membership.interfaceadapters.Membership;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Component
 @Entity
 @Table(name = "payment_tutor")
-public class PaymentTutor implements Serializable {
+public class PaymentTutorDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

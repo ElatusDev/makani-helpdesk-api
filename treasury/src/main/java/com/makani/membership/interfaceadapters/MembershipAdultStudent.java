@@ -1,7 +1,6 @@
-package com.makani.domain.treasury.customerpayment;
+package com.makani.membership.interfaceadapters;
 
-import com.makani.domain.people.customer.AdultStudent;
-import com.makani.domain.treasury.membership.interfaceadapters.Membership;
+import com.makani.customer.interfaceadapters.AdultStudent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,24 +20,22 @@ import java.time.LocalDate;
 @Scope("prototype")
 @Component
 @Entity
-@Table(name = "payment_adult_student")
-public class PaymentAdultStudent implements Serializable {
+@Table(name = "membership_adult_student")
+public class MembershipAdultStudent implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "payment_adult_student_id")
-    private Integer paymentAdultStudentId;
-    @Column(name = "payment_date", columnDefinition = "DATE", nullable = false)
-    private LocalDate paymentDate;
-    @Column(nullable = false)
-    private Double amount;
-    @Column(name = "payment_method", nullable = false, length = 25)
-    private String paymentMethod;
+    @Column(name = "membership_adult_student_id")
+    private Integer membershipAdultStudentId;
+    @Column(name = "start_date", columnDefinition = "DATE", nullable = false)
+    private LocalDate startDate;
+    @Column(name = "due_date", columnDefinition = "DATE", nullable = false)
+    private LocalDate dueDate;
 
-    @JoinColumn(name = "membership_id")
     @ManyToOne
+    @JoinColumn(name = "membership_id")
     private Membership membership;
 
     @ManyToOne

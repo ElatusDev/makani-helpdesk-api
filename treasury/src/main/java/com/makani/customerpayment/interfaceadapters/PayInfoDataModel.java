@@ -1,5 +1,6 @@
-package com.makani.domain.treasury.customerpayment;
+package com.makani.customerpayment.interfaceadapters;
 
+import com.makani.customer.interfaceadapters.AdultStudent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 @Component
 @Entity
 @Table(name = "pay_info")
-public class PayInfo implements Serializable {
+public class PayInfoDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -36,11 +37,11 @@ public class PayInfo implements Serializable {
     private String cardType;
 
     @OneToOne
-    @JoinColumn(optional = true,name = "adult_student_id")
+    @JoinColumn(name = "adult_student_id")
     private AdultStudent AdultStudent;
 
     @OneToOne
-    @JoinColumn(optional = true, name = "tutor_id")
+    @JoinColumn(name = "tutor_id")
     private AdultStudent Tutor;
 
 }

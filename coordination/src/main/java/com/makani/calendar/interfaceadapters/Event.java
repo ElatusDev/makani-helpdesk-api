@@ -1,14 +1,14 @@
-package com.makani.domain.coordination.calendar;
+package com.makani.calendar.interfaceadapters;
 
-import com.makani.domain.coordination.program.Course;
-import com.makani.domain.people.instructor.Instructor;
-import com.makani.domain.people.customer.AdultStudent;
-import com.makani.domain.people.customer.MinorStudent;
+import com.makani.customer.interfaceadapters.AdultStudent;
+import com.makani.customer.interfaceadapters.MinorStudent;
+import com.makani.program.interfaceadapters.Course;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import openapi.makani.domain.people.dto.Instructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

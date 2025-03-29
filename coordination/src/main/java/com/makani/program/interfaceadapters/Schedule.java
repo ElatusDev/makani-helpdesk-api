@@ -1,4 +1,5 @@
-package com.makani.domain.treasury.payroll;
+package com.makani.program.interfaceadapters;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Time;
+
 
 @Getter
 @Setter
@@ -18,21 +21,19 @@ import java.io.Serializable;
 @Scope("prototype")
 @Component
 @Entity
-@Table(name = "compensation")
-public class Compensation implements Serializable {
+@Table(name = "schedule")
+public class Schedule implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "compensation_id")
-    private Integer compensationId;
-    @Column(name = "compensation_type", nullable = false, length = 10)
-    private String compensationType;
-    @Column(nullable = false)
-    private Double amount;
-
-    @OneToMany
-    @JoinColumn(name = "compensation_id")
-    private List<Instructor> instructors;
+    @Column(name = "schedule_id")
+    private Integer scheduleId;
+    @Column(name = "schedule_day", nullable = false, length = 9)
+    private String day;
+    @Column(name = "start_time", nullable = false)
+    private Time startTime;
+    @Column(name = "end_time", nullable = false)
+    private Time endTime;
 }

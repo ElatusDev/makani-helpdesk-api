@@ -1,6 +1,6 @@
-package com.makani.domain.treasury.membership.interfaceadapters;
+package com.makani.membership.interfaceadapters;
 
-import com.makani.domain.people.customer.AdultStudent;
+import com.makani.customer.interfaceadapters.Tutor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,15 +20,15 @@ import java.time.LocalDate;
 @Scope("prototype")
 @Component
 @Entity
-@Table(name = "membership_adult_student")
-public class MembershipAdultStudent implements Serializable {
+@Table(name = "membership_tutor")
+public class MembershipTutor implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "membership_adult_student_id")
-    private Integer membershipAdultStudentId;
+    @Column(name = "membership_tutor_id")
+    private Integer membershipTutorId;
     @Column(name = "start_date", columnDefinition = "DATE", nullable = false)
     private LocalDate startDate;
     @Column(name = "due_date", columnDefinition = "DATE", nullable = false)
@@ -39,6 +39,6 @@ public class MembershipAdultStudent implements Serializable {
     private Membership membership;
 
     @ManyToOne
-    @JoinColumn(name = "adult_student_id")
-    private AdultStudent adultStudent;
+    @JoinColumn(name = "tutor_id")
+    private Tutor tutor;
 }
