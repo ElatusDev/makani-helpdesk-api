@@ -37,6 +37,7 @@
         <modelmapper.version>3.2.2</modelmapper.version>
         <sonar.organization>elatusdev</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <github.token>${env.GITHUB_TOKEN}</github.token>
     </properties>
 
     <modules>
@@ -203,4 +204,15 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub ElatusDev Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/ElatusDev/makani-helpdesk-api</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </distributionManagement>
 </project>

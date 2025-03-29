@@ -1,6 +1,5 @@
 package com.makani.employee.usecases;
 
-import jakarta.validation.ConstraintViolationException;
 import openapi.makani.domain.people.dto.EmployeeCreateRequest;
 import com.makani.employee.interfaceadapters.EmployeeDataModel;
 import com.makani.employee.interfaceadapters.EmployeeRepository;
@@ -8,8 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 
 @Service
 public class CreateEmployeeUseCase {
