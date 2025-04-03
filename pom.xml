@@ -46,6 +46,7 @@
         <module>people</module>
         <module>treasury</module>
         <module>application</module>
+        <module>security</module>
     </modules>
 
     <dependencies>

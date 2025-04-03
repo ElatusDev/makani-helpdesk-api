@@ -1,11 +1,10 @@
-package com.makani.domain.communication.email;
+package com.makani.email.interfaceadapters;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.checkerframework.checker.units.qual.C;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -29,19 +28,24 @@ public class Email implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "email_id")
     private Integer emailId;
+
     @Column(nullable = false, length = 100)
     private String subject;
+
     @Lob
     @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
+
     @Column(nullable = false, length = 50)
     private String sender;
 
+    @ElementCollection
     @CollectionTable(name = "email_recipients", joinColumns = @JoinColumn(name = "email_id"))
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "recipients", columnDefinition = "TEXT")
     private List<String> recipients;
 
+    @ElementCollection
     @CollectionTable(name = "email_attachments", joinColumns = @JoinColumn(name = "email_id"))
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "attachments", columnDefinition = "TEXT")
     private List<String> attachments;
 }
