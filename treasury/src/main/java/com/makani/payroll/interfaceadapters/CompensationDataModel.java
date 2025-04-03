@@ -1,11 +1,11 @@
 package com.makani.payroll.interfaceadapters;
 
+import com.makani.instructor.interfaceadapters.InstructorDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import openapi.makani.domain.people.dto.Instructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -36,5 +36,5 @@ public class CompensationDataModel implements Serializable {
 
     @OneToMany
     @JoinColumn(name = "compensation_id")
-    private List<Instructor> instructors;
+    private List<InstructorDataModel> instructors;
 }
