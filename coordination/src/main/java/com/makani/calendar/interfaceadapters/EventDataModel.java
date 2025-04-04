@@ -2,7 +2,7 @@ package com.makani.calendar.interfaceadapters;
 
 import com.makani.customer.interfaceadapters.AdultStudent;
 import com.makani.customer.interfaceadapters.MinorStudent;
-import com.makani.program.interfaceadapters.Course;
+import com.makani.program.interfaceadapters.CourseDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +26,7 @@ import java.util.List;
 @Component
 @Entity
 @Table(name = "calendar_event")
-public class Event implements Serializable {
+public class EventDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +47,7 @@ public class Event implements Serializable {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    private Course course;
+    private CourseDataModel course;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")

@@ -29,7 +29,7 @@ import java.util.List;
 @Component
 @Entity
 @Table(name = "course")
-public class Course implements Serializable {
+public class CourseDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -50,7 +50,7 @@ public class Course implements Serializable {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "schedule_id")
     )
-    private List<Schedule> timeTable;
+    private List<ScheduleDataModel> timeTable;
 
     @ManyToMany
     @JoinTable(
@@ -66,6 +66,6 @@ public class Course implements Serializable {
             joinColumns = @JoinColumn(name = "adult_student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id")
     )
-    private List<Course> registeredCourses;
+    private List<CourseDataModel> registeredCourses;
 
 }

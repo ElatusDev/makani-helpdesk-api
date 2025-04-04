@@ -22,7 +22,7 @@ import java.sql.Time;
 @Component
 @Entity
 @Table(name = "schedule")
-public class Schedule implements Serializable {
+public class ScheduleDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
