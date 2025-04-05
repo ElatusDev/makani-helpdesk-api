@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Component
 @Entity
 @Table(name = "membership")
-public class Membership implements Serializable {
+public class MembershipDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
