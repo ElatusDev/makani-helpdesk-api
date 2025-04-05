@@ -21,7 +21,7 @@ import java.time.LocalDate;
 @Component
 @Entity
 @Table(name = "membership_tutor")
-public class MembershipTutor implements Serializable {
+public class MembershipTutorDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class MembershipTutor implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "membership_id")
-    private Membership membership;
+    private MembershipDataModel membership;
 
     @ManyToOne
     @JoinColumn(name = "tutor_id")

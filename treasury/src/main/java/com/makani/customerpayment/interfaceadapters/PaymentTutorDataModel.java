@@ -1,7 +1,7 @@
 package com.makani.customerpayment.interfaceadapters;
 
 import com.makani.customer.interfaceadapters.Tutor;
-import com.makani.membership.interfaceadapters.Membership;
+import com.makani.membership.interfaceadapters.MembershipDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +39,7 @@ public class PaymentTutorDataModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "membership_id")
-    private Membership membership;
+    private MembershipDataModel membership;
 
     @ManyToOne
     @JoinColumn(name = "tutor_id")
