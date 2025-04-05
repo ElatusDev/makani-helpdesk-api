@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Component
 @Entity
 @Table(name = "customer_auth")
-public class CustomerAuth implements Serializable {
+public class CustomerAuthDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

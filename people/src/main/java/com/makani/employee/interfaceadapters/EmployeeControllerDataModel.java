@@ -16,12 +16,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/people")
-public class EmployeeController implements EmployeeApi {
+public class EmployeeControllerDataModel implements EmployeeApi {
 
     private final GetEmployeeByIdUseCase getEmployeeByIdUseCase;
     private final CreateEmployeeUseCase createEmployeeUseCase;
 
-    public EmployeeController(GetEmployeeByIdUseCase getEmployeeByIdUseCase, CreateEmployeeUseCase createEmployeeUseCase) {
+    public EmployeeControllerDataModel(GetEmployeeByIdUseCase getEmployeeByIdUseCase, CreateEmployeeUseCase createEmployeeUseCase) {
         this.getEmployeeByIdUseCase = getEmployeeByIdUseCase;
         this.createEmployeeUseCase = createEmployeeUseCase;
     }
