@@ -1,5 +1,6 @@
 package com.makani.program.interfaceadapters;
 
+import com.makani.instructor.interfaceadapters.InstructorDataModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import openapi.makani.domain.people.dto.Instructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -58,7 +58,7 @@ public class Course implements Serializable {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "instructor_id")
     )
-    private List<Instructor> availableInstructors;
+    private List<InstructorDataModel> availableInstructors;
 
     @ManyToMany
     @JoinTable(

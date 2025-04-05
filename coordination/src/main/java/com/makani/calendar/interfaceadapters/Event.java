@@ -3,12 +3,12 @@ package com.makani.calendar.interfaceadapters;
 import com.makani.customer.interfaceadapters.AdultStudentDataModel;
 import com.makani.customer.interfaceadapters.MinorStudentDataModel;
 import com.makani.program.interfaceadapters.Course;
+import com.makani.instructor.interfaceadapters.InstructorDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import openapi.makani.domain.people.dto.Instructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -51,7 +51,7 @@ public class Event implements Serializable {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
+    private InstructorDataModel instructor;
 
     @ManyToMany
     @JoinTable(

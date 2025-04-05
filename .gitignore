@@ -6,6 +6,9 @@ communication/target/
 coordination/target/
 people/target/
 treasury/target/
-
+security/target/
+### docker related ###
+.env
+mariadb-logs/
 ### Mac OS ###
 .DS_Store
