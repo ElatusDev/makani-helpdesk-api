@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Component
 @Entity
 @Table(name = "tutor")
-public class Tutor extends AbstractPerson implements Serializable {
+public class TutorDataModel extends AbstractPerson implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -31,5 +31,5 @@ public class Tutor extends AbstractPerson implements Serializable {
 
     @OneToOne(optional = false)
     @JoinColumn(name = "customer_auth_id")
-    private CustomerAuth customerAuth;
+    private CustomerAuthDataModel customerAuth;
 }
