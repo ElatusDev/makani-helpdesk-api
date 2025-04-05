@@ -1,6 +1,6 @@
 package com.makani.membership.interfaceadapters;
 
-import com.makani.customer.interfaceadapters.Tutor;
+import com.makani.customer.interfaceadapters.TutorDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,5 +40,5 @@ public class MembershipTutorDataModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "tutor_id")
-    private Tutor tutor;
+    private TutorDataModel tutor;
 }

@@ -1,7 +1,7 @@
 package com.makani.calendar.interfaceadapters;
 
-import com.makani.customer.interfaceadapters.AdultStudent;
-import com.makani.customer.interfaceadapters.MinorStudent;
+import com.makani.customer.interfaceadapters.AdultStudentDataModel;
+import com.makani.customer.interfaceadapters.MinorStudentDataModel;
 import com.makani.program.interfaceadapters.Course;
 import com.makani.instructor.interfaceadapters.InstructorDataModel;
 import jakarta.persistence.*;
@@ -59,12 +59,12 @@ public class Event implements Serializable {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "adult_student_id")
     )
-    private List<AdultStudent> adultAttendees;
+    private List<AdultStudentDataModel> adultAttendees;
     @ManyToMany
     @JoinTable(
             name = "event_attendees",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "minor_student_id")
     )
-    private List<MinorStudent> minorAttendees;
+    private List<MinorStudentDataModel> minorAttendees;
 }
