@@ -1,6 +1,6 @@
 package com.makani.customerpayment.interfaceadapters;
 
-import com.makani.customer.interfaceadapters.AdultStudent;
+import com.makani.customer.interfaceadapters.AdultStudentDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -38,10 +38,10 @@ public class PayInfoDataModel implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "adult_student_id")
-    private AdultStudent AdultStudent;
+    private AdultStudentDataModel AdultStudent;
 
     @OneToOne
     @JoinColumn(name = "tutor_id")
-    private AdultStudent Tutor;
+    private AdultStudentDataModel Tutor;
 
 }
