@@ -17,7 +17,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Instructor'
+                  $ref: '#/components/schemas/InstructorResponse'
         '500':
           description: An unexpected error occurred
           content:
@@ -39,7 +39,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Instructor'
+                type: integer
         '400':
           description: Invalid request data
           content:
@@ -52,6 +52,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
   /instructors/{instructorId}:
     get:
       summary: Retrieve an instructor by ID
@@ -69,7 +70,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Instructor'
+                $ref: '#/components/schemas/InstructorResponse'
         '404':
           description: Instructor not found
           content:
@@ -86,46 +87,35 @@ paths:
 components:
   schemas:
     Instructor:
-      type: object
-      properties:
-        instructorId:
-          type: integer
-        skills:
-          type: string
-          maxLength: 100
-          nullable: true
-        profilePicture:
-          type: string
-          format: byte
-        employeeAuth:
-          $ref: '#/components/schemas/EmployeeAuthDataModel'
+      allOf:
+        - $ref: './commons.yaml#/components/schemas/BasePerson'
+        - type: object
+          properties:
+            skills:
+              type: string
+              maxLength: 100
+              nullable: true
+            profilePicture:
+              type: string
+              format: byte
+
     InstructorCreateRequest:
-      type: object
-      properties:
-        skills:
-          type: string
-          maxLength: 100
-          nullable: true
-        profilePicture:
-          type: string
-          format: byte
-        employeeAuthId:
-          type: integer
-    EmployeeAuthDataModel:
-      type: object
-      properties:
-        customerAuthId:
-          type: integer
-        provider:
-          type: string
-          maxLength: 9
-        token:
-          type: string
-          format: byte
+      allOf:
+        - $ref: '#/components/schemas/Instructor'
+        - $ref: './commons.yaml#/components/schemas/InternalAuth'
+
+    InstructorResponse:
+      allOf:
+        - $ref: '#/components/schemas/Instructor'
+        - type: object
+          properties:
+            instructorId:
+              type: integer
+              description: Instructor ID
+
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
-        details:
-          type: string
+          description: Error message

@@ -52,6 +52,7 @@
                             <inputSpec>${project.basedir}/src/main/resources/people-module.yaml</inputSpec>
                             <apiPackage>openapi.makani.domain.people.api</apiPackage>
                             <modelPackage>openapi.makani.domain.people.dto</modelPackage>
+                            <modelNameSuffix>DTO</modelNameSuffix>
                             <generatorName>spring</generatorName>
                             <configOptions>
                                 <generateTests>false</generateTests>

@@ -1,6 +1,6 @@
 package com.makani.employee.usecases;
 
-import openapi.makani.domain.people.dto.EmployeeResponse;
+import openapi.makani.domain.people.dto.EmployeeResponseDTO;
 import com.makani.employee.interfaceadapters.EmployeeDataModel;
 import com.makani.employee.interfaceadapters.EmployeeRepository;
 import org.modelmapper.ModelMapper;
@@ -18,8 +18,8 @@ public class GetEmployeeByIdUseCase {
         this.modelMapper = modelMapper;
     }
 
-    public Optional<EmployeeResponse> getEmployeeId(Integer employeeId) {
+    public Optional<EmployeeResponseDTO> getEmployeeId(Integer employeeId) {
           Optional<EmployeeDataModel> queryResult = employeeRepository.findByEmployeeId(employeeId);
-          return queryResult.map(employeeDataModel -> modelMapper.map(employeeDataModel, EmployeeResponse.class));
+          return queryResult.map(employeeDataModel -> modelMapper.map(employeeDataModel, EmployeeResponseDTO.class));
     }
 }

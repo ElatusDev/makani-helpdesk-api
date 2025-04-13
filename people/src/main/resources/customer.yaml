@@ -3,6 +3,7 @@ info:
   title: Customer Services API
   version: 1.0.0
   description: API for managing customers in the Makani system
+
 paths:
   /adultStudents:
     get:
@@ -51,6 +52,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
   /minorStudents:
     get:
       summary: Retrieve a list of minor students
@@ -98,6 +100,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+
 components:
   schemas:
     BaseStudent:
@@ -108,29 +111,27 @@ components:
           format: byte
         customerAuthId:
           type: integer
+
     AdultStudent:
       allOf:
+        - $ref: './commons.yaml#/components/schemas/BasePerson'
         - $ref: '#/components/schemas/BaseStudent'
-        - type: object
-          properties:
-            adultStudentId:
-              type: integer
+
     MinorStudent:
       allOf:
         - $ref: '#/components/schemas/BaseStudent'
+        - $ref: '#/components/schemas/Tutor'
         - type: object
           properties:
-            minorStudentId:
-              type: integer
             tutorId:
               type: integer
+            customerAuthId:
+              type: integer
+
     Tutor:
-      type: object
-      properties:
-        tutorId:
-          type: integer
-        customerAuthId:
-          type: integer
+      allOf:
+        - $ref: './commons.yaml#/components/schemas/BasePerson'
+
     CustomerAuth:
       type: object
       properties:
@@ -142,24 +143,41 @@ components:
         token:
           type: string
           format: byte
+
     AdultStudentCreateRequest:
-      type: object
-      properties:
-        profilePicture:
-          type: string
-          format: byte
-        customerAuthId:
-          type: integer
+      allOf:
+        - $ref: '#/components/schemas/AdultStudent'
+        - type: object
+          properties:
+            auth:
+              $ref: '#/components/schemas/CustomerAuth'
+
+    AdultStudentResponse:
+      allOf:
+        - $ref: '#/components/schemas/AdultStudent'
+        - type: object
+          properties:
+            adultStudentId:
+              type: integer
+
     MinorStudentCreateRequest:
-      type: object
-      properties:
-        profilePicture:
-          type: string
-          format: byte
-        customerAuthId:
-          type: integer
-        tutorId:
-          type: integer
+      allOf:
+        - $ref: '#/components/schemas/MinorStudent'
+        - type: object
+          properties:
+            minorStudentAuth:
+              $ref: '#/components/schemas/CustomerAuth'
+            tutorAuth:
+              $ref: '#/components/schemas/CustomerAuth'
+
+    MinorStudentResponse:
+      allOf:
+        - $ref: '#/components/schemas/MinorStudent'
+        - type: object
+          properties:
+            minorStudentId:
+              type: integer
+
     ErrorResponse:
       type: object
       properties:

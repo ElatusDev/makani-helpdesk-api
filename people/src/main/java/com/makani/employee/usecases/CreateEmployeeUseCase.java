@@ -1,6 +1,6 @@
 package com.makani.employee.usecases;
 
-import openapi.makani.domain.people.dto.EmployeeCreateRequest;
+import openapi.makani.domain.people.dto.EmployeeCreateRequestDTO;
 import com.makani.employee.interfaceadapters.EmployeeDataModel;
 import com.makani.employee.interfaceadapters.EmployeeRepository;
 import org.modelmapper.ModelMapper;
@@ -21,7 +21,7 @@ public class CreateEmployeeUseCase {
         this.messageSource = messageSource;
     }
 
-    public Integer createEmployee(EmployeeCreateRequest employeeCreateRequest) throws InvalidCreateRequestException {
+    public Integer createEmployee(EmployeeCreateRequestDTO employeeCreateRequest) throws InvalidCreateRequestException {
             EmployeeDataModel received =  modelMapper.map(employeeCreateRequest, EmployeeDataModel.class);
             try {
                 EmployeeDataModel persisted = employeeRepository.save(received);
