@@ -2,6 +2,7 @@ components:
   schemas:
     BasePerson:
       type: object
+      description: 'Base schema for Person, used for referencing only. Do not generate a class for this schema.'
       properties:
         firstName:
           type: string
@@ -26,7 +27,14 @@ components:
         zipCode:
           type: string
           description: Employee's zip code
-
+      required:
+        - firstName
+        - lastName
+        - birthDate
+        - email
+        - phone
+        - address
+        - zipCode
     InternalAuth:
       type: object
       properties:
@@ -39,3 +47,7 @@ components:
         passwordToken:
           type: string
           description: Password token for authentication
+      required:
+        - employeeType
+        - usernameToken
+        - passwordToken

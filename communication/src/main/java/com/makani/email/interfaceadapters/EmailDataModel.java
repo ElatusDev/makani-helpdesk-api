@@ -20,7 +20,7 @@ import java.util.List;
 @Component
 @Entity
 @Table(name = "email")
-public class Email implements Serializable {
+public class EmailDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 

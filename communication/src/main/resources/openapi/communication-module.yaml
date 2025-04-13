@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: Communication Module API
+  version: 1.0.0
+components:
+  schemas:
+    EmailCreateRequest:
+      $ref: './email.yaml#/components/schemas/EmailCreateRequest'
+    EmailResponse:
+      $ref: './email.yaml#/components/schemas/EmailResponse'
+paths:
+  /emails:
+      $ref: './email.yaml#/paths/~1emails'
+  /emails/{emailId}:
+      $ref: './email.yaml#/paths/~1emails~1{emailId}'

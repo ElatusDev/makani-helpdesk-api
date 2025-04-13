@@ -1,11 +1,10 @@
 openapi: 3.0.0
 info:
-  title: Instructor Services API
-  version: 1.0.0
+  title:   Instructor Services API
+  version: '1.0.0'
   description: API for managing instructors in the Makani system
-
 paths:
-  /instructor:
+  '/instructors':
     get:
       summary: Retrieve a list of instructors
       operationId: getInstructors
@@ -17,7 +16,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InstructorResponse'
+                  $ref: '#/components/schemas/GetInstructorResponse'
         '500':
           description: An unexpected error occurred
           content:
@@ -32,14 +31,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InstructorCreateRequest'
+              $ref: '#/components/schemas/InstructorCreationRequest'
       responses:
         '201':
           description: Instructor created successfully
           content:
             application/json:
               schema:
-                type: integer
+                $ref: '#/components/schemas/InstructorCreationResponse'
         '400':
           description: Invalid request data
           content:
@@ -52,8 +51,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
-  /instructors/{instructorId}:
+  '/instructors/{instructorId}':
     get:
       summary: Retrieve an instructor by ID
       operationId: getInstructorById
@@ -70,7 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InstructorResponse'
+                $ref: '#/components/schemas/GetInstructorResponse'
         '404':
           description: Instructor not found
           content:
@@ -83,10 +81,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
 components:
   schemas:
-    Instructor:
+    BaseInstructor:
       allOf:
         - $ref: './commons.yaml#/components/schemas/BasePerson'
         - type: object
@@ -98,24 +95,35 @@ components:
             profilePicture:
               type: string
               format: byte
-
-    InstructorCreateRequest:
+      required:
+        - skills
+        - profilePicture
+    InstructorCreationRequest:
       allOf:
-        - $ref: '#/components/schemas/Instructor'
+        - $ref: '#/components/schemas/BaseInstructor'
         - $ref: './commons.yaml#/components/schemas/InternalAuth'
-
-    InstructorResponse:
+    InstructorCreationResponse:
+      type: object
+      properties:
+        instructorId:
+          type: integer
+          description: Instructor ID
+          readOnly: true
+      required:
+        - instructorId
+    GetInstructorResponse:
       allOf:
-        - $ref: '#/components/schemas/Instructor'
+        - $ref: '#/components/schemas/BaseInstructor'
         - type: object
           properties:
             instructorId:
               type: integer
               description: Instructor ID
-
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
           description: Error message
+      required:
+        - message

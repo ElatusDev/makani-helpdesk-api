@@ -1,27 +1,26 @@
 openapi: 3.0.0
 info:
-  title: Employee Services API
-  version: 1.0.0
+  title:   Employee Services API
+  version: '1.0.0'
   description: API for managing people in the Makani system
-
 paths:
-  /employee:
+  '/employees':
     post:
-      operationId: postEmployee
+      operationId: createEmployee
       summary: Create a new employee
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/EmployeeCreateRequest'
+              $ref: '#/components/schemas/EmployeeCreationRequest'
       responses:
         '201':
           description: Employee created successfully
           content:
             application/json:
               schema:
-                type: integer
+                $ref: '#/components/schemas/EmployeeCreationResponse'
         '400':
           description: Invalid request data
           content:
@@ -40,12 +39,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
+    get:
+      summary: Retrieve a list of employees
+      operationId: getEmployees
+      responses:
+        '200':
+          description: A list of employees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetEmployeeResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/employees/{employeeId}':
     get:
       summary: Retrieve an employee by ID
       operationId: getEmployeeById
       parameters:
-        - in: query
+        - in: path
           name: employeeId
           schema:
             type: integer
@@ -57,7 +74,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/EmployeeResponse'
+                $ref: '#/components/schemas/GetEmployeeResponse'
         '404':
           description: Employee not found
           content:
@@ -70,29 +87,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
 components:
   schemas:
-    EmployeeCreateRequest:
+    EmployeeCreationRequest:
       allOf:
         - $ref: './commons.yaml#/components/schemas/BasePerson'
         - type: object
           properties:
             employeeAuth:
               $ref: './commons.yaml#/components/schemas/InternalAuth'
-          required:
-            - firstName
-            - lastName
-            - email
-            - phone
-            - address
-            - zipCode
-            - birthDate
-            - employeeType
-            - usernameToken
-            - passwordToken
-
-    EmployeeResponse:
+    EmployeeCreationResponse:
+      type: object
+      properties:
+        employeeId:
+          type: integer
+          readOnly: true
+          description: Employee ID
+      required:
+        - employeeId
+    GetEmployeeResponse:
       allOf:
         - $ref: './commons.yaml#/components/schemas/BasePerson'
         - type: object
@@ -100,19 +113,13 @@ components:
             employeeId:
               type: integer
               description: Employee ID
-          required:
-            - employeeId
-            - firstName
-            - lastName
-            - birthDate
-            - email
-            - phone
-            - address
-            - zipCode
-
+            employeeAuth:
+              $ref: './commons.yaml#/components/schemas/InternalAuth'
     ErrorResponse:
       type: object
       properties:
         message:
           type: string
           description: Error message
+      required:
+        - message

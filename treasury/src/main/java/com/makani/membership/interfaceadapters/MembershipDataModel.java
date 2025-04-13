@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -35,7 +36,7 @@ public class MembershipDataModel implements Serializable {
     @Column(nullable = false, length = 100)
     private String description;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "course_id")
-    private CourseDataModel course;
+    private List<CourseDataModel> course;
 }

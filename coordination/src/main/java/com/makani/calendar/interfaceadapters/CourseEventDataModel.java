@@ -2,13 +2,13 @@ package com.makani.calendar.interfaceadapters;
 
 import com.makani.customer.interfaceadapters.AdultStudentDataModel;
 import com.makani.customer.interfaceadapters.MinorStudentDataModel;
+import com.makani.instructor.interfaceadapters.InstructorDataModel;
 import com.makani.program.interfaceadapters.CourseDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import openapi.makani.domain.people.dto.Instructor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -25,25 +25,15 @@ import java.util.List;
 @Scope("prototype")
 @Component
 @Entity
-@Table(name = "calendar_event")
-public class EventDataModel implements Serializable {
+@Table(name = "course_event")
+public class CourseEventDataModel extends AbstractEvent implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_id")
-    private Integer eventId;
-    @Column(name = "event_date", nullable = false, columnDefinition = "DATE", updatable = false)
-    private LocalDate date;
-    @Column(name = "event_title", nullable = false, length = 50)
-    private String title;
-    @Column(name = "event_description", nullable = false, length = 200)
-    private String description;
-    @Column(name = "start_time", nullable = false)
-    private Time startTime;
-    @Column(name = "end_time", nullable = false)
-    private Time endTime;
+    @Column(name = "course_event_id")
+    private Integer courseEventId;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
@@ -51,18 +41,18 @@ public class EventDataModel implements Serializable {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
+    private InstructorDataModel instructor;
 
     @ManyToMany
     @JoinTable(
-            name = "event_attendees",
+            name = "course_event_attendees",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "adult_student_id")
     )
     private List<AdultStudentDataModel> adultAttendees;
     @ManyToMany
     @JoinTable(
-            name = "event_attendees",
+            name = "course_event_attendees",
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "minor_student_id")
     )

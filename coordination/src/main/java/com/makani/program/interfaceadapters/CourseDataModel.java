@@ -1,5 +1,6 @@
 package com.makani.program.interfaceadapters;
 
+import com.makani.customer.interfaceadapters.AdultStudentDataModel;
 import com.makani.instructor.interfaceadapters.InstructorDataModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,13 +60,4 @@ public class CourseDataModel implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "instructor_id")
     )
     private List<InstructorDataModel> availableInstructors;
-
-    @ManyToMany
-    @JoinTable(
-            name = "adult_student_course",
-            joinColumns = @JoinColumn(name = "adult_student_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<CourseDataModel> registeredCourses;
-
 }
