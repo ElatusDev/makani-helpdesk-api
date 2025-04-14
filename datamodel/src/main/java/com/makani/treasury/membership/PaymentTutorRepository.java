@@ -5,10 +5,10 @@
  * This code is proprietary and confidential.
  * Unauthorized copying, distribution, or modification is strictly prohibited.
  */
-package com.makani.customer.interfaceadapters;
+package com.makani.treasury.membership;
 
-import com.makani.people.customer.CustomerAuthDataModel;
+import com.makani.treasury.customerpayment.PaymentTutorDataModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CustomerAuthRepository extends JpaRepository <CustomerAuthDataModel, Integer> {
+public interface PaymentTutorRepository extends JpaRepository<PaymentTutorDataModel, Integer> {
 }
