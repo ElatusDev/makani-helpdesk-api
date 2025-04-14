@@ -1,0 +1,45 @@
+services:
+  makani-helpdesk-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    container_name: makani-helpdesk-api
+    volumes:
+      - .:/makani-helpdesk-api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+    command: [ "java", "-jar", "/MakaniHelpDeskAPI/application-1.0-SNAPSHOT.jar" ]
+  makani-db:
+    image: mariadb:latest
+    container_name: makani-db
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: makani_db
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: ringo1522
+      INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-false}
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d # Mount a local folder for initialization scripts
+      - ./mariadb-logs:/var/log/mysql  # Mount a local folder for MariaDB logs
+    command: >
+      --general-log=1
+      --general-log-file=/var/log/mysql/mariadb-general.log
+      --slow-query-log=1
+      --slow-query-log-file=/var/log/mysql/mariadb-slow.log
+      --long-query-time=2
+volumes:
+  db_data: {}

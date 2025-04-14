@@ -1,0 +1,53 @@
+components:
+  schemas:
+    BasePerson:
+      type: object
+      description: 'Base schema for Person, used for referencing only. Do not generate a class for this schema.'
+      properties:
+        firstName:
+          type: string
+          description: Employee's first name
+        lastName:
+          type: string
+          description: Employee's last name
+        birthDate:
+          type: string
+          format: date
+          description: Employee's birthdate
+        email:
+          type: string
+          format: email
+          description: Employee's email address
+        phone:
+          type: string
+          description: Employee's phone number
+        address:
+          type: string
+          description: Employee's address
+        zipCode:
+          type: string
+          description: Employee's zip code
+      required:
+        - firstName
+        - lastName
+        - birthDate
+        - email
+        - phone
+        - address
+        - zipCode
+    InternalAuth:
+      type: object
+      properties:
+        employeeType:
+          type: string
+          description: Type of employees and collaborators
+        usernameToken:
+          type: string
+          description: Username token for authentication
+        passwordToken:
+          type: string
+          description: Password token for authentication
+      required:
+        - employeeType
+        - usernameToken
+        - passwordToken

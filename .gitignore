@@ -1,4 +1,3 @@
-.idea
 
 ### maven modules ###
 application/target/
@@ -6,6 +5,20 @@ communication/target/
 coordination/target/
 people/target/
 treasury/target/
-
+security/target/
+datamodel/target/
+### docker related ###
+.env
+mariadb-logs/
 ### Mac OS ###
 .DS_Store
+
+#intelliJ
+.idea/
+application/*.iml
+communication/*.iml
+coordination/*.iml
+people/*.iml
+treasury/*.iml
+security/*.iml
+datamodel/*.iml

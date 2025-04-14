@@ -1,0 +1,288 @@
+openapi: 3.0.0
+info:
+  title:   Customer Services API
+  version: '1.0.0'
+  description: API for managing customers in the Makani system
+paths:
+  '/adultStudents':
+    get:
+      summary: Retrieve a list of adult students
+      operationId: getAdultStudents
+      responses:
+        '200':
+          description: A list of adult students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdultStudentResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new adult student
+      operationId: createAdultStudent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdultStudentCreationRequest'
+      responses:
+        '201':
+          description: Adult student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdultStudentCreationResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/adultStudents/{adultStudentId}':
+    get:
+      summary: Retrieve an adult student by ID
+      operationId: getAdultStudentById
+      parameters:
+        - name: adultStudentId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the adult student to retrieve
+      responses:
+        '200':
+          description: Adult student details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdultStudentResponse'
+        '404':
+          description: Adult student not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/minorStudents':
+    get:
+      summary: Retrieve a list of minor students
+      operationId: getMinorStudents
+      responses:
+        '200':
+          description: A list of minor students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetMinorStudentResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new minor student
+      operationId: createMinorStudent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MinorStudentCreationRequest'
+      responses:
+        '201':
+          description: Minor student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MinorStudentCreationResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/minorStudents/{minorStudentId}':
+    get:
+      summary: Retrieve a minor student by ID
+      operationId: getMinorStudentById
+      parameters:
+        - name: minorStudentId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the minor student to retrieve
+      responses:
+        '200':
+          description: Minor student details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMinorStudentResponse'
+        '404':
+          description: Minor student not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    BaseStudent:
+      type: object
+      description: 'Base schema for Student, used for referencing only. Do not generate a class for this schema.'
+      properties:
+        profilePicture:
+          type: string
+          format: byte
+          description: Student's profile picture
+        customerAuthId:
+          type: integer
+          description: Student's customer authentication ID
+      required:
+        - profilePicture
+        - customerAuthId
+    AdultStudent:
+      allOf:
+        - $ref: './commons.yaml#/components/schemas/BasePerson'
+        - $ref: '#/components/schemas/BaseStudent'
+    MinorStudent:
+      allOf:
+        - $ref: '#/components/schemas/BaseStudent'
+        - $ref: '#/components/schemas/Tutor'
+        - type: object
+          properties:
+            tutorId:
+              type: integer
+              description: ID of the tutor associated with the minor student
+            customerAuthId:
+              type: integer
+              description: Minor student's customer authentication ID
+          required:
+            - tutorId
+            - customerAuthId
+    Tutor:
+      allOf:
+        - $ref: './commons.yaml#/components/schemas/BasePerson'
+    CustomerAuth:
+      type: object
+      properties:
+        customerAuthId:
+          type: integer
+          description: Customer authentication ID
+        provider:
+          type: string
+          maxLength: 9
+          description: Authentication provider (e.g., Google, Facebook)
+        token:
+          type: string
+          format: byte
+          description: Authentication token
+      required:
+        - customerAuthId
+        - provider
+        - token
+    AdultStudentCreationRequest:
+      allOf:
+        - $ref: '#/components/schemas/AdultStudent'
+        - type: object
+          properties:
+            auth:
+              $ref: '#/components/schemas/CustomerAuth'
+              description: Adult student's authentication details
+      required:
+        - auth
+    AdultStudentCreationResponse:
+      type: object
+      properties:
+        adultStudentId:
+          type: integer
+          readOnly: true
+          description: Adult student ID
+      required:
+        - adultStudentId
+    GetAdultStudentResponse:
+      allOf:
+        - $ref: '#/components/schemas/AdultStudent'
+        - type: object
+          properties:
+            adultStudentId:
+              type: integer
+              readOnly: true
+              description: Adult student ID
+      required:
+        - adultStudentId
+    MinorStudentCreationRequest:
+      allOf:
+        - $ref: '#/components/schemas/MinorStudent'
+        - type: object
+          properties:
+            minorStudentAuth:
+              $ref: '#/components/schemas/CustomerAuth'
+              description: Minor student's authentication details
+            tutorAuth:
+              $ref: '#/components/schemas/CustomerAuth'
+              description: Tutor's authentication details
+      required:
+        - minorStudentAuth
+        - tutorAuth
+    MinorStudentCreationResponse:
+      type: object
+      properties:
+        minorStudentId:
+          type: integer
+          readOnly: true
+          description: Minor student ID
+      required:
+        - minorStudentId
+    GetMinorStudentResponse:
+      allOf:
+        - $ref: '#/components/schemas/MinorStudent'
+        - type: object
+          properties:
+            minorStudentId:
+              type: integer
+              readOnly: true
+              description: Minor student ID
+      required:
+        - minorStudentId
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+      required:
+        - message

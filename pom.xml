@@ -37,6 +37,8 @@
         <modelmapper.version>3.2.2</modelmapper.version>
         <sonar.organization>elatusdev</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <!--suppress UnresolvedMavenProperty -->
+        <github.token>${env.GITHUB_TOKEN}</github.token>
     </properties>
 
     <modules>
@@ -45,6 +47,8 @@
         <module>people</module>
         <module>treasury</module>
         <module>application</module>
+        <module>security</module>
+        <module>datamodel</module>
     </modules>
 
     <dependencies>
@@ -184,23 +188,117 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.version}</version>
-                <configuration>
-                    <argLine>
-                        -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/${byte.buddy.agent.version}/byte-buddy-agent-${byte.buddy.agent.version}.jar
-                    </argLine>
-                    <systemPropertyVariables>
-                        <property>
-                            <name>net.bytebuddy.agent.allow.dynamic.attach</name>
-                            <value>true</value>
-                        </property>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven.clean.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>clean-generated-code ${project.artifactId}</id>
+                            <phase>generate-sources</phase>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                            <configuration>
+                                <filesets>
+                                    <fileset>
+                                        <directory>${project.basedir}/generated-sources/openapi</directory>
+                                        <includes>
+                                            <include>**/*</include>
+                                        </includes>
+                                    </fileset>
+                                </filesets>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>${openapi.generator.version}</version>
+                    <executions>
+                        <execution>
+                            <id>generate-openapi-specs ${project.artifactId}</id>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <inputSpec>${project.basedir}/src/main/resources/openapi/${project.artifactId}-module.yaml</inputSpec>
+                                <apiPackage>openapi.makani.domain.${project.artifactId}.api</apiPackage>
+                                <modelPackage>openapi.makani.domain.${project.artifactId}.dto</modelPackage>
+                                <modelNameSuffix>DTO</modelNameSuffix>
+                                <generatorName>spring</generatorName>
+                                <configOptions>
+                                    <generateTests>false</generateTests>
+                                    <useJakartaEe>true</useJakartaEe>
+                                    <serializableModel>true</serializableModel>
+                                </configOptions>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>3.1.0</version>
+                    <executions>
+                        <execution>
+                            <id>delete-generated-tests ${project.artifactId}</id>
+                            <phase>generate-sources</phase> <!-- Runs after OpenAPI generates sources -->
+                            <configuration>
+                                <target>
+                                    <delete>
+                                        <fileset dir="${project.build.directory}/generated-sources/openapi">
+                                            <include name="**/*Tests.java"/>
+                                        </fileset>
+                                    </delete>
+                                </target>
+                            </configuration>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven.surefire.version}</version>
+                    <configuration>
+                        <argLine>
+                            -javaagent:${settings.localRepository}/net/bytebuddy/byte-buddy-agent/${byte.buddy.agent.version}/byte-buddy-agent-${byte.buddy.agent.version}.jar
+                        </argLine>
+                        <systemPropertyVariables>
+                            <property>
+                                <name>net.bytebuddy.agent.allow.dynamic.attach</name>
+                                <value>true</value>
+                            </property>
+                        </systemPropertyVariables>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <mainClass>com.makani.Main</mainClass>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub ElatusDev Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/ElatusDev/makani-helpdesk-api</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </distributionManagement>
 </project>

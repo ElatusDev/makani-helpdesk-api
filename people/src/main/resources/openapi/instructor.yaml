@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title:   Instructor Services API
+  version: '1.0.0'
+  description: API for managing instructors in the Makani system
+paths:
+  '/instructors':
+    get:
+      summary: Retrieve a list of instructors
+      operationId: getInstructors
+      responses:
+        '200':
+          description: A list of instructors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetInstructorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new instructor
+      operationId: createInstructor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstructorCreationRequest'
+      responses:
+        '201':
+          description: Instructor created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstructorCreationResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/instructors/{instructorId}':
+    get:
+      summary: Retrieve an instructor by ID
+      operationId: getInstructorById
+      parameters:
+        - in: path
+          name: instructorId
+          required: true
+          schema:
+            type: integer
+          description: ID of the instructor to retrieve
+      responses:
+        '200':
+          description: Instructor retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInstructorResponse'
+        '404':
+          description: Instructor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    BaseInstructor:
+      allOf:
+        - $ref: './commons.yaml#/components/schemas/BasePerson'
+        - type: object
+          properties:
+            skills:
+              type: string
+              maxLength: 100
+              nullable: true
+            profilePicture:
+              type: string
+              format: byte
+      required:
+        - skills
+        - profilePicture
+    InstructorCreationRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseInstructor'
+        - $ref: './commons.yaml#/components/schemas/InternalAuth'
+    InstructorCreationResponse:
+      type: object
+      properties:
+        instructorId:
+          type: integer
+          description: Instructor ID
+          readOnly: true
+      required:
+        - instructorId
+    GetInstructorResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseInstructor'
+        - type: object
+          properties:
+            instructorId:
+              type: integer
+              description: Instructor ID
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+      required:
+        - message

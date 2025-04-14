@@ -1,0 +1,41 @@
+openapi: 3.0.0
+info:
+  title: Treasury Module API
+  version: 1.0.0
+  description: API for managing payroll and memberships
+
+components:
+  schemas:
+    Compensation:
+      $ref: './compensation.yaml#/components/schemas'
+    Membership:
+      $ref: './membership.yaml#/components/schemas'
+    MembershipManagement:
+      $ref: './membership-management.yaml#/components/schemas'
+    PaymentManagement:
+      $ref: './payment-management.yaml#/components/schemas'
+paths:
+  /compensations:
+    $ref: './compensation.yaml#/paths/~1compensations'
+  /compensations/{compensationId}:
+    $ref: './compensation.yaml#/paths/~1compensations~1{compensationId}'
+  /compensations/{compensationId}/instructors:
+    $ref: './compensation.yaml#/paths/~1compensations~1{compensationId}~1instructors'
+  /memberships:
+    $ref: './membership.yaml#/paths/~1memberships'
+  /memberships/{membershipId}:
+    $ref: './membership.yaml#/paths/~1memberships~1{membershipId}'
+  /memberships/{membershipId}/courses:
+    $ref: './membership.yaml#/paths/~1memberships~1{membershipId}~1courses'
+  /memberships/adult-students:
+    $ref: './membership-management.yaml#/paths/~1memberships~1adult-students'
+  /memberships/tutors:
+    $ref: './membership-management.yaml#/paths/~1memberships~1tutors'
+  /payments/adult-students: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1adult-students'
+  /payments/adult-students/{paymentAdultStudentId}: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1adult-students~1{paymentAdultStudentId}'
+  /payments/tutor: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1tutor'
+  /payments/tutor/{paymentTutorId}: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1tutor~1{paymentTutorId}'

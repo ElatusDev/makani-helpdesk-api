@@ -1,7 +1,7 @@
 package com.makani.config;
 
-import com.makani.employee.interfaceadapters.EmployeeDataModel;
-import openapi.makani.domain.people.dto.EmployeeCreateRequest;
+import com.makani.people.employee.EmployeeDataModel;
+import openapi.makani.domain.people.dto.EmployeeCreationRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +12,11 @@ public class PeopleConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-        PropertyMap<EmployeeCreateRequest, EmployeeDataModel> employeeAuthMap = new PropertyMap<>() {
+        PropertyMap<EmployeeCreationRequestDTO, EmployeeDataModel> employeeAuthMap = new PropertyMap<>() {
             protected void configure() {
-                map(source.getUsernameToken(), destination.getEmployeeAuth().getUsernameToken());
-                map(source.getPasswordToken(), destination.getEmployeeAuth().getPasswordToken());
+                assert source.getEmployeeAuth() != null;
+                map(source.getEmployeeAuth().getUsernameToken(), destination.getInternalAuth().getUsernameToken());
+                map(source.getEmployeeAuth().getUsernameToken(), destination.getInternalAuth().getPasswordToken());
             }
         };
 

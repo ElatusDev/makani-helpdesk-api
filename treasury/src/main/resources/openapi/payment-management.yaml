@@ -1,0 +1,317 @@
+openapi: 3.0.0
+info:
+  title: Payment Management API
+  description: API for managing payments made by adult students and tutors.
+  version: 1.0.0
+servers:
+  - url: /api/v1 # You can change this base path
+paths:
+  /payments/adult-students:
+    post:
+      summary: Record a payment from an adult student.
+      description: Creates a new payment record for an adult student.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentAdultStudentRequest'
+      responses:
+        '201':
+          description: Payment recorded successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentAdultStudentResponse'
+        '400':
+          description: Bad request. Validation errors or invalid data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Retrieve all payments from adult students.
+      description: Retrieves a list of all payment records made by adult students.
+      responses:
+        '200':
+          description: A list of payments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentAdultStudentResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /payments/adult-students/{paymentAdultStudentId}:
+    get:
+      summary: Retrieve a specific payment by ID.
+      description: Retrieves a payment record for a specific adult student payment ID.
+      parameters:
+        - name: paymentAdultStudentId
+          in: path
+          description: ID of the payment to retrieve.
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The requested payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentAdultStudentResponse'
+        '404':
+          description: Payment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /payments/tutor:
+    post:
+      summary: Record a payment from a tutor.
+      description: Creates a new payment record for a tutor.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentTutorRequest'
+      responses:
+        '201':
+          description: Payment recorded successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTutorResponse'
+        '400':
+          description: Bad request. Validation errors or invalid data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Retrieve all payments from tutors.
+      description: Retrieves a list of all payment records made by tutors.
+      responses:
+        '200':
+          description: A list of payments.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentTutorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /payments/tutor/{paymentTutorId}:
+    get:
+      summary: Retrieve a specific tutor payment by ID.
+      description: Retrieves a payment record for a specific tutor payment ID.
+      parameters:
+        - name: paymentTutorId
+          in: path
+          description: ID of the tutor payment to retrieve.
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The requested payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentTutorResponse'
+        '404':
+          description: Payment not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    PaymentAdultStudentRequest:
+      type: object
+      required:
+        - paymentDate
+        - amount
+        - paymentMethod
+      properties:
+        paymentDate:
+          type: string
+          format: date
+          example: "2024-01-20"
+        amount:
+          type: number
+          format: double
+          description: The amount of the payment.
+          example: 50.00
+        paymentMethod:
+          type: string
+          maxLength: 25
+          description: The method used for payment (e.g., "Credit Card", "Cash", "Check").
+          example: "Credit Card"
+        membershipId:  #  Include the membershipId
+          type: integer
+          description: The ID of the membership associated with the payment.
+          example: 1
+        adultStudentId: # Include the adultStudentId
+          type: integer
+          description: The ID of the adult student making the payment.
+          example: 101
+    PaymentAdultStudentResponse:
+      type: object
+      properties:
+        paymentAdultStudentId:
+          type: integer
+          description: The unique ID of the payment record.
+          example: 201
+        paymentDate:
+          type: string
+          format: date
+          description: The date the payment was made.
+          example: "2024-01-20"
+        amount:
+          type: number
+          format: double
+          description: The amount of the payment.
+          example: 50.00
+        paymentMethod:
+          type: string
+          maxLength: 25
+          description: The method used for payment.
+          example: "Credit Card"
+        membership:
+          $ref: '#/components/schemas/Membership'
+        adultStudent:
+          $ref: '#/components/schemas/AdultStudent'
+    PaymentTutorRequest:
+      type: object
+      required:
+        - paymentDate
+        - amount
+        - paymentMethod
+      properties:
+        paymentDate:
+          type: string
+          format: date-time
+          example: "2024-01-20T14:30:00Z"
+        amount:
+          type: number
+          format: double
+          description: The amount of the payment.
+          example: 75.00
+        paymentMethod:
+          type: string
+          maxLength: 25
+          description: The method used for payment (e.g., "Direct Deposit", "Check").
+          example: "Direct Deposit"
+        courseId: # Added courseId
+          type: integer
+          description: The ID of the course associated with the payment.
+          example: 10
+        tutorId: # Added tutorId
+          type: integer
+          description: The ID of the tutor receiving the payment.
+          example: 202
+    PaymentTutorResponse:
+      type: object
+      properties:
+        paymentTutorId:
+          type: integer
+          description: The unique ID of the payment record.
+          example: 301
+        paymentDate:
+          type: string
+          format: date-time
+          description: The date and time the payment was made.
+          example: "2024-01-20T14:30:00Z"
+        amount:
+          type: number
+          format: double
+          description: The amount of the payment.
+          example: 75.00
+        paymentMethod:
+          type: string
+          maxLength: 25
+          description: The method used for payment.
+          example: "Direct Deposit"
+        course: # Include Course
+          $ref: '#/components/schemas/Course'
+        tutor: # Include Tutor
+          $ref: '#/components/schemas/Tutor'
+    Membership:
+      type: object
+      properties:
+        membershipId:
+          type: integer
+          description: The unique ID of the membership.
+          example: 1
+    AdultStudent:
+      type: object
+      properties:
+        adultStudentId:
+          type: integer
+          description: The unique ID of the adult student.
+          example: 101
+    Tutor:  # Added Tutor schema
+      type: object
+      properties:
+        tutorId:
+          type: integer
+          description: The unique ID of the tutor.
+          example: 202
+        # Add other tutor properties as needed
+    Course: # Added Course schema
+      type: object
+      properties:
+        courseId:
+          type: integer
+          description: The unique ID of the course.
+          example: 10
+        # Add other course properties
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The error code.
+          example: 400
+        message:
+          type: string
+          description: A human-readable error message.
+          example: "Invalid input: amount must be greater than zero."

@@ -1,8 +1,8 @@
 package com.makani.employee.usecases;
 
-import openapi.makani.domain.people.dto.EmployeeResponse;
-import com.makani.employee.interfaceadapters.EmployeeDataModel;
+import com.makani.people.employee.EmployeeDataModel;
 import com.makani.employee.interfaceadapters.EmployeeRepository;
+import openapi.makani.domain.people.dto.GetEmployeeResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +18,8 @@ public class GetEmployeeByIdUseCase {
         this.modelMapper = modelMapper;
     }
 
-    public Optional<EmployeeResponse> getEmployeeId(Integer employeeId) {
+    public Optional<GetEmployeeResponseDTO> getEmployeeId(Integer employeeId) {
           Optional<EmployeeDataModel> queryResult = employeeRepository.findByEmployeeId(employeeId);
-          return queryResult.map(employeeDataModel -> modelMapper.map(employeeDataModel, EmployeeResponse.class));
+          return queryResult.map(employeeDataModel -> modelMapper.map(employeeDataModel, GetEmployeeResponseDTO.class));
     }
 }

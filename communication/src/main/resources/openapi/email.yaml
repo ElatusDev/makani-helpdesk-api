@@ -1,0 +1,115 @@
+components:
+  schemas:
+    EmailCreateRequest:
+      type: object
+      properties:
+        subject:
+          type: string
+          maxLength: 100
+        body:
+          type: string
+        sender:
+          type: string
+          maxLength: 50
+        recipients:
+          type: array
+          items:
+            type: string
+        attachments:
+          type: array
+          items:
+            type: string
+      required:
+        - subject
+        - body
+        - sender
+        - recipients
+        - attachments
+    EmailResponse:
+      type: object
+      properties:
+        emailId:
+          type: integer
+          readOnly: true
+paths:
+  /emails:
+    post:
+      summary: Create a new email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailCreateRequest'
+      responses:
+        '201':
+          description: Email created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailResponse'
+    get:
+      summary: Get all emails
+      responses:
+        '200':
+          description: List of emails
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailResponse'
+  /emails/{emailId}:
+    get:
+      summary: Get an email by ID
+      parameters:
+        - name: emailId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Email details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailResponse'
+        '404':
+          description: Email not found
+      put:
+        summary: Update an email
+        parameters:
+          - name: emailId
+            in: path
+            required: true
+            schema:
+              type: integer
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailCreateRequest'
+        responses:
+          '200':
+            description: Email updated successfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/EmailResponse'
+          '404':
+            description: Email not found
+      delete:
+        summary: Delete an email
+        parameters:
+          - name: emailId
+            in: path
+            required: true
+            schema:
+              type: integer
+        responses:
+          '204':
+            description: Email deleted successfully
+          '404':
+            description: Email not found
