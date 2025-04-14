@@ -21,15 +21,16 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Scope("prototype")
 @Component
 @Entity
 @Table(name = "membership_adult_student")
-public class MembershipAdultStudentDataModel implements Serializable {
+public class MembershipAdultStudentDataModel extends MembershipBaseDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -37,20 +38,9 @@ public class MembershipAdultStudentDataModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "membership_adult_student_id")
     private Integer membershipAdultStudentId;
-    @Column(name = "start_date", columnDefinition = "DATE", nullable = false)
-    private LocalDate startDate;
-    @Column(name = "due_date", columnDefinition = "DATE", nullable = false)
-    private LocalDate dueDate;
-
-    @ManyToOne
-    @JoinColumn(name = "membership_id")
-    private MembershipDataModel membership;
-
-    @ManyToOne
-    @JoinColumn(name = "course_id")
-    private CourseDataModel course;
 
     @ManyToOne
     @JoinColumn(name = "adult_student_id")
     private AdultStudentDataModel adultStudent;
+
 }

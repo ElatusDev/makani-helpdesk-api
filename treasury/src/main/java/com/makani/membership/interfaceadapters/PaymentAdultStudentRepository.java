@@ -5,7 +5,7 @@
  * This code is proprietary and confidential.
  * Unauthorized copying, distribution, or modification is strictly prohibited.
  */
-package com.makani.treasury.membership;
+package com.makani.membership.interfaceadapters;
 
 import com.makani.treasury.customerpayment.PaymentAdultStudentDataModel;
 import org.springframework.data.jpa.repository.JpaRepository;
