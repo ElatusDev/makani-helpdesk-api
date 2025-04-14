@@ -16,6 +16,13 @@
     <properties>
         <module-name>communication</module-name>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.makani</groupId>
+            <artifactId>datamodel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

@@ -1,6 +1,6 @@
 package com.makani.config;
 
-import com.makani.employee.interfaceadapters.EmployeeDataModel;
+import com.makani.people.employee.EmployeeDataModel;
 import openapi.makani.domain.people.dto.EmployeeCreationRequestDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -15,8 +15,8 @@ public class PeopleConfig {
         PropertyMap<EmployeeCreationRequestDTO, EmployeeDataModel> employeeAuthMap = new PropertyMap<>() {
             protected void configure() {
                 assert source.getEmployeeAuth() != null;
-                map(source.getEmployeeAuth().getUsernameToken(), destination.getEmployeeAuth().getUsernameToken());
-                map(source.getEmployeeAuth().getUsernameToken(), destination.getEmployeeAuth().getPasswordToken());
+                map(source.getEmployeeAuth().getUsernameToken(), destination.getInternalAuth().getUsernameToken());
+                map(source.getEmployeeAuth().getUsernameToken(), destination.getInternalAuth().getPasswordToken());
             }
         };
 

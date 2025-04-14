@@ -2,10 +2,16 @@
 --GRANT ALL PRIVILEGES ON makani_db.* TO 'dev'@'%';
 --FLUSH PRIVILEGES;
 
-
 DROP SCHEMA IF EXISTS makani_db;
 CREATE SCHEMA makani_db;
 USE makani_db;
+
+CREATE TABLE card_payment_info (
+  card_payment_info_id INT AUTO_INCREMENT PRIMARY KEY,
+  payment_id BIGINT NOT NULL,
+  token TEXT NOT NULL,
+  card_type VARCHAR(7) NOT NULL
+);
 
 CREATE TABLE email (
     email_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,8 +52,8 @@ CREATE TABLE customer_auth (
     token TEXT NOT NULL
 );
 
-CREATE TABLE employee_auth (
-    employee_auth_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE internal_auth (
+    internal_auth_id INT AUTO_INCREMENT PRIMARY KEY,
     username_token TEXT NOT NULL,
     password_token TEXT NOT NULL
 );
@@ -67,27 +73,25 @@ CREATE TABLE employee (
     address VARCHAR(100) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
     employee_type VARCHAR(30) NOT NULL,
-    employee_auth_id INT NOT NULL,
+    internal_auth_id INT NOT NULL,
     birthdate DATE NOT NULL,
-    FOREIGN KEY (employee_auth_id) REFERENCES employee_auth(employee_auth_id)
+    FOREIGN KEY (internal_auth_id) REFERENCES internal_auth(internal_auth_id)
 );
 
-CREATE TABLE instructor (
-    instructor_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE collaborator (
+    collaborator_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     email VARCHAR(50) NOT NULL,
     phone VARCHAR(20) NOT NULL,
     address VARCHAR(100) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
-    customer_auth_id INT NOT NULL,
+    internal_auth_id INT NOT NULL,
     skills VARCHAR(100),
     profile_picture MEDIUMBLOB,
-    employee_auth_id INT NOT NULL,
     compensation_id INT NOT NULL,
     birthdate DATE NOT NULL,
-    FOREIGN KEY (customer_auth_id) REFERENCES customer_auth(customer_auth_id),
-    FOREIGN KEY (employee_auth_id) REFERENCES employee_auth(employee_auth_id),
+    FOREIGN KEY (internal_auth_id) REFERENCES internal_auth(internal_auth_id),
     FOREIGN KEY (compensation_id) REFERENCES compensation(compensation_id)
 );
 
@@ -106,12 +110,12 @@ CREATE TABLE course_schedule (
     PRIMARY KEY (course_id, schedule_id)
 );
 
-CREATE TABLE course_available_instructors (
+CREATE TABLE course_available_collaborators (
     course_id INT NOT NULL,
-    instructor_id INT NOT NULL,
+    collaborator_id INT NOT NULL,
     FOREIGN KEY (course_id) REFERENCES course(course_id),
-    FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id),
-    PRIMARY KEY (course_id, instructor_id)
+    FOREIGN KEY (collaborator_id) REFERENCES collaborator(collaborator_id),
+    PRIMARY KEY (course_id, collaborator_id)
 );
 
 CREATE TABLE adult_student (
@@ -176,36 +180,14 @@ CREATE TABLE minor_student_course (
 CREATE TABLE course_event (
     course_event_id INT AUTO_INCREMENT PRIMARY KEY,
     course_id INT NOT NULL,
-    instructor_id INT NOT NULL,
+    collaborator_id INT NOT NULL,
     schedule_id INT NOT NULL,
     event_date DATE NOT NULL,
     event_title VARCHAR(50) NOT NULL,
     event_description VARCHAR(200) NOT NULL,
     FOREIGN KEY (course_id) REFERENCES course(course_id),
-    FOREIGN KEY (instructor_id) REFERENCES instructor(instructor_id),
+    FOREIGN KEY (collaborator_id) REFERENCES collaborator(collaborator_id),
     FOREIGN KEY (schedule_id) REFERENCES schedule(schedule_id)
-);
-
-CREATE TABLE payment_adult_student (
-    payment_adult_student_id INT AUTO_INCREMENT PRIMARY KEY,
-    payment_date DATE NOT NULL,
-    amount DOUBLE NOT NULL,
-    payment_method VARCHAR(25) NOT NULL,
-    membership_id INT NOT NULL,
-    adult_student_id INT NOT NULL,
-    FOREIGN KEY (membership_id) REFERENCES membership(membership_id),
-    FOREIGN KEY (adult_student_id) REFERENCES adult_student(adult_student_id)
-);
-
-CREATE TABLE payment_tutor (
-    payment_tutor_id INT AUTO_INCREMENT PRIMARY KEY,
-    payment_date TIMESTAMP NOT NULL,
-    amount DOUBLE NOT NULL,
-    payment_method VARCHAR(25) NOT NULL,
-    membership_id INT NOT NULL,
-    tutor_id INT NOT NULL,
-    FOREIGN KEY (membership_id) REFERENCES membership(membership_id),
-    FOREIGN KEY (tutor_id) REFERENCES tutor(tutor_id)
 );
 
 CREATE TABLE membership_adult_student (
@@ -230,6 +212,24 @@ CREATE TABLE membership_tutor (
     FOREIGN KEY (membership_id) REFERENCES membership(membership_id),
     FOREIGN KEY (course_id) REFERENCES course(course_id),
     FOREIGN KEY (tutor_id) REFERENCES tutor(tutor_id)
+);
+
+CREATE TABLE payment_adult_student (
+    payment_adult_student_id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_date DATE NOT NULL,
+    amount DOUBLE NOT NULL,
+    payment_method VARCHAR(25) NOT NULL,
+    membership_adult_student_id INT NOT NULL,
+    FOREIGN KEY (membership_adult_student_id) REFERENCES membership_adult_student(membership_adult_student_id)
+);
+
+CREATE TABLE payment_tutor (
+    payment_tutor_id INT AUTO_INCREMENT PRIMARY KEY,
+    payment_date TIMESTAMP NOT NULL,
+    amount DOUBLE NOT NULL,
+    payment_method VARCHAR(25) NOT NULL,
+    membership_tutor_id INT NOT NULL,
+    FOREIGN KEY (membership_tutor_id) REFERENCES membership_tutor(membership_tutor_id)
 );
 
 CREATE TABLE course_event_attendees (

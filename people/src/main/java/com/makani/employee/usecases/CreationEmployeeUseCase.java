@@ -1,6 +1,6 @@
 package com.makani.employee.usecases;
 
-import com.makani.employee.interfaceadapters.EmployeeDataModel;
+import com.makani.people.employee.EmployeeDataModel;
 import com.makani.employee.interfaceadapters.EmployeeRepository;
 import openapi.makani.domain.people.dto.EmployeeCreationRequestDTO;
 import org.modelmapper.ModelMapper;

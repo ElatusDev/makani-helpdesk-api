@@ -1,5 +1,6 @@
 package com.makani.employee.interfaceadapters;
 
+import com.makani.people.employee.EmployeeDataModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

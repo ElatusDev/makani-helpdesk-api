@@ -11,7 +11,9 @@ components:
     Membership:
       $ref: './membership.yaml#/components/schemas'
     MembershipManagement:
-      $ref: './membership.yaml#/components/schemas'
+      $ref: './membership-management.yaml#/components/schemas'
+    PaymentManagement:
+      $ref: './payment-management.yaml#/components/schemas'
 paths:
   /compensations:
     $ref: './compensation.yaml#/paths/~1compensations'
@@ -29,3 +31,11 @@ paths:
     $ref: './membership-management.yaml#/paths/~1memberships~1adult-students'
   /memberships/tutors:
     $ref: './membership-management.yaml#/paths/~1memberships~1tutors'
+  /payments/adult-students: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1adult-students'
+  /payments/adult-students/{paymentAdultStudentId}: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1adult-students~1{paymentAdultStudentId}'
+  /payments/tutor: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1tutor'
+  /payments/tutor/{paymentTutorId}: # Added
+    $ref: './payment-management.yaml#/paths/~1payments~1tutor~1{paymentTutorId}'

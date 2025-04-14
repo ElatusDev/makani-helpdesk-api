@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.makani</groupId>
-            <artifactId>people</artifactId>
+            <artifactId>datamodel</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
