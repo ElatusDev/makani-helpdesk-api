@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
   pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
@@ -50,4 +51,4 @@ jobs:
         run: |
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
             -Dsonar.projectKey=ElatusDev_makani-helpdesk-api \
-            -Dsonar.branch.name=${{ github.event.inputs.branch || github.ref_name }} 
+
