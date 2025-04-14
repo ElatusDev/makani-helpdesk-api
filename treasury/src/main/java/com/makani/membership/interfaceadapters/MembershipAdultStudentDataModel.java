@@ -1,6 +1,7 @@
 package com.makani.membership.interfaceadapters;
 
 import com.makani.customer.interfaceadapters.AdultStudentDataModel;
+import com.makani.program.interfaceadapters.CourseDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,6 +38,10 @@ public class MembershipAdultStudentDataModel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "membership_id")
     private MembershipDataModel membership;
+
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private CourseDataModel course;
 
     @ManyToOne
     @JoinColumn(name = "adult_student_id")

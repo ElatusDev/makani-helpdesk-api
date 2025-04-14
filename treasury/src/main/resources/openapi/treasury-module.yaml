@@ -10,6 +10,8 @@ components:
       $ref: './compensation.yaml#/components/schemas'
     Membership:
       $ref: './membership.yaml#/components/schemas'
+    MembershipManagement:
+      $ref: './membership.yaml#/components/schemas'
 paths:
   /compensations:
     $ref: './compensation.yaml#/paths/~1compensations'
@@ -23,3 +25,7 @@ paths:
     $ref: './membership.yaml#/paths/~1memberships~1{membershipId}'
   /memberships/{membershipId}/courses:
     $ref: './membership.yaml#/paths/~1memberships~1{membershipId}~1courses'
+  /memberships/adult-students:
+    $ref: './membership-management.yaml#/paths/~1memberships~1adult-students'
+  /memberships/tutors:
+    $ref: './membership-management.yaml#/paths/~1memberships~1tutors'

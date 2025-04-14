@@ -1,0 +1,193 @@
+openapi: 3.0.0
+info:
+  title: Membership Management API
+  description: API for managing memberships for adult students and tutors.
+  version: 1.0.0
+paths:
+  /memberships/adult-students:
+    post:
+      summary: Register an adult student for a membership.
+      description: Creates a new membership registration for an adult student, associating them with a membership type, course, and student.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipAdultStudentRequest'
+      responses:
+        '201':
+          description: Membership registration created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipAdultStudentResponse'
+        '400':
+          description: Bad request.  Validation errors or invalid data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /memberships/tutors:
+    post:
+      summary: Register a tutor for a membership.
+      description: Creates a new membership registration for a tutor, associating them with a membership type, course, and tutor.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipTutorRequest'
+      responses:
+        '201':
+          description: Membership registration created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipTutorResponse'
+        '400':
+          description: Bad request.  Validation errors or invalid data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    MembershipAdultStudentRequest:
+      type: object
+      required:
+        - startDate
+        - dueDate
+        - membershipId
+        - courseId
+        - adultStudentId
+      properties:
+        startDate:
+          type: string
+          format: date
+          example: "2024-01-15"
+        dueDate:
+          type: string
+          format: date
+          example: "2024-12-31"
+        membershipId:
+          type: integer
+          description: The ID of the membership type.  Must exist in the memberships table.
+          example: 1
+        courseId:
+          type: integer
+          description: The ID of the course. Must exist in the courses table.
+          example: 10
+        adultStudentId:
+          type: integer
+          description: The ID of the adult student. Must exist in the adult_students table.
+          example: 25
+    MembershipAdultStudentResponse:
+      type: object
+      properties:
+        membershipAdultStudentId:
+          type: integer
+          description: The unique ID of the membership registration.
+          example: 101
+        startDate:
+          type: string
+          format: date
+          description: The start date of the membership.
+          example: "2024-01-15"
+        dueDate:
+          type: string
+          format: date
+          description: The end date of the membership.
+          example: "2024-12-31"
+        membershipId:
+          type: integer
+          description: The ID of the membership type.
+          example: 1
+        courseId:
+          type: integer
+          description: The ID of the course.
+          example: 10
+        adultStudentId:
+          type: integer
+          description: The ID of the adult student.
+          example: 25
+    MembershipTutorRequest:
+      type: object
+      required:
+        - startDate
+        - dueDate
+        - membershipId
+        - courseId
+        - tutorId
+      properties:
+        startDate:
+          type: string
+          format: date
+          example: "2024-01-15"
+        dueDate:
+          type: string
+          format: date
+          example: "2024-12-31"
+        membershipId:
+          type: integer
+          description: The ID of the membership type.  Must exist in the memberships table.
+          example: 1
+        courseId:
+          type: integer
+          description: The ID of the course. Must exist in the courses table.
+          example: 10
+        tutorId:
+          type: integer
+          description: The ID of the tutor. Must exist in the tutors table.
+          example: 30
+    MembershipTutorResponse:
+      type: object
+      properties:
+        membershipTutorId:
+          type: integer
+          description: The unique ID of the membership registration.
+          example: 201
+        startDate:
+          type: string
+          format: date
+          description: The start date of the membership.
+          example: "2024-01-15"
+        dueDate:
+          type: string
+          format: date
+          description: The end date of the membership.
+          example: "2024-12-31"
+        membershipId:
+          type: integer
+          description: The ID of the membership type.
+          example: 1
+        courseId:
+          type: integer
+          description: The ID of the course.
+          example: 10
+        tutorId:
+          type: integer
+          description: The ID of the tutor.
+          example: 30
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The error code.
+          example: 400
+        message:
+          type: string
+          description: A human-readable error message.
+          example: "Invalid input: startDate is required."

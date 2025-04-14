@@ -1,3 +1,8 @@
+--CREATE USER 'dev'@'%' IDENTIFIED BY 'ringo1522';
+--GRANT ALL PRIVILEGES ON makani_db.* TO 'dev'@'%';
+--FLUSH PRIVILEGES;
+
+
 DROP SCHEMA IF EXISTS makani_db;
 CREATE SCHEMA makani_db;
 USE makani_db;
@@ -186,8 +191,8 @@ CREATE TABLE payment_adult_student (
     payment_date DATE NOT NULL,
     amount DOUBLE NOT NULL,
     payment_method VARCHAR(25) NOT NULL,
-    membership_id INT,
-    adult_student_id INT,
+    membership_id INT NOT NULL,
+    adult_student_id INT NOT NULL,
     FOREIGN KEY (membership_id) REFERENCES membership(membership_id),
     FOREIGN KEY (adult_student_id) REFERENCES adult_student(adult_student_id)
 );
@@ -197,8 +202,8 @@ CREATE TABLE payment_tutor (
     payment_date TIMESTAMP NOT NULL,
     amount DOUBLE NOT NULL,
     payment_method VARCHAR(25) NOT NULL,
-    membership_id INT,
-    tutor_id INT,
+    membership_id INT NOT NULL,
+    tutor_id INT NOT NULL,
     FOREIGN KEY (membership_id) REFERENCES membership(membership_id),
     FOREIGN KEY (tutor_id) REFERENCES tutor(tutor_id)
 );
@@ -209,7 +214,9 @@ CREATE TABLE membership_adult_student (
     adult_student_id INT NOT NULL,
     start_date DATE NOT NULL,
     due_date DATE NOT NULL,
+    course_id INT NOT NULL,
     FOREIGN KEY (membership_id) REFERENCES membership(membership_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
     FOREIGN KEY (adult_student_id) REFERENCES adult_student(adult_student_id)
 );
 
@@ -219,14 +226,16 @@ CREATE TABLE membership_tutor (
     tutor_id INT NOT NULL,
     start_date DATE NOT NULL,
     due_date DATE NOT NULL,
+    course_id INT NOT NULL,
     FOREIGN KEY (membership_id) REFERENCES membership(membership_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id),
     FOREIGN KEY (tutor_id) REFERENCES tutor(tutor_id)
 );
 
 CREATE TABLE course_event_attendees (
     course_event_id INT NOT NULL,
-    adult_student_id INT,
-    minor_student_id INT,
+    adult_student_id INT NOT NULL,
+    minor_student_id INT NOT NULL,
     FOREIGN KEY (course_event_id) REFERENCES course_event(course_event_id),
     FOREIGN KEY (adult_student_id) REFERENCES adult_student(adult_student_id),
     FOREIGN KEY (minor_student_id) REFERENCES minor_student(minor_student_id),
