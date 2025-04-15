@@ -20,6 +20,8 @@ WORKDIR /MakaniHelpDeskAPI
 # Install MySQL client (this line adds the mysql-client package)
 RUN apk add --no-cache mysql-client
 
+ENV SPRING_PROFILES_ACTIVE=docker
+
 # Copy the final JAR from the build stage
 COPY --from=build /MakaniHelpDeskAPI/application/target/application-1.0-SNAPSHOT.jar /MakaniHelpDeskAPI
 

@@ -3,43 +3,46 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    env_file:
-      - .env
     container_name: makani-helpdesk-api
-    volumes:
-      - .:/makani-helpdesk-api
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
-    command: [ "java", "-jar", "/MakaniHelpDeskAPI/application-1.0-SNAPSHOT.jar" ]
-  makani-db:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      makani-mariadb:
+        condition: service_healthy
+    command: ["java", "-jar", "/MakaniHelpDeskAPI/application-1.0-SNAPSHOT.jar"]
+    volumes:
+      - .:/makani-helpdesk-api
+
+  makani-mariadb:
     image: mariadb:latest
-    container_name: makani-db
+    container_name: makani-mariadb
     restart: always
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      retries: 5
-      start_period: 30s
-      timeout: 5s
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3306", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 20s
+      retries: 10
+      start_period: 300s
+      timeout: 10s
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
       MYSQL_DATABASE: makani_db
-      MYSQL_USER: dev
-      MYSQL_PASSWORD: ringo1522
-      INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-false}
+      MYSQL_USER: ${MYSQL_USER:-dev}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-12345}
+      INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-true}
     ports:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./db_init:/docker-entrypoint-initdb.d # Mount a local folder for initialization scripts
-      - ./mariadb-logs:/var/log/mysql  # Mount a local folder for MariaDB logs
+      - ./db_init:/docker-entrypoint-initdb.d
+      - ./mariadb-logs:/var/log/mysql
     command: >
       --general-log=1
-      --general-log-file=/var/log/mysql/mariadb-general.log
+      --general-log-file=/var/lib/mysql/mariadb-general.log
       --slow-query-log=1
-      --slow-query-log-file=/var/log/mysql/mariadb-slow.log
+      --slow-query-log-file=/var/lib/mysql/mariadb-slow.log
       --long-query-time=2
+
 volumes:
   db_data: {}

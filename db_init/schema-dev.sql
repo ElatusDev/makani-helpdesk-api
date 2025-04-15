@@ -1,10 +1,19 @@
---CREATE USER 'dev'@'%' IDENTIFIED BY 'ringo1522';
---GRANT ALL PRIVILEGES ON makani_db.* TO 'dev'@'%';
---FLUSH PRIVILEGES;
-
 DROP SCHEMA IF EXISTS makani_db;
 CREATE SCHEMA makani_db;
 USE makani_db;
+
+DELIMITER //
+CREATE PROCEDURE create_dev_user()
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM mysql.user WHERE User = 'dev' AND Host = '%') THEN
+        CREATE USER 'dev'@'%' IDENTIFIED BY '12345';
+        GRANT ALL PRIVILEGES ON makani_db.* TO 'dev'@'%';
+        FLUSH PRIVILEGES;
+    END IF;
+END //
+DELIMITER ;
+CALL create_dev_user();
+
 
 CREATE TABLE card_payment_info (
   card_payment_info_id INT AUTO_INCREMENT PRIMARY KEY,
