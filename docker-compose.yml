@@ -8,9 +8,6 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: docker
-    depends_on:
-      makani-mariadb:
-        condition: service_healthy
     command: ["java", "-jar", "/MakaniHelpDeskAPI/application-1.0-SNAPSHOT.jar"]
     volumes:
       - .:/makani-helpdesk-api
@@ -19,17 +16,7 @@ services:
     image: mariadb:latest
     container_name: makani-mariadb
     restart: always
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3306", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
-      interval: 20s
-      retries: 10
-      start_period: 300s
-      timeout: 10s
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: makani_db
-      MYSQL_USER: ${MYSQL_USER:-dev}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-12345}
       INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-true}
     ports:
       - "3307:3306"

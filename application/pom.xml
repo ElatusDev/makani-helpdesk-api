@@ -18,6 +18,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.makani</groupId>
             <artifactId>people</artifactId>
             <version>${module.version}</version>
