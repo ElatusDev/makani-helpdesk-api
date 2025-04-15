@@ -234,7 +234,7 @@ CREATE TABLE payment_adult_student (
 
 CREATE TABLE payment_tutor (
     payment_tutor_id INT AUTO_INCREMENT PRIMARY KEY,
-    payment_date TIMESTAMP NOT NULL,
+    payment_date DATE NOT NULL,
     amount DOUBLE NOT NULL,
     payment_method VARCHAR(25) NOT NULL,
     membership_tutor_id INT NOT NULL,

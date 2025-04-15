@@ -49,14 +49,6 @@ components:
             - compensationType
             - amount
             - instructorIds
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-      required:
-        - message
     InstructorAssociationRequest:
       type: object
       properties:
@@ -79,6 +71,18 @@ components:
       required:
         - compensationId
         - instructorId
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code of the error
+        message:
+          type: string
+          description: A user-friendly error message
+      required:
+        - statusCode
+        - message
 paths:
   '/compensations':
     post:

@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @Component
 @Entity
 @Table(name = "payment_tutor")
-public class PaymentTutorDataModel implements Serializable {
+public class PaymentTutorDataModel extends BasePayment  implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -36,12 +36,6 @@ public class PaymentTutorDataModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_tutor_id")
     private Integer paymentTutorId;
-    @Column(name = "payment_date", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalDateTime paymentDate;
-    @Column(nullable = false)
-    private Double amount;
-    @Column(name = "payment_method", nullable = false, length = 25)
-    private String paymentMethod;
 
     @ManyToOne
     @JoinColumn(name = "membership_tutor_id")

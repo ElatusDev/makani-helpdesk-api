@@ -20,7 +20,7 @@ public class DatabaseConnectionService {
         this.dataSource = dataSource;
     }
 
-    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 5000))
+    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 9000))
     public Connection getConnection() throws SQLException {
         System.out.println("Attempting to get database connection..."); // Log this properly!
         return dataSource.getConnection();

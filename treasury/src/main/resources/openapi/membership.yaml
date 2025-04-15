@@ -1,7 +1,8 @@
 openapi: 3.0.0
 info:
-  title:   Membership Entity
+  title:   Membership API
   version: '1.0.0'
+  description: API for managing memberships
 components:
   schemas:
     BaseMembership:
@@ -44,47 +45,23 @@ components:
               type: integer
               readOnly: true
               description: Membership ID
-            courseIds:
-              type: array
-              items:
-                type: integer
-              description: IDs of courses associated with this membership
-      required:
-        - membershipId
-        - membershipType
-        - fee
-        - description
-        - courseIds
+          required:
+            - membershipId
+            - membershipType
+            - fee
+            - description
     ErrorResponse:
       type: object
       properties:
+        statusCode:
+          type: integer
+          description: HTTP status code of the error
         message:
           type: string
-          description: Error message
+          description: A user-friendly error message
       required:
+        - statusCode
         - message
-    CourseAssociationRequest:
-      type: object
-      properties:
-        courseId:
-          type: integer
-          description: ID of the course to associate with the membership
-      required:
-        - courseId
-    CourseAssociationResponse:
-      type: object
-      properties:
-        membershipId:
-          type: integer
-          readOnly: true
-          description: Membership ID
-        courseId:
-          type: integer
-          readOnly: true
-          description: ID of the associated course
-      required:
-        - membershipId
-        - courseId
 paths:
   '/memberships':
     post:
@@ -219,79 +196,6 @@ paths:
           description: Membership deleted successfully
         '404':
           description: Membership not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: An unexpected error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  '/memberships/{membershipId}/courses':
-    post:
-      summary: Associate a course with a membership
-      operationId: associateCourseWithMembership
-      parameters:
-        - name: membershipId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID of the membership
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CourseAssociationRequest'
-      responses:
-        '200':
-          description: Course associated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CourseAssociationResponse'
-        '400':
-          description: Invalid request data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Membership or Course not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: An unexpected error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      summary: Remove a course from a membership
-      operationId: removeCourseFromMembership
-      parameters:
-        - name: membershipId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID of the membership
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-          description: ID of the course to remove
-      responses:
-        '204':
-          description: Course removed successfully
-        '404':
-          description: Membership or Course not found
           content:
             application/json:
               schema:

@@ -11,13 +11,16 @@ services:
     command: ["java", "-jar", "/MakaniHelpDeskAPI/application-1.0-SNAPSHOT.jar"]
     volumes:
       - .:/makani-helpdesk-api
-
   makani-mariadb:
     image: mariadb:latest
     container_name: makani-mariadb
     restart: always
     environment:
-      INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-true}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword} # Use env/secrets
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-makani_db}
+      MYSQL_USER: ${MYSQL_USER:-dev} # Use env/secrets
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-12345} # Use env/secrets
+      INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-false}
     ports:
       - "3307:3306"
     volumes:

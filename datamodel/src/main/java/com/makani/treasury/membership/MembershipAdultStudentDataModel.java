@@ -8,7 +8,6 @@
 package com.makani.treasury.membership;
 
 import com.makani.people.customer.AdultStudentDataModel;
-import com.makani.coordination.program.CourseDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 
 
 @NoArgsConstructor
@@ -30,7 +28,7 @@ import java.time.LocalDate;
 @Component
 @Entity
 @Table(name = "membership_adult_student")
-public class MembershipAdultStudentDataModel extends MembershipBaseDataModel implements Serializable {
+public class MembershipAdultStudentDataModel extends MembershipAssociationBase implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
