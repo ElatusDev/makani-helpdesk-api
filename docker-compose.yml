@@ -1,3 +1,4 @@
+version: '3.8'
 services:
   makani-helpdesk-api:
     build:
@@ -7,26 +8,27 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: docker
-    command: ["java", "-jar", "/MakaniHelpDeskAPI/application-1.0-SNAPSHOT.jar"]
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev} # Default to dev profile
+    command: ["java", "-jar", "/app.jar"]
     volumes:
-      - .:/makani-helpdesk-api
+      - ./application/target/application-1.0-SNAPSHOT.jar:/app.jar # Mount JAR for faster QA iterations
+      - ./application/src/main/resources:/app/src/main/resources # Mount resources for faster QA iterations
   makani-mariadb:
     image: mariadb:latest
     container_name: makani-mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword} # Use env/secrets
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-makani_db}
-      MYSQL_USER: ${MYSQL_USER:-dev} # Use env/secrets
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-12345} # Use env/secrets
+      MYSQL_USER: ${MYSQL_USER:-qa}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-12345}
       INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-false}
     ports:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./db_init:/docker-entrypoint-initdb.d
-      - ./mariadb-logs:/var/log/mysql
+      # - ./mariadb-logs:/var/log/mysql # Consider external logging
     command: >
       --general-log=1
       --general-log-file=/var/lib/mysql/mariadb-general.log
