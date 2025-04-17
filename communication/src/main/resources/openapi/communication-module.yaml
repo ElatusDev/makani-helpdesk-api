@@ -4,12 +4,24 @@ info:
   version: 1.0.0
 components:
   schemas:
-    EmailCreateRequest:
-      $ref: './email.yaml#/components/schemas/EmailCreateRequest'
-    EmailResponse:
-      $ref: './email.yaml#/components/schemas/EmailResponse'
+    BaseEmail:
+      $ref: './email.yaml#/components/schemas/BaseEmail'
+    EmailCreationRequest:
+      $ref: './email.yaml#/components/schemas/EmailCreationRequest'
+    EmailCreationResponse:
+      $ref: './email.yaml#/components/schemas/EmailCreationResponse'
+    GetEmailResponse:
+      $ref: './email.yaml#/components/schemas/GetEmailResponse'
+    ErrorResponse:
+      $ref: './email.yaml#/components/schemas/ErrorResponse'
 paths:
   /emails:
-      $ref: './email.yaml#/paths/~1emails'
+    $ref: './email.yaml#/paths/~1emails'
   /emails/{emailId}:
-      $ref: './email.yaml#/paths/~1emails~1{emailId}'
+    $ref: './email.yaml#/paths/~1emails~1{emailId}'
+  /emails/bySubject/{subject}:
+    $ref: './email.yaml#/paths/~1emails~1bySubject~1{subject}'
+  /emails/byRecipient/{recipient}:
+    $ref: './email.yaml#/paths/~1emails~1byRecipient~1{recipient}'
+  /emails/send:
+    $ref: './email.yaml#/paths/~1emails~1send'

@@ -12,14 +12,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class  MembershipBaseDataModel {
+public abstract class MembershipAssociationBase {
 
     @Column(name = "start_date", columnDefinition = "DATE", nullable = false)
     private LocalDate startDate;

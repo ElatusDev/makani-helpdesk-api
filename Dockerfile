@@ -1,30 +1,32 @@
-# Build stage with Maven (for compiling)
+# Build stage
 FROM eclipse-temurin:21-jdk-alpine AS build
+WORKDIR /app
 
-WORKDIR /MakaniHelpDeskAPI
+COPY pom.xml /app
+COPY application/pom.xml application/
+COPY communication/pom.xml communication/
+COPY coordination/pom.xml coordination/
+COPY datamodel/pom.xml datamodel/
+COPY people/pom.xml people/
+COPY security/pom.xml security/
+COPY treasury/pom.xml treasury/
 
-# Install Maven
 RUN apk add --no-cache maven
+RUN mvn dependency:go-offline
 
-# Copy all source files
-COPY . .
+COPY application/src application/src
+COPY communication/src communication/src
+COPY coordination/src coordination/src
+COPY datamodel/src datamodel/src
+COPY people/src people/src
+COPY security/src security/src
+COPY treasury/src treasury/src
 
-# Build the entire project
-RUN mvn clean install
+RUN mvn clean install -DskipTests
 
-# Runtime stage with a JRE (no Maven required here)
+# Runtime stage
 FROM eclipse-temurin:21-jdk-alpine
-
-WORKDIR /MakaniHelpDeskAPI
-
-# Install MySQL client (this line adds the mysql-client package)
-RUN apk add --no-cache mysql-client
-
-# Copy the final JAR from the build stage
-COPY --from=build /MakaniHelpDeskAPI/application/target/application-1.0-SNAPSHOT.jar /MakaniHelpDeskAPI
-
-# Expose application port
+WORKDIR /app
+COPY --from=build /app/application/target/*.jar /app.jar
 EXPOSE 8080
-
-# Run the application
-CMD ["java", "-jar", "/MakaniHelpDeskAPI/application-1.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/app/app.jar"]

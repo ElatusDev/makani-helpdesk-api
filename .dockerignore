@@ -1,2 +1,8 @@
-db_init/
-mariadb-logs/
+
+application/target/
+communication/target/
+coordination/target/
+people/target/
+treasury/target/
+security/target/
+datamodel/target/

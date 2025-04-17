@@ -6,36 +6,77 @@ info:
 
 components:
   schemas:
-    Compensation:
-      $ref: './compensation.yaml#/components/schemas'
-    Membership:
-      $ref: './membership.yaml#/components/schemas'
-    MembershipManagement:
-      $ref: './membership-management.yaml#/components/schemas'
-    PaymentManagement:
-      $ref: './payment-management.yaml#/components/schemas'
+    BaseCompensation:
+      $ref: './compensation.yaml#/components/schemas/BaseCompensation'
+    CompensationCreationRequest:
+      $ref: './compensation.yaml#/components/schemas/CompensationCreationRequest'
+    CompensationCreationResponse:
+      $ref: './compensation.yaml#/components/schemas/CompensationCreationResponse'
+    GetCompensationResponse:
+      $ref: './compensation.yaml#/components/schemas/GetCompensationResponse'
+    BaseMembership:
+      $ref: './membership.yaml#/components/schemas/BaseMembership'
+    MembershipCreationRequest:
+      $ref: './membership.yaml#/components/schemas/MembershipCreationRequest'
+    MembershipCreationResponse:
+      $ref: './membership.yaml#/components/schemas/MembershipCreationResponse'
+    GetMembershipResponse:
+      $ref: './membership.yaml#/components/schemas/GetMembershipResponse'
+    MembershipAssociationBase:
+      $ref: './membership-management.yaml#/components/schemas/MembershipAssociationBase'
+    MembershipAdultStudentCreationRequest:
+      $ref: './membership-management.yaml#/components/schemas/MembershipAdultStudentCreationRequest'
+    MembershipAdultStudentCreationResponse:
+      $ref: './membership-management.yaml#/components/schemas/MembershipAdultStudentCreationResponse'
+    GetMembershipAdultStudentResponse:
+      $ref: './membership-management.yaml#/components/schemas/GetMembershipAdultStudentResponse'
+    MembershipTutorCreationRequest:
+      $ref: './membership-management.yaml#/components/schemas/MembershipTutorCreationRequest'
+    MembershipTutorCreationResponse:
+      $ref: './membership-management.yaml#/components/schemas/MembershipTutorCreationResponse'
+    GetMembershipTutorResponse:
+      $ref: './membership-management.yaml#/components/schemas/GetMembershipTutorResponse'
+    BasePayment:
+      $ref: './payment-management.yaml#/components/schemas/BasePayment'
+    PaymentAdultStudentCreationRequest:
+      $ref: './payment-management.yaml#/components/schemas/PaymentAdultStudentCreationRequest'
+    PaymentAdultStudentCreationResponse:
+      $ref: './payment-management.yaml#/components/schemas/PaymentAdultStudentCreationResponse'
+    GetPaymentAdultStudentResponse:
+      $ref: './payment-management.yaml#/components/schemas/GetPaymentAdultStudentResponse'
+    PaymentTutorCreationRequest:
+      $ref: './payment-management.yaml#/components/schemas/PaymentTutorCreationRequest'
+    PaymentTutorCreationResponse:
+      $ref: './payment-management.yaml#/components/schemas/PaymentTutorCreationResponse'
+    GetPaymentTutorResponse:
+      $ref: './payment-management.yaml#/components/schemas/GetPaymentTutorResponse'
+    ErrorResponse:
+      $ref: './compensation.yaml#/components/schemas/ErrorResponse' # Assuming it's the same for all
+
 paths:
-  /compensations:
+  '/compensations':
     $ref: './compensation.yaml#/paths/~1compensations'
-  /compensations/{compensationId}:
+  '/compensations/{compensationId}':
     $ref: './compensation.yaml#/paths/~1compensations~1{compensationId}'
-  /compensations/{compensationId}/instructors:
+  '/compensations/{compensationId}/instructors':
     $ref: './compensation.yaml#/paths/~1compensations~1{compensationId}~1instructors'
-  /memberships:
+  '/memberships':
     $ref: './membership.yaml#/paths/~1memberships'
-  /memberships/{membershipId}:
+  '/memberships/{membershipId}':
     $ref: './membership.yaml#/paths/~1memberships~1{membershipId}'
-  /memberships/{membershipId}/courses:
-    $ref: './membership.yaml#/paths/~1memberships~1{membershipId}~1courses'
-  /memberships/adult-students:
-    $ref: './membership-management.yaml#/paths/~1memberships~1adult-students'
-  /memberships/tutors:
-    $ref: './membership-management.yaml#/paths/~1memberships~1tutors'
-  /payments/adult-students: # Added
-    $ref: './payment-management.yaml#/paths/~1payments~1adult-students'
-  /payments/adult-students/{paymentAdultStudentId}: # Added
-    $ref: './payment-management.yaml#/paths/~1payments~1adult-students~1{paymentAdultStudentId}'
-  /payments/tutor: # Added
-    $ref: './payment-management.yaml#/paths/~1payments~1tutor'
-  /payments/tutor/{paymentTutorId}: # Added
-    $ref: './payment-management.yaml#/paths/~1payments~1tutor~1{paymentTutorId}'
+  '/membershipAdultStudents':
+    $ref: './membership-management.yaml#/paths/~1membershipAdultStudents'
+  '/membershipAdultStudents/{membershipAdultStudentId}':
+    $ref: './membership-management.yaml#/paths/~1membershipAdultStudents~1{membershipAdultStudentId}'
+  '/membershipTutors':
+    $ref: './membership-management.yaml#/paths/~1membershipTutors'
+  '/membershipTutors/{membershipTutorId}':
+    $ref: './membership-management.yaml#/paths/~1membershipTutors~1{membershipTutorId}'
+  '/paymentAdultStudents':
+    $ref: './payment-management.yaml#/paths/~1paymentAdultStudents'
+  '/paymentAdultStudents/{paymentAdultStudentId}':
+    $ref: './payment-management.yaml#/paths/~1paymentAdultStudents~1{paymentAdultStudentId}'
+  '/paymentTutors':
+    $ref: './payment-management.yaml#/paths/~1paymentTutors'
+  '/paymentTutors/{paymentTutorId}':
+    $ref: './payment-management.yaml#/paths/~1paymentTutors~1{paymentTutorId}'
