@@ -32,9 +32,7 @@ The `docker-runner.sh` script is designed to simplify and standardize common Doc
 
 ## Script Location
 
-* The script is located in the repository at: `path/to/docker-runner.sh`
-
-    * **Note:** Replace `path/to` with the actual path.
+* The script is located in the repository at: `makani-helpdesk-api/docker-runner.sh`
 
 ## Script Usage
 
