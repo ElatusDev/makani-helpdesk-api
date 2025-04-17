@@ -1,18 +1,5 @@
 USE makani_db;
 
-   -- Data for card_payment_info (10 rows)
-   INSERT INTO card_payment_info (payment_id, token, card_type) VALUES
-   (1, 'token123', 'Visa'),
-   (2, 'token456', 'Mastercard'),
-   (3, 'token789', 'Amex'),
-   (4, 'tokenabc', 'Visa'),
-   (5, 'tokendef', 'Discover'),
-   (6, 'tokenghi', 'Mastercard'),
-   (7, 'tokenjkl', 'Visa'),
-   (8, 'tokenmno', 'Amex'),
-   (9, 'tokenpqr', 'Visa'),
-   (10, 'tokenstu', 'Mastercard');
-
    -- Data for email (10 rows)
    INSERT INTO email (subject, body, sender) VALUES
    ('Meeting Reminder', 'Don''t forget our meeting tomorrow.', 'john.doe@example.com'),
@@ -299,11 +286,13 @@ USE makani_db;
 
    -- Data for payment_tutor (10 rows)
    INSERT INTO payment_tutor (payment_tutor_id, payment_date, amount, payment_method, membership_tutor_id) VALUES
-   (1, '2025-04-30 12:00:00', 25.00, 'Direct Deposit', 1),
-   (2, '2025-04-30 12:00:00', 50.00, 'Check', 2),
-   (3, '2025-04-30 12:00:00', 75.00, 'Direct Deposit', 3),
-   (4, '2025-04-30 12:00:00', 100.00, 'Check', 4),
-   (5, '2025-04-30 12:00:00', 125.00, 'Direct Deposit', 5),
-   (6, '2025-04-30 12:00:00', 150.00, 'Check', 6),
-   (7, '2025-04-30 12:00:00', 175.00, 'Direct Deposit', 7),
-   (8, '2025-04-30 12:00
+   (1, '2025-04-30', 25.00, 'Direct Deposit', 1),
+   (2, '2025-05-30', 50.00, 'Check', 2),
+   (3, '2025-06-30', 75.00, 'Direct Deposit', 3),
+   (4, '2025-04-30', 100.00, 'Check', 4),
+   (5, '2025-04-30', 125.00, 'Direct Deposit', 5),
+   (6, '2025-09-30', 150.00, 'Check', 6),
+   (7, '2025-01-30', 175.00, 'Direct Deposit', 7),
+   (8, '2025-10-30', 175.00, 'Check', 8),
+   (9, '2025-01-30', 275.00, 'Direct Deposit', 9),
+   (10, '2025-10-30', 475.00, 'Check', 10);

@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   makani-helpdesk-api:
     build:
@@ -8,11 +7,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev} # Default to dev profile
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
     command: ["java", "-jar", "/app.jar"]
     volumes:
-      - ./application/target/application-1.0-SNAPSHOT.jar:/app.jar # Mount JAR for faster QA iterations
-      - ./application/src/main/resources:/app/src/main/resources # Mount resources for faster QA iterations
+      - ./src:/app/src
+      - ./application/src/main/resources:/app/src/main/resources
   makani-mariadb:
     image: mariadb:latest
     container_name: makani-mariadb
@@ -20,7 +19,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
       MYSQL_DATABASE: ${MYSQL_DATABASE:-makani_db}
-      MYSQL_USER: ${MYSQL_USER:-qa}
+      MYSQL_USER: ${MYSQL_USER:-dev}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-12345}
       INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-false}
     ports:
@@ -28,13 +27,11 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./db_init:/docker-entrypoint-initdb.d
-      # - ./mariadb-logs:/var/log/mysql # Consider external logging
     command: >
       --general-log=1
       --general-log-file=/var/lib/mysql/mariadb-general.log
       --slow-query-log=1
       --slow-query-log-file=/var/lib/mysql/mariadb-slow.log
       --long-query-time=2
-
 volumes:
   db_data: {}

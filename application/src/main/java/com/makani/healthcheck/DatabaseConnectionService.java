@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import org.springframework.retry.annotation.EnableRetry;
 
 @Service
-@EnableRetry // Important!
+@EnableRetry
 public class DatabaseConnectionService {
 
     private final DataSource dataSource;
@@ -20,7 +20,7 @@ public class DatabaseConnectionService {
         this.dataSource = dataSource;
     }
 
-    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 9000))
+    @Retryable(maxAttempts = 5, backoff = @Backoff(delay = 20000))
     public Connection getConnection() throws SQLException {
         System.out.println("Attempting to get database connection..."); // Log this properly!
         return dataSource.getConnection();
