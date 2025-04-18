@@ -13,7 +13,7 @@ update_db_init() {
     docker stop makani-mariadb
     docker rm makani-mariadb
     docker volume ls # List all volumes to find the one associated with MariaDB
-    docker volume rm makanihelpdeskapi_db_data
+    docker volume rm makani-helpdesk-api_db_data
     docker-compose -f "$COMPOSE_FILE" up --build --force-recreate -d makani-mariadb
     echo "--- Database updated (using init scripts) ---"
 }
