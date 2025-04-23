@@ -1,5 +1,6 @@
 services:
   makani-helpdesk-api:
+    image: elatusdev/makani-helpdesk-api:v1
     build:
       context: .
       dockerfile: Dockerfile

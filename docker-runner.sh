@@ -10,10 +10,26 @@ APP_SERVICE_NAME="makani-helpdesk-api" # Name of your application service\
 # WARNING: This will likely wipe existing data!
 update_db_init() {
     echo "--- Updating database (using init scripts) ---"
-    docker stop makani-mariadb
-    docker rm makani-mariadb
-    docker volume ls # List all volumes to find the one associated with MariaDB
-    docker volume rm makani-helpdesk-api_db_data
+    # Check if container exists
+    if docker ps -aq --filter name=makani-mariadb | grep -q .; then
+        echo "Stopping existing container: makani-mariadb"
+        docker stop makani-mariadb
+        echo "Removing existing container: makani-mariadb"
+        docker rm makani-mariadb
+    else
+        echo "Container 'makani-mariadb' does not exist."
+    fi
+
+    # Validate and remove volume if it exists
+    volume_name="makanihelpdeskapi_db_data"
+    if docker volume ls --filter name="$volume_name" | grep -q "$volume_name"; then
+        echo "Removing existing volume: $volume_name"
+        docker volume rm "$volume_name"
+    else
+        echo "Volume '$volume_name' does not exist."
+    fi
+
+    echo "--- Starting database with fresh volume ---"
     docker-compose -f "$COMPOSE_FILE" up --build --force-recreate -d makani-mariadb
     echo "--- Database updated (using init scripts) ---"
 }
