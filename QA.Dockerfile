@@ -22,11 +22,22 @@ COPY people/src people/src
 COPY security/src security/src
 COPY treasury/src treasury/src
 
-RUN mvn clean install
+RUN mvn clean install -DskipTests
+
+COPY db_init/*.sql /app/db_init/
+
+COPY qa-launch.sh /app/qa-launch.sh
+RUN chmod +x /app/qa-launch.sh
 
 # Runtime stage
 FROM eclipse-temurin:21-jdk-alpine
 WORKDIR /app
-COPY --from=build /app/application/target/*.jar /app.jar
+
+COPY --from=build /app/application/target/*.jar /app/app.jar
+COPY --from=build /app/qa-launch.sh /app/qa-launch.sh
+COPY --from=build /app/db_init /app/db_init
+RUN chmod +x /app/qa-launch.sh
+
 EXPOSE 8080
-CMD ["java", "-jar", "/app/app.jar"]
+
+ENTRYPOINT sh /app/qa-launch.sh

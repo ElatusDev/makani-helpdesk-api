@@ -1,30 +1,22 @@
-#!/bin/bash
+#!/bin/sh
 
-# --- Optional: Environment Variable Setup with Defaults ---
-# You can define default values for environment variables here
-# that can be overridden by the Lightsail Container Service configuration.
+# --- Database Initialization ---
+echo "--- Initializing Database [$DB_NAME] on $DB_HOST:$DB_PORT ---"
 
-SPRING_DATASOURCE_USERNAME="${SPRING_DATASOURCE_USERNAME:-makani_admin}"
-SPRING_DATASOURCE_PASSWORD="${SPRING_DATASOURCE_PASSWORD:-Cn6FpLO%7#OXQ,+N!dwV2<<QepfT*&Sj}"
-SPRING_DATASOURCE_URL="${SPRING_DATASOURCE_URL:-jdbc:mysql://ls-636595989fb25e98c8b20c52683694521c6e9379.cvqemg4okhdn.us-west-2.rds.amazonaws.com:3306/makani-db}"
-JAVA_OPTIONS="${JAVA_OPTIONS:-}"
-NODE_ENV="${NODE_ENV:-qa}"
-PORT="${PORT:-8080}"
+if [ "$ENABLE_DB_INIT" = "true" ]; then
+  echo "--- Running DB initialization for QA ---"
+  mysql -h "$DB_HOST" -P "$DB_PORT" -u "$SPRING_DATASOURCE_USERNAME" -p"$SPRING_DATASOURCE_PASSWORD" "$DB_NAME" < /app/db_init/00-schema-dev.sql
+  mysql -h "$DB_HOST" -P "$DB_PORT" -u "$SPRING_DATASOURCE_USERNAME" -p"$SPRING_DATASOURCE_PASSWORD" "$DB_NAME" < /app/db_init/01-mock-data.sql
+else
+  echo "--- Skipping DB initialization ---"
+fi
 
-# --- Optional: Logging Environment Variables (for debugging in Tonalá) ---
-echo "--- Environment Variables---"
-env
-echo "---------------------------------------"
+echo "--- Database Initialization Completed ---"
 
-# --- Application Startup Command with Performance-Tuning Java Options ---
+# --- Application Startup Command with Java Performance Options ---
 echo "--- Starting Application with Java Performance Options ---"
 
-# Recommended starting options for Lightsail Micro (1GB RAM) - ADJUST AS NEEDED
+# Safe default for Java options
 JAVA_OPTS="-XX:+UseG1GC -Xms256m -Xmx600m -XX:MaxGCPauseMillis=200"
 
-java $JAVA_OPTIONS $JAVA_OPTS -jar /app/app.jar --server.port=$PORT
-
-echo "--- Application Started ---"
-
-# --- Optional: Keeping the Container Running (if your app exits) ---
-tail -f /dev/null
+exec java $JAVA_OPTIONS $JAVA_OPTS -jar /app/app.jar --server.port=$PORT

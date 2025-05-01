@@ -1,89 +1,89 @@
 openapi: 3.0.0
 info:
-  title:   Instructor Services API
+  title:   Collaborator Services API
   version: '1.0.0'
-  description: API for managing instructors in the Makani system
+  description: API for managing Collaborators in the Makani system
 paths:
-  '/instructors':
+  '/collaborators':
     get:
-      summary: Retrieve a list of instructors
-      operationId: getInstructors
+      summary: Retrieve a list of Collaborators
+      operationId: getCollaborators
       responses:
         '200':
-          description: A list of instructors
+          description: A list of Collaborators
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/GetInstructorResponse'
+                  $ref: '#/components/schemas/GetCollaboratorResponse'
         '500':
           description: An unexpected error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
     post:
-      summary: Create a new instructor
-      operationId: createInstructor
+      summary: Create a new Collaborator
+      operationId: createCollaborator
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InstructorCreationRequest'
+              $ref: '#/components/schemas/CollaboratorCreationRequest'
       responses:
         '201':
-          description: Instructor created successfully
+          description: Collaborator created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InstructorCreationResponse'
+                $ref: '#/components/schemas/CollaboratorCreationResponse'
         '400':
           description: Invalid request data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
         '500':
           description: An unexpected error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  '/instructors/{instructorId}':
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+  '/collaborators/{collaboratorId}':
     get:
-      summary: Retrieve an instructor by ID
-      operationId: getInstructorById
+      summary: Retrieve an Collaborator by ID
+      operationId: getCollaboratorById
       parameters:
         - in: path
-          name: instructorId
+          name: CollaboratorId
           required: true
           schema:
             type: integer
-          description: ID of the instructor to retrieve
+          description: ID of the Collaborator to retrieve
       responses:
         '200':
-          description: Instructor retrieved successfully
+          description: Collaborator retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetInstructorResponse'
+                $ref: '#/components/schemas/GetCollaboratorResponse'
         '404':
-          description: Instructor not found
+          description: Collaborator not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
         '500':
           description: An unexpected error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
 components:
   schemas:
-    BaseInstructor:
+    BaseCollaborator:
       allOf:
         - $ref: './commons.yaml#/components/schemas/BasePerson'
         - type: object
@@ -98,32 +98,24 @@ components:
       required:
         - skills
         - profilePicture
-    InstructorCreationRequest:
+    CollaboratorCreationRequest:
       allOf:
-        - $ref: '#/components/schemas/BaseInstructor'
+        - $ref: '#/components/schemas/BaseCollaborator'
         - $ref: './commons.yaml#/components/schemas/InternalAuth'
-    InstructorCreationResponse:
+    CollaboratorCreationResponse:
       type: object
       properties:
-        instructorId:
+        CollaboratorId:
           type: integer
-          description: Instructor ID
+          description: Collaborator ID
           readOnly: true
       required:
-        - instructorId
-    GetInstructorResponse:
+        - collaboratorId
+    GetCollaboratorResponse:
       allOf:
-        - $ref: '#/components/schemas/BaseInstructor'
+        - $ref: '#/components/schemas/BaseCollaborator'
         - type: object
           properties:
-            instructorId:
+            CollaboratorId:
               type: integer
-              description: Instructor ID
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-      required:
-        - message
+              description: Collaborator ID

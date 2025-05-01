@@ -1,6 +1,6 @@
 services:
   makani-helpdesk-api:
-    image: elatusdev/makani-helpdesk-api:v1
+    image: elatusdevops/makani-helpdesk-api:dev
     build:
       context: .
       dockerfile: Dockerfile
@@ -8,7 +8,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      SPRING_PROFILES_ACTIVE: dev
     command: ["java", "-jar", "/app.jar"]
     volumes:
       - ./src:/app/src
@@ -18,11 +18,11 @@ services:
     container_name: makani-mariadb
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
-      MYSQL_DATABASE: ${MYSQL_DATABASE:-makani_db}
-      MYSQL_USER: ${MYSQL_USER:-dev}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-12345}
-      INIT_DB_SCRIPT_ENABLED: ${INIT_DB_SCRIPT_ENABLED:-false}
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: makani_db
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: 12345
+      INIT_DB_SCRIPT_ENABLED: false
     ports:
       - "3307:3306"
     volumes:
