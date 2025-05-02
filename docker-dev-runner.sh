@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- Configuration ---
-COMPOSE_FILE="docker-compose.yml" # The name of your docker-compose.yml file
+COMPOSE_FILE="docker-compose.dev.yml" # The name of your docker-compose.yml file
 DB_INIT_DIR="./db_init"          # Directory containing database initialization scripts
 APP_SERVICE_NAME="makani-helpdesk-api" # Name of your application service\
 # --- Functions ---

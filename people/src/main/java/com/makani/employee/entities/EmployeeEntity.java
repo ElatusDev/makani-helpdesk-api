@@ -7,7 +7,7 @@
  */
 package com.makani.employee.entities;
 
-import com.makani.people.employee.InternalAuthDataModel;
+import com.makani.security.user.InternalAuthDataModel;
 
 
 public class EmployeeEntity {

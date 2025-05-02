@@ -1,4 +1,4 @@
-package com.makani.people.employee;
+package com.makani.security.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -33,4 +33,7 @@ public class InternalAuthDataModel implements Serializable {
     @Lob
     @Column(name = "password_token",nullable = false, columnDefinition = "TEXT")
     private String passwordToken;
+
+    @Column(nullable = false, unique = true, length = 50)
+    private String role;
 }

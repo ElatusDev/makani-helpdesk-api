@@ -1,0 +1,18 @@
+openapi: 3.0.0
+info:
+  title: Security Module API
+  version: 1.0.0
+  description: API for authentication and authorization
+
+components:
+  schemas:
+    ErrorResponse:
+      $ref: './internal-authentication.yaml#/components/schemas/ErrorResponse'
+    AuthTokenResponse:
+      $ref: './internal-authentication.yaml#/components/schemas/AuthTokenResponse'
+    LoginRequest:
+      $ref: './internal-authentication.yaml#/components/schemas/LoginRequest'
+
+paths:
+  /login/internal:
+    $ref: './internal-authentication.yaml#/paths/~1login~1internal'
