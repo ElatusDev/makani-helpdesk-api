@@ -64,7 +64,8 @@ CREATE TABLE customer_auth (
 CREATE TABLE internal_auth (
     internal_auth_id INT AUTO_INCREMENT PRIMARY KEY,
     username_token TEXT NOT NULL,
-    password_token TEXT NOT NULL
+    password_token TEXT NOT NULL,
+    role VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE compensation (
@@ -98,10 +99,8 @@ CREATE TABLE collaborator (
     internal_auth_id INT NOT NULL,
     skills VARCHAR(100),
     profile_picture MEDIUMBLOB,
-    compensation_id INT NOT NULL,
     birthdate DATE NOT NULL,
-    FOREIGN KEY (internal_auth_id) REFERENCES internal_auth(internal_auth_id),
-    FOREIGN KEY (compensation_id) REFERENCES compensation(compensation_id)
+    FOREIGN KEY (internal_auth_id) REFERENCES internal_auth(internal_auth_id)
 );
 
 CREATE TABLE membership (

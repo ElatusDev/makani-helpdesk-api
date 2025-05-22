@@ -46,6 +46,11 @@
             <artifactId>datamodel</artifactId>
             <version>${module.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.makani</groupId>
+            <artifactId>security</artifactId>
+            <version>${module.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -53,6 +58,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>19</source>
+                    <target>19</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

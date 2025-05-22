@@ -81,6 +81,31 @@ paths:
             application/json:
               schema:
                 $ref: './commons.yaml#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete an collaborator by ID
+      operationId: deleteCollaboratorById
+      parameters:
+        - in: path
+          name: collaboratorId
+          schema:
+            type: integer
+          required: true
+          description: ID of the collaborator to delete
+      responses:
+        '204':
+          description: collaborator deleted successfully
+        '404':
+          description: collaborator not found
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
 components:
   schemas:
     BaseCollaborator:
@@ -89,9 +114,11 @@ components:
         - type: object
           properties:
             skills:
-              type: string
-              maxLength: 100
-              nullable: true
+                type: array
+                items:
+                  type: string
+                  maxLength: 100
+                description: list of skills
             profilePicture:
               type: string
               format: byte
@@ -101,11 +128,14 @@ components:
     CollaboratorCreationRequest:
       allOf:
         - $ref: '#/components/schemas/BaseCollaborator'
-        - $ref: './commons.yaml#/components/schemas/InternalAuth'
+        - type: object
+          properties:
+            employeeAuth:
+              $ref: './commons.yaml#/components/schemas/InternalAuth'
     CollaboratorCreationResponse:
       type: object
       properties:
-        CollaboratorId:
+        collaboratorId:
           type: integer
           description: Collaborator ID
           readOnly: true
@@ -116,6 +146,8 @@ components:
         - $ref: '#/components/schemas/BaseCollaborator'
         - type: object
           properties:
-            CollaboratorId:
+            collaboratorId:
               type: integer
               description: Collaborator ID
+      required:
+        - collaboratorId

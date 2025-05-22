@@ -36,13 +36,15 @@ public class CollaboratorDataModel extends AbstractPerson implements Serializabl
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "collaborator_id")
     private Integer collaboratorId;
-    @Column(nullable = true, length = 100)
+
+    @Column(nullable = false, length = 100)
     private String skills;
+
     @Lob
     @Column(name = "profile_picture", columnDefinition = "MEDIUMBLOB")
     private Byte[] profilePicture;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "internal_auth_id")
     private InternalAuthDataModel internalAuth;
 }

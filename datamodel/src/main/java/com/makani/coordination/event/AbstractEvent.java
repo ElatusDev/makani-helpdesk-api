@@ -17,18 +17,21 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @MappedSuperclass
-public class AbstractEvent {
+public abstract class AbstractEvent {
 
     @Column(name = "event_date", nullable = false, columnDefinition = "DATE", updatable = false)
     private LocalDate date;
     @Column(name = "event_title", nullable = false, length = 50)
-    private String title;
+    protected String title;
     @Column(name = "event_description", nullable = false, length = 200)
     private String description;
     @OneToOne
     @JoinColumn(name = "schedule_id")
     private ScheduleDataModel schedule;
+
+    protected boolean hasTitle() {
+        return this.title != null;
+    }
+
 }

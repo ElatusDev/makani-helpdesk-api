@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
-public class JwtTokenProvider {
+public class JwtTokenProvider  {
 
     @Value("${jwt.keystore.path}")
     private String keystorePath;
@@ -51,14 +51,13 @@ public class JwtTokenProvider {
                 .claims(claims)
                 .issuedAt(now)
                 .expiration(expiry)
-                .signWith(keyPair.getPrivate(), Jwts.SIG.RS512)
-                .encryptWith(keyPair.getPublic(), Jwts.KEY.RSA_OAEP_256, Jwts.ENC.A256GCM)
+                .signWith(keyPair.getPrivate())
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            jwtParser.parseEncryptedClaims(token);
+            jwtParser.parseSignedClaims(token);
             return true;
         } catch (JwtException e) {
             return false;
@@ -66,10 +65,12 @@ public class JwtTokenProvider {
     }
 
     public Claims getClaims(String token) {
-        return jwtParser.parseEncryptedClaims(token).getPayload();
+        return jwtParser.parseSignedClaims(token).getPayload();
     }
 
     public String getUsername(String token) {
-        return getClaims(token).getSubject();
+        Claims claims =  getClaims(token);
+        return String.valueOf(claims.get("sub"));
     }
+
 }

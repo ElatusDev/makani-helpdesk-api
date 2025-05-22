@@ -9,13 +9,10 @@ package com.makani.treasury.membership;
 
 import com.makani.coordination.program.CourseDataModel;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+
 @MappedSuperclass
 public abstract class MembershipAssociationBase {
 
@@ -27,7 +24,7 @@ public abstract class MembershipAssociationBase {
 
     @ManyToOne
     @JoinColumn(name = "membership_id")
-    private MembershipDataModel membership;
+    protected MembershipDataModel membership;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
