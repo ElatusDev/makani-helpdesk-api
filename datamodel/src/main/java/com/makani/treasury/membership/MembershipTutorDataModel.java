@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Scope("prototype")
 @Component
 @Entity

@@ -77,17 +77,17 @@ USE makani_db;
    ('Google', 'google_token_10');
 
    -- Data for internal_auth (10 rows)
-   INSERT INTO internal_auth (username_token, password_token) VALUES
-   ('user1', 'pass1'),
-   ('user2', 'pass2'),
-   ('user3', 'pass3'),
-   ('user4', 'pass4'),
-   ('user5', 'pass5'),
-   ('user6', 'pass6'),
-   ('user7', 'pass7'),
-   ('user8', 'pass8'),
-   ('user9', 'pass9'),
-   ('user10', 'pass10');
+   INSERT INTO internal_auth (username_token, password_token, role) VALUES
+   ('user1', 'pass1', 'ADMIN'),
+   ('user2', 'pass2', 'USER'),
+   ('user3', 'pass3', 'CSR'),
+   ('user4', 'pass4', 'COLLABORATOR'),
+   ('user5', 'pass5', 'PRINCIPAL'),
+   ('user6', 'pass6', 'USER'),
+   ('user7', 'pass7', 'COLLABORATOR'),
+   ('user8', 'pass8', 'CSR'),
+   ('user9', 'pass9', 'USER'),
+   ('user10', 'pass10', 'COLLABORATOR');
 
    -- Data for compensation (10 rows)
    INSERT INTO compensation (compensation_type, amount) VALUES
@@ -116,17 +116,17 @@ USE makani_db;
    ('Jack', 'Thomas', 'jack.t@example.com', '222-333-4444', '222 Oakwood Blvd', '20002', 'Full-time', 10, '1989-01-18');
 
    -- Data for collaborator (10 rows)
-   INSERT INTO collaborator (first_name, last_name, email, phone, address, zip_code, internal_auth_id, skills, profile_picture, compensation_id, birthdate) VALUES
-   ('Karen', 'White', 'karen.w@example.com', '333-444-5555', '333 Pinecrest Ln', '33333', 1, 'Painting, Drawing', NULL, 1, '1980-03-25'),
-   ('Liam', 'Hall', 'liam.h@example.com', '444-333-2222', '444 River Rd', '44444', 2, 'Sculpture', NULL, 2, '1976-11-08'),
-   ('Mia', 'Young', 'mia.y@example.com', '555-666-7777', '555 Lakeview Dr', '55555', 3, 'Digital Art, Animation', NULL, 3, '1983-09-18'),
-   ('Noah', 'King', 'noah.k@example.com', '666-555-4444', '666 Forest Ave', '66666', 4, 'Photography', NULL, 4, '1979-06-12'),
-   ('Olivia', 'Wright', 'olivia.w@example.com', '777-111-2222', '777 Hilltop Ct', '77777', 5, 'Creative Writing', NULL, 5, '1985-02-03'),
-   ('Peter', 'Green', 'peter.g@example.com', '888-222-3333', '888 Meadow Ln', '88888', 6, 'Music Theory', NULL, 6, '1981-12-21'),
-   ('Quinn', 'Adams', 'quinn.a@example.com', '999-333-1111', '999 Valley Rd', '99999', 7, 'Dance', NULL, 7, '1986-10-09'),
-   ('Ryan', 'Nelson', 'ryan.n@example.com', '101-202-3030', '101 Mountain View', '10101', 8, 'Acting', NULL, 8, '1982-08-16'),
-   ('Sophia', 'Carter', 'sophia.c@example.com', '202-303-4040', '202 Sunset Blvd', '20202', 9, 'Graphic Design', NULL, 9, '1987-05-04'),
-   ('Thomas', 'Roberts', 'thomas.r@example.com', '303-404-5050', '303 Ocean Dr', '30303', 10, 'Web Development', NULL, 10, '1984-01-11');
+   INSERT INTO collaborator (first_name, last_name, email, phone, address, zip_code, internal_auth_id, skills, profile_picture, birthdate) VALUES
+   ('Karen', 'White', 'karen.w@example.com', '333-444-5555', '333 Pinecrest Ln', '33333', 1, 'Painting, Drawing', NULL, '1980-03-25'),
+   ('Liam', 'Hall', 'liam.h@example.com', '444-333-2222', '444 River Rd', '44444', 2, 'Sculpture', NULL, '1976-11-08'),
+   ('Mia', 'Young', 'mia.y@example.com', '555-666-7777', '555 Lakeview Dr', '55555', 3, 'Digital Art, Animation', NULL, '1983-09-18'),
+   ('Noah', 'King', 'noah.k@example.com', '666-555-4444', '666 Forest Ave', '66666', 4, 'Photography', NULL, '1979-06-12'),
+   ('Olivia', 'Wright', 'olivia.w@example.com', '777-111-2222', '777 Hilltop Ct', '77777', 5, 'Creative Writing', NULL, '1985-02-03'),
+   ('Peter', 'Green', 'peter.g@example.com', '888-222-3333', '888 Meadow Ln', '88888', 6, 'Music Theory', NULL, '1981-12-21'),
+   ('Quinn', 'Adams', 'quinn.a@example.com', '999-333-1111', '999 Valley Rd', '99999', 7, 'Dance', NULL, '1986-10-09'),
+   ('Ryan', 'Nelson', 'ryan.n@example.com', '101-202-3030', '101 Mountain View', '10101', 8, 'Acting', NULL, '1982-08-16'),
+   ('Sophia', 'Carter', 'sophia.c@example.com', '202-303-4040', '202 Sunset Blvd', '20202', 9, 'Graphic Design', NULL, '1987-05-04'),
+   ('Thomas', 'Roberts', 'thomas.r@example.com', '303-404-5050', '303 Ocean Dr', '30303', 10, 'Web Development', NULL, '1984-01-11');
 
    -- Data for membership (10 rows)
    INSERT INTO membership (membership_id, membership_type, fee, description) VALUES

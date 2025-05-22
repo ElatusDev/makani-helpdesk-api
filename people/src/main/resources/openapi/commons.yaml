@@ -6,9 +6,11 @@ components:
       properties:
         firstName:
           type: string
+          maxLength: 30
           description: Employee's first name
         lastName:
           type: string
+          maxLength: 30
           description: Employee's last name
         birthDate:
           type: string
@@ -17,15 +19,19 @@ components:
         email:
           type: string
           format: email
+          maxLength: 50
           description: Employee's email address
         phone:
           type: string
+          maxLength: 15
           description: Employee's phone number
         address:
           type: string
+          maxLength: 50
           description: Employee's address
         zipCode:
           type: string
+          maxLength: 8
           description: Employee's zip code
       required:
         - firstName
@@ -47,7 +53,19 @@ components:
         passwordToken:
           type: string
           description: Password token for authentication
+        role:
+          type: string
+          description: authorization role
       required:
         - employeeType
         - usernameToken
         - passwordToken
+        - role
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+      required:
+        - message

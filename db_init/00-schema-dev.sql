@@ -64,7 +64,8 @@ CREATE TABLE customer_auth (
 CREATE TABLE internal_auth (
     internal_auth_id INT AUTO_INCREMENT PRIMARY KEY,
     username_token TEXT NOT NULL,
-    password_token TEXT NOT NULL
+    password_token TEXT NOT NULL,
+    role VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE compensation (
@@ -77,8 +78,8 @@ CREATE TABLE employee (
     employee_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL UNIQUE,
     address VARCHAR(100) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
     employee_type VARCHAR(30) NOT NULL,
@@ -91,17 +92,15 @@ CREATE TABLE collaborator (
     collaborator_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL UNIQUE,
     address VARCHAR(100) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
     internal_auth_id INT NOT NULL,
     skills VARCHAR(100),
     profile_picture MEDIUMBLOB,
-    compensation_id INT NOT NULL,
     birthdate DATE NOT NULL,
-    FOREIGN KEY (internal_auth_id) REFERENCES internal_auth(internal_auth_id),
-    FOREIGN KEY (compensation_id) REFERENCES compensation(compensation_id)
+    FOREIGN KEY (internal_auth_id) REFERENCES internal_auth(internal_auth_id)
 );
 
 CREATE TABLE membership (
@@ -131,8 +130,8 @@ CREATE TABLE adult_student (
     adult_student_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL UNIQUE,
     address VARCHAR(100) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
     customer_auth_id INT NOT NULL,
@@ -145,8 +144,8 @@ CREATE TABLE tutor (
     tutor_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL UNIQUE,
     address VARCHAR(100) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
     customer_auth_id INT NOT NULL,
@@ -158,8 +157,8 @@ CREATE TABLE minor_student (
     minor_student_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL UNIQUE,
     address VARCHAR(100) NOT NULL,
     zip_code VARCHAR(5) NOT NULL,
     customer_auth_id INT NOT NULL,

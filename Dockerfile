@@ -22,7 +22,7 @@ COPY people/src people/src
 COPY security/src security/src
 COPY treasury/src treasury/src
 
-RUN mvn clean install -DskipTests
+RUN mvn clean install
 
 # Runtime stage
 FROM eclipse-temurin:21-jdk-alpine

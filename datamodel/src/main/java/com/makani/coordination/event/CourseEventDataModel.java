@@ -62,4 +62,16 @@ public class CourseEventDataModel extends AbstractEvent implements Serializable 
             inverseJoinColumns = @JoinColumn(name = "minor_student_id")
     )
     private List<MinorStudentDataModel> minorAttendees;
+
+    @Override
+    protected boolean hasTitle() {
+        boolean hasNoTitle = this.title.isEmpty();
+        return !hasNoTitle;
+    }
+
+    public void addCollaborator(CollaboratorDataModel collaborator) {
+        if(this.hasTitle()) {
+            this.collaborator = collaborator;
+        }
+    }
 }

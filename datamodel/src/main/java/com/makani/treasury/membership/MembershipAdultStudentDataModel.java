@@ -40,5 +40,4 @@ public class MembershipAdultStudentDataModel extends MembershipAssociationBase i
     @ManyToOne
     @JoinColumn(name = "adult_student_id")
     private AdultStudentDataModel adultStudent;
-
 }

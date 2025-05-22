@@ -1,0 +1,64 @@
+openapi: 3.0.0
+info:
+  title: Authentication API
+  version: '1.0.0'
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Employee's username
+        password:
+          type: string
+          description: Employee's password
+      required:
+        - username
+        - password
+    AuthTokenResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Authentication token (e.g., JWT)
+      required:
+        - token
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+      required:
+        - message
+paths:
+  /login/internal:
+    post:
+      summary: Authenticate an internal user
+      operationId: loginInternal
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Employee authenticated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

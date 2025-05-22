@@ -22,7 +22,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
     post:
       summary: Create a new adult student
       operationId: createAdultStudent
@@ -44,13 +44,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
         '500':
           description: An unexpected error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
   '/adultStudents/{adultStudentId}':
     get:
       summary: Retrieve an adult student by ID
@@ -74,13 +74,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
         '500':
           description: An unexpected error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
   '/minorStudents':
     get:
       summary: Retrieve a list of minor students
@@ -99,7 +99,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
     post:
       summary: Create a new minor student
       operationId: createMinorStudent
@@ -121,13 +121,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
         '500':
           description: An unexpected error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
   '/minorStudents/{minorStudentId}':
     get:
       summary: Retrieve a minor student by ID
@@ -151,13 +151,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
         '500':
           description: An unexpected error occurred
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
 components:
   schemas:
     BaseStudent:

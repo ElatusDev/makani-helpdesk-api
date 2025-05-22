@@ -1,0 +1,38 @@
+services:
+  makani-helpdesk-api:
+    image: elatusdevops/makani-helpdesk-api:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: makani-helpdesk-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    command: ["java", "-jar", "/app.jar"]
+    volumes:
+      - ./src:/app/src
+      - ./application/src/main/resources:/app/src/main/resources
+  makani-mariadb:
+    image: mariadb:latest
+    container_name: makani-mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: makani_db
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: 12345
+      INIT_DB_SCRIPT_ENABLED: true
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db_init:/docker-entrypoint-initdb.d
+    command: >
+      --general-log=1
+      --general-log-file=/var/lib/mysql/mariadb-general.log
+      --slow-query-log=1
+      --slow-query-log-file=/var/lib/mysql/mariadb-slow.log
+      --long-query-time=2
+volumes:
+  db_data: {}

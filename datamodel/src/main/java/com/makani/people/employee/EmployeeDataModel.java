@@ -1,6 +1,7 @@
 package com.makani.people.employee;
 
 import com.makani.people.AbstractPerson;
+import com.makani.security.user.InternalAuthDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

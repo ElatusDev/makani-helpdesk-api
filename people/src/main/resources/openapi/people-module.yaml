@@ -9,10 +9,10 @@ paths:
     $ref: "./employee.yaml#/paths/~1employees"
   /employees/{employeeId}:
     $ref: "./employee.yaml#/paths/~1employees~1{employeeId}"
-  /instructors:
-    $ref: "./instructor.yaml#/paths/~1instructors"
-  /instructors/{instructorId}:
-    $ref: "./instructor.yaml#/paths/~1instructors~1{instructorId}"
+  /collaborators:
+    $ref: "./collaborator.yaml#/paths/~1collaborators"
+  /collaborators/{collaboratorId}:
+    $ref: "./collaborator.yaml#/paths/~1collaborators~1{collaboratorId}"
   /adultStudents:
     $ref: './customer.yaml#/paths/~1adultStudents'
   /adultStudents/{adultStudentId}:
@@ -26,7 +26,7 @@ components:
   schemas:
     Employee:
       $ref: './employee.yaml#/components/schemas'
-    Instructor:
-      $ref: './instructor.yaml#/components/schemas'
+    collaborator:
+      $ref: './collaborator.yaml#/components/schemas'
     Customer:
       $ref: './customer.yaml#/components/schemas'
