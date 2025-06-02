@@ -7,7 +7,7 @@ people/target/
 treasury/target/
 security/target/
 datamodel/target/
-utilities/target
+utilities/target/
 ### docker related ###
 .env
 mariadb-logs/
