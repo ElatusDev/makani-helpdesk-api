@@ -7,7 +7,6 @@ import openapi.makani.domain.security.dto.AuthTokenResponseDTO;
 import openapi.makani.domain.security.dto.LoginRequestDTO;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,16 +16,13 @@ import java.util.Map;
 public class InternalAuthenticationUseCase {
 
     private final InternalAuthRepository repository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final MessageSource messageSource;
 
     public InternalAuthenticationUseCase(InternalAuthRepository repository,
-                                         PasswordEncoder passwordEncoder,
                                          JwtTokenProvider jwtTokenProvider,
                                          MessageSource messageSource) {
         this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.messageSource = messageSource;
     }
