@@ -100,12 +100,28 @@ paths:
       responses:
         '204':
           description: Employee deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+              required: true
+              description: deletion confirmation
         '404':
           description: Employee not found
           content:
             application/json:
               schema:
-                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+                type: string
+              required: true
+              description: employee to be deleted was not found
+        '422':
+          description: Employee deletion not allowed
+          content:
+            application/json:
+              schema:
+                type: string
+              required: true
+              description: employee cannot be delete, it already has been associated with other records
         '500':
           description: An unexpected error occurred
           content:
@@ -138,5 +154,3 @@ components:
             employeeId:
               type: integer
               description: Employee ID
-            employeeAuth:
-              $ref: './commons.yaml#/components/schemas/InternalAuth'

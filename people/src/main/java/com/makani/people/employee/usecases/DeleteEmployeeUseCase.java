@@ -2,6 +2,7 @@ package com.makani.people.employee.usecases;
 
 import com.makani.people.employee.interfaceadapters.EmployeeRepository;
 import com.makani.people.employee.EmployeeDataModel;
+import com.makani.utilities.exceptions.FailToDeleteEntityException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -10,7 +11,6 @@ import java.util.Optional;
 @Service
 public class DeleteEmployeeUseCase {
     private final EmployeeRepository employeeRepository;
-
     public DeleteEmployeeUseCase(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }

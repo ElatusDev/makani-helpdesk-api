@@ -8,9 +8,11 @@ treasury/target/
 security/target/
 datamodel/target/
 utilities/target/
+
 ### docker related ###
 .env
 mariadb-logs/
+
 ### Mac OS ###
 .DS_Store
 
@@ -24,3 +26,4 @@ treasury/*.iml
 security/*.iml
 datamodel/*.iml
 utilities/*.iml
+

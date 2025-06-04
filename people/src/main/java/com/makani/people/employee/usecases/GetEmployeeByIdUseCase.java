@@ -13,6 +13,7 @@ import openapi.makani.domain.people.dto.GetEmployeeResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,11 @@ public class GetEmployeeByIdUseCase {
 
     public Optional<GetEmployeeResponseDTO> getEmployeeId(Integer employeeId) {
           Optional<EmployeeDataModel> queryResult = employeeRepository.findByEmployeeId(employeeId);
-          return queryResult.map(employeeDataModel -> modelMapper.map(employeeDataModel, GetEmployeeResponseDTO.class));
+          if(queryResult.isPresent()) {
+              return queryResult.map( model ->
+                      modelMapper.map(model, GetEmployeeResponseDTO.class, "getEmployeeResponseMap"));
+          } else {
+              throw new NoSuchElementException(String.valueOf(employeeId));
+          }
     }
 }

@@ -13,6 +13,7 @@ import openapi.makani.domain.people.dto.GetCollaboratorResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,6 +28,11 @@ public class GetCollaboratorByIdUseCase {
 
     public Optional<GetCollaboratorResponseDTO> getCollaboratorId(Integer collaboratorId) {
           Optional<CollaboratorDataModel> queryResult = repository.findById(collaboratorId);
-          return queryResult.map(collaboratorDataModel -> modelMapper.map(collaboratorDataModel, GetCollaboratorResponseDTO.class));
+          if(queryResult.isPresent()) {
+              return queryResult.map(collaboratorDataModel ->
+                      modelMapper.map(collaboratorDataModel, GetCollaboratorResponseDTO.class));
+          } else {
+              throw new NoSuchElementException(String.valueOf(collaboratorId));
+          }
     }
 }

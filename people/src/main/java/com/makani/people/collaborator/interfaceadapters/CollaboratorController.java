@@ -4,16 +4,12 @@ import com.makani.people.collaborator.usecases.CollaboratorCreationUseCase;
 import com.makani.people.collaborator.usecases.DeleteCollaboratorUseCase;
 import com.makani.people.collaborator.usecases.GetAllCollaboratorsUseCase;
 import com.makani.people.collaborator.usecases.GetCollaboratorByIdUseCase;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import openapi.makani.domain.people.api.CollaboratorsApi;
 import openapi.makani.domain.people.dto.CollaboratorCreationRequestDTO;
 import openapi.makani.domain.people.dto.CollaboratorCreationResponseDTO;
 import openapi.makani.domain.people.dto.GetCollaboratorResponseDTO;
-import openapi.makani.domain.people.dto.GetEmployeeResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
