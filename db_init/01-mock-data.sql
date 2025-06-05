@@ -181,17 +181,17 @@ USE makani_db;
    (10, 'Kevin', 'Bell', 'kevin.b@example.com', '100-100-1000', '100 Sunset Ter', '10000', 10, NULL, '1997-08-17');
 
    -- Data for tutor (10 rows)
-   INSERT INTO tutor (tutor_id, first_name, last_name, email, phone, address, zip_code, customer_auth_id, birthdate) VALUES
-   (1, 'Lily', 'Mitchell', 'lily.m@example.com', '123-123-1234', '111 Cherry St', '11122', 1, '1975-01-10'),
-   (2, 'Mason', 'Perez', 'mason.p@example.com', '234-234-2345', '222 Birch Ave', '22233', 2, '1974-05-15'),
-   (3, 'Nora', 'Roberts', 'nora.r@example.com', '345-345-6789', '333 Cedar Ln', '33344', 3, '1977-09-20'),
-   (4, 'Owen', 'Turner', 'owen.t@example.com', '456-456-4567', '444 Dogwood Dr', '44455', 4, '1973-03-01'),
-   (5, 'Penelope', 'Phillips', 'penelope.p@example.com', '567-567-5678', '555 Elmwood Ct', '55566', 5, '1976-07-06'),
-   (6, 'Theodore', 'Campbell', 'theodore.c@example.com', '678-678-6789', '666 Fern Rd', '66677', 6, '1979-11-11'),
-   (7, 'Uma', 'Parker', 'uma.p@example.com', '789-789-7890', '777 Grove Ave', '77788', 7, '1972-04-16'),
-   (8, 'Victor', 'Evans', 'victor.e@example.com', '890-890-8901', '888 Hickory St', '88899', 8, '1975-08-21'),
-   (9, 'Willow', 'Collins', 'willow.c@example.com', '901-901-9012', '999 Ivy Ln', '99900', 9, '1978-12-26'),
-   (10, 'Xavier', 'Stewart', 'xavier.s@example.com', '012-012-0123', '100 Juniper Dr', '10011', 10, '1973-06-01');
+    INSERT INTO tutor (first_name, last_name, email, phone, customer_auth_id) VALUES
+    ('Liam', 'Baker', 'liam.baker@example.com', '111-222-3333', 1),
+    ('Olivia', 'Clark', 'olivia.c@example.com', '222-333-4444', 2),
+    ('Noah', 'Davis', 'noah.d@example.com', '333-444-5555', 3),
+    ('Emma', 'Evans', 'emma.e@example.com', '444-555-6666', 4),
+    ('Jackson', 'Foster', 'jackson.f@example.com', '555-666-7777', 5),
+    ('Sophia', 'Green', 'sophia.g@example.com', '666-777-8888', 6),
+    ('Aiden', 'Hill', 'aiden.h@example.com', '777-888-9999', 7),
+    ('Ava', 'King', 'ava.k@example.com', '888-999-0000', 8),
+    ('Lucas', 'Lewis', 'lucas.l@example.com', '999-000-1111', 9),
+    ('Mia', 'Moore', 'mia.m@example.com', '000-111-2222', 10);
 
    -- Data for minor_student (10 rows)
    INSERT INTO minor_student (minor_student_id, first_name, last_name, email, phone, address, zip_code, customer_auth_id, tutor_id, profile_picture, birthdate) VALUES

@@ -27,7 +27,7 @@ import java.io.Serializable;
 @Component
 @Entity
 @Table(name = "tutor")
-public class TutorDataModel extends AbstractPerson implements Serializable {
+public class TutorDataModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,16 @@ public class TutorDataModel extends AbstractPerson implements Serializable {
     @Column(name = "tutor_id")
     private Integer tutorId;
 
-    @OneToOne(optional = false)
+    @Column(name = "first_name", nullable = false, length = 30)
+    private String firstName;
+    @Column(name = "last_name", nullable = false, length = 30)
+    private String lastName;
+    @Column(nullable = false, length = 15, unique = true)
+    private String phone;
+    @Column(nullable = true, length = 50, unique = true)
+    private String email;
+
+    @OneToOne(optional = true)
     @JoinColumn(name = "customer_auth_id")
     private CustomerAuthDataModel customerAuth;
 }

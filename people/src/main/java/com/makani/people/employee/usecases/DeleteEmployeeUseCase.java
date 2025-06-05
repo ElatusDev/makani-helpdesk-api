@@ -10,7 +10,6 @@ import java.util.Optional;
 @Service
 public class DeleteEmployeeUseCase {
     private final EmployeeRepository employeeRepository;
-
     public DeleteEmployeeUseCase(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
@@ -20,7 +19,7 @@ public class DeleteEmployeeUseCase {
         if(found.isPresent()) {
             employeeRepository.delete(found.get());
         } else {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(String.valueOf(employeeId));
         }
     }
 }

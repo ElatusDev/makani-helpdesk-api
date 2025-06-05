@@ -1,2 +1,8 @@
+com/makani/utilities/config/BeanConfig.class
+com/makani/utilities/exceptions/InvalidCreateRequestException.class
+com/makani/utilities/exceptions/EntityNotFoundByIdException.class
 com/makani/utilities/ModuleSecurityConfigurator.class
 com/makani/utilities/Role.class
+com/makani/utilities/exceptions/FailToDeleteEntityException.class
+com/makani/utilities/healthcheck/DatabaseConnectionException.class
+com/makani/utilities/healthcheck/DatabaseConnectionService.class

@@ -57,7 +57,7 @@ paths:
       operationId: getCollaboratorById
       parameters:
         - in: path
-          name: CollaboratorId
+          name: collaboratorId
           required: true
           schema:
             type: integer

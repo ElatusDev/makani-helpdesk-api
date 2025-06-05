@@ -5,7 +5,7 @@
  * This code is proprietary and confidential.
  * Unauthorized copying, distribution, or modification is strictly prohibited.
  */
-package com.makani.people.employee.usecases;
+package com.makani.utilities.exceptions;
 
 public class InvalidCreateRequestException extends Exception{
     public InvalidCreateRequestException(String msg, Exception ex) {

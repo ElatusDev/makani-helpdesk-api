@@ -60,7 +60,7 @@ public class EmployeeController implements EmployeesApi {
     }
 
     @Override
-    public ResponseEntity<Void> deleteEmployeeById(Integer employeeId) {
+    public ResponseEntity<String> deleteEmployeeById(Integer employeeId) {
          deleteEmployeeUseCase.delete(employeeId);
          return ResponseEntity.noContent().build();
     }

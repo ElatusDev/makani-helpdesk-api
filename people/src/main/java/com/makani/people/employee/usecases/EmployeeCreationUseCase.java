@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeCreationUseCase {
-
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
 

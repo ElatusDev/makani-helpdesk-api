@@ -1,4 +1,4 @@
-package com.makani.healthcheck;
+package com.makani.utilities.healthcheck;
 
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;

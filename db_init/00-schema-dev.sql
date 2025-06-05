@@ -144,12 +144,9 @@ CREATE TABLE tutor (
     tutor_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    email VARCHAR(50) NOT NULL UNIQUE,
-    phone VARCHAR(20) NOT NULL UNIQUE,
-    address VARCHAR(100) NOT NULL,
-    zip_code VARCHAR(5) NOT NULL,
-    customer_auth_id INT NOT NULL,
-    birthdate DATE NOT NULL,
+    email VARCHAR(50) UNIQUE,
+    phone VARCHAR(15) NOT NULL UNIQUE,
+    customer_auth_id INT,
     FOREIGN KEY (customer_auth_id) REFERENCES customer_auth(customer_auth_id)
 );
 
