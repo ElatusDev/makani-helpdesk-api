@@ -21,6 +21,10 @@ paths:
     $ref: './customer.yaml#/paths/~1minorStudents'
   /minorStudents/{minorStudentId}:
     $ref: './customer.yaml#/paths/~1minorStudents~1{minorStudentId}'
+  /tutors: # Add Tutor paths
+    $ref: './customer.yaml#/paths/~1tutors'
+  /tutors/{tutorId}: # Add Tutor paths
+    $ref: './customer.yaml#/paths/~1tutors~1{tutorId}'
 
 components:
   schemas:

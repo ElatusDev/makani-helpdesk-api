@@ -39,8 +39,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdultStudentCreationResponse'
-        '400':
-          description: Invalid request data
+        '400': # Changed from 409
+          description: Invalid request data or Conflict - Adult student with provided email or phone already exists
           content:
             application/json:
               schema:
@@ -69,6 +69,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAdultStudentResponse'
+        '404':
+          description: Adult student not found
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+    delete: # DELETE for adult students
+      summary: Delete an adult student by ID
+      operationId: deleteAdultStudent
+      parameters:
+        - in: path
+          name: adultStudentId
+          schema:
+            type: integer
+          required: true
+          description: ID of the adult student to delete
+      responses:
+        '204':
+          description: Adult student deleted successfully (No Content)
         '404':
           description: Adult student not found
           content:
@@ -158,6 +183,141 @@ paths:
             application/json:
               schema:
                 $ref: './commons.yaml#/components/schemas/ErrorResponse'
+    delete: # DELETE for minor students
+      summary: Delete a minor student by ID
+      operationId: deleteMinorStudent
+      parameters:
+        - in: path
+          name: minorStudentId
+          schema:
+            type: integer
+          required: true
+          description: ID of the minor student to delete
+      responses:
+        '204':
+          description: Minor student deleted successfully (No Content)
+        '404':
+          description: Minor student not found
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+
+  '/tutors': # PATHS FOR TUTORS
+    post:
+      summary: Create a new tutor
+      operationId: createTutor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TutorCreationRequest'
+      responses:
+        '201':
+          description: Tutor created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TutorCreationResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+        '409': # For unique constraint violations (email, phone)
+          description: Conflict - Tutor with provided email or phone already exists
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+    get:
+      summary: Retrieve a list of tutors
+      operationId: getTutors
+      responses:
+        '200':
+          description: A list of tutors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetTutorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+
+  '/tutors/{tutorId}': # PATHS FOR INDIVIDUAL TUTOR
+    get:
+      summary: Retrieve a tutor by ID
+      operationId: getTutorById
+      parameters:
+        - in: path
+          name: tutorId
+          schema:
+            type: integer
+          required: true
+          description: ID of the tutor to retrieve
+      responses:
+        '200':
+          description: Tutor retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetTutorResponse'
+        '404':
+          description: Tutor not found
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a tutor by ID
+      operationId: deleteTutor
+      parameters:
+        - in: path
+          name: tutorId
+          schema:
+            type: integer
+          required: true
+          description: ID of the tutor to delete
+      responses:
+        '204':
+          description: Tutor deleted successfully (No Content)
+        '404':
+          description: Tutor not found
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: './commons.yaml#/components/schemas/ErrorResponse'
 components:
   schemas:
     BaseStudent:
@@ -181,21 +341,43 @@ components:
     MinorStudent:
       allOf:
         - $ref: '#/components/schemas/BaseStudent'
-        - $ref: '#/components/schemas/Tutor'
         - type: object
           properties:
-            tutorId:
+            tutorId: # FK to Tutor
               type: integer
               description: ID of the tutor associated with the minor student
-            customerAuthId:
-              type: integer
-              description: Minor student's customer authentication ID
           required:
             - tutorId
-            - customerAuthId
-    Tutor:
-      allOf:
-        - $ref: './commons.yaml#/components/schemas/BasePerson'
+    BaseTutor: # BaseTutor for the object hierarchy
+      type: object
+      properties:
+        # Properties from TutorDataModel
+        firstName:
+          type: string
+          maxLength: 30
+          description: Tutor's first name
+        lastName:
+          type: string
+          maxLength: 30
+          description: Tutor's last name
+        email:
+          type: string
+          maxLength: 50
+          format: email
+          nullable: true # As per TutorDataModel
+          description: Tutor's email address (unique)
+        phone:
+          type: string
+          maxLength: 15
+          description: Tutor's phone number (unique)
+        customerAuthId: # Link to CustomerAuthDataModel by ID
+          type: integer
+          description: ID of the associated customer authentication record
+      required:
+        - firstName
+        - lastName
+        - phone
+        - customerAuthId # email is optional, but other fields are mandatory
     CustomerAuth:
       type: object
       properties:
@@ -278,6 +460,30 @@ components:
               description: Minor student ID
       required:
         - minorStudentId
+    # Tutor Schemas (renamed to align with BaseTutor)
+    TutorCreationRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseTutor' # Now extends BaseTutor
+    TutorCreationResponse:
+      type: object
+      properties:
+        tutorId:
+          type: integer
+          readOnly: true
+          description: Unique identifier for the tutor
+      required:
+        - tutorId
+    GetTutorResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseTutor' # Now extends BaseTutor
+        - type: object
+          properties:
+            tutorId:
+              type: integer
+              readOnly: true
+              description: Unique identifier for the tutor
+          required:
+            - tutorId
     ErrorResponse:
       type: object
       properties:

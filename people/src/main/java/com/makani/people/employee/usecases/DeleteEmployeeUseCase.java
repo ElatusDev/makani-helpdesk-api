@@ -2,7 +2,6 @@ package com.makani.people.employee.usecases;
 
 import com.makani.people.employee.interfaceadapters.EmployeeRepository;
 import com.makani.people.employee.EmployeeDataModel;
-import com.makani.utilities.exceptions.FailToDeleteEntityException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -20,7 +19,7 @@ public class DeleteEmployeeUseCase {
         if(found.isPresent()) {
             employeeRepository.delete(found.get());
         } else {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(String.valueOf(employeeId));
         }
     }
 }

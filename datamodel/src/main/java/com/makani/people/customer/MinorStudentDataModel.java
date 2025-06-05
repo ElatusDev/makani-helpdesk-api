@@ -43,7 +43,7 @@ public class MinorStudentDataModel extends AbstractPerson implements Serializabl
     @JoinColumn(name = "tutor_id")
     private TutorDataModel tutor;
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = true)
     @JoinColumn(name = "customer_auth_id")
     private CustomerAuthDataModel customerAuth;
 

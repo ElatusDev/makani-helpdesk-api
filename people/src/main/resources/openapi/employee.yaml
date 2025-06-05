@@ -27,12 +27,6 @@ paths:
             application/json:
               schema:
                 $ref: './commons.yaml#/components/schemas/ErrorResponse'
-        '404':
-          description: Employee not found
-          content:
-            application/json:
-              schema:
-                $ref: './commons.yaml#/components/schemas/ErrorResponse'
         '500':
           description: An unexpected error occurred
           content:

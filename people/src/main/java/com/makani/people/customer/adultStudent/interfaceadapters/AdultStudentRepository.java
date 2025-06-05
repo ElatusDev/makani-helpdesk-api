@@ -5,7 +5,7 @@
  * This code is proprietary and confidential.
  * Unauthorized copying, distribution, or modification is strictly prohibited.
  */
-package com.makani.people.customer.interfaceadapters;
+package com.makani.people.customer.adultStudent.interfaceadapters;
 
 import com.makani.people.customer.AdultStudentDataModel;
 import org.springframework.data.jpa.repository.JpaRepository;

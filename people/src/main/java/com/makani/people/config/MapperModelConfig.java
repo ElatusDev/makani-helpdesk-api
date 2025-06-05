@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 @Configuration
-public class PeopleConfig {
+public class MapperModelConfig {
 
     @Bean
     public ModelMapper modelMapper() {
@@ -41,9 +41,11 @@ public class PeopleConfig {
             }
         };
 
-        modelMapper.createTypeMap(EmployeeDataModel.class, GetEmployeeResponseDTO.class)
-                .addMappings(mapping ->
-                        mapping.map(EmployeeDataModel::getBirthDate, GetEmployeeResponseDTO::setBirthDate));
+        PropertyMap<EmployeeDataModel, GetEmployeeResponseDTO> getEmployeeResponseDtoMap = new PropertyMap<>() {
+            protected void configure() {
+                map(source.getBirthDate(), destination.getBirthDate());
+            }
+        };
 
         PropertyMap<CollaboratorCreationRequestDTO, CollaboratorDataModel> collaboratorMap = new PropertyMap<>() {
             protected void configure() {
@@ -55,6 +57,7 @@ public class PeopleConfig {
             }
         };
 
+        modelMapper.addMappings(getEmployeeResponseDtoMap);
         modelMapper.addMappings(employeeMap);
         modelMapper.addMappings(collaboratorMap);
         return modelMapper;
@@ -69,6 +72,6 @@ public class PeopleConfig {
     private void addSqlDateToLocalDateConverter(ModelMapper modelMapper) {
         Converter<Date, LocalDate> sqlDateToLocalDate = mappingContext ->
                 mappingContext.getSource() == null ? null : mappingContext.getSource().toLocalDate();
-        modelMapper.addConverter(sqlDateToLocalDate);
+        modelMapper.addConverter(sqlDateToLocalDate, Date.class, LocalDate.class);
     }
 }

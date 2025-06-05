@@ -30,7 +30,7 @@ public class GetEmployeeByIdUseCase {
           Optional<EmployeeDataModel> queryResult = employeeRepository.findByEmployeeId(employeeId);
           if(queryResult.isPresent()) {
               return queryResult.map( model ->
-                      modelMapper.map(model, GetEmployeeResponseDTO.class, "getEmployeeResponseMap"));
+                      modelMapper.map(model, GetEmployeeResponseDTO.class, "getEmployeeResponseDtoMap"));
           } else {
               throw new NoSuchElementException(String.valueOf(employeeId));
           }

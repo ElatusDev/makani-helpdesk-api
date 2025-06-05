@@ -20,7 +20,7 @@ public class DeleteCollaboratorUseCase {
         if(found.isPresent()) {
             repository.delete(found.get());
         } else {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException(String.valueOf(collaboratorId));
         }
     }
 }
