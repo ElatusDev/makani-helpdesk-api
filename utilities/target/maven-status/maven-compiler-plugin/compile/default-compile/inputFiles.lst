@@ -1,7 +1,0 @@
-/Users/davidmartineenciso/Documents/elatusdev/Makani/MakaniHelpDeskAPI/utilities/src/main/java/com/makani/utilities/ModuleSecurityConfigurator.java
-/Users/davidmartineenciso/Documents/elatusdev/Makani/MakaniHelpDeskAPI/utilities/src/main/java/com/makani/utilities/Role.java
-/Users/davidmartineenciso/Documents/elatusdev/Makani/MakaniHelpDeskAPI/utilities/src/main/java/com/makani/utilities/config/BeanConfig.java
-/Users/davidmartineenciso/Documents/elatusdev/Makani/MakaniHelpDeskAPI/utilities/src/main/java/com/makani/utilities/exceptions/EntityNotFoundByIdException.java
-/Users/davidmartineenciso/Documents/elatusdev/Makani/MakaniHelpDeskAPI/utilities/src/main/java/com/makani/utilities/exceptions/FailToDeleteEntityException.java
-/Users/davidmartineenciso/Documents/elatusdev/Makani/MakaniHelpDeskAPI/utilities/src/main/java/com/makani/utilities/exceptions/InvalidCreateRequestException.java
-/Users/davidmartineenciso/Documents/elatusdev/Makani/MakaniHelpDeskAPI/utilities/src/main/java/com/makani/utilities/healthcheck/DatabaseConnectionService.java
