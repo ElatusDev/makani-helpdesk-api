@@ -26,11 +26,10 @@ public class GetEmployeeByIdUseCase {
         this.modelMapper = modelMapper;
     }
 
-    public Optional<GetEmployeeResponseDTO> getEmployeeId(Integer employeeId) {
+    public GetEmployeeResponseDTO getEmployeeId(Integer employeeId) {
           Optional<EmployeeDataModel> queryResult = employeeRepository.findByEmployeeId(employeeId);
           if(queryResult.isPresent()) {
-              return queryResult.map( model ->
-                      modelMapper.map(model, GetEmployeeResponseDTO.class, "getEmployeeResponseDtoMap"));
+              return modelMapper.map(queryResult.get(), GetEmployeeResponseDTO.class, "getEmployeeResponseDtoMap");
           } else {
               throw new EmployeeNotFoundException(String.valueOf(employeeId));
           }

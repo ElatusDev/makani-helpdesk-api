@@ -20,7 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/people")
@@ -43,8 +42,7 @@ public class EmployeeController implements EmployeesApi {
 
     @Override
     public ResponseEntity<GetEmployeeResponseDTO> getEmployeeById(Integer employeeId) {
-        Optional<GetEmployeeResponseDTO> employeeResponse = getEmployeeByIdUseCase.getEmployeeId(employeeId);
-        return employeeResponse.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(getEmployeeByIdUseCase.getEmployeeId(employeeId));
     }
 
     @Override

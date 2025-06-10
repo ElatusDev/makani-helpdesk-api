@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2025 ElatusDev
+ * All rights reserved.
+ *
+ * This code is proprietary and confidential.
+ * Unauthorized copying, distribution, or modification is strictly prohibited.
+ */
 package com.makani.collaborator.interfaceadapters;
 
 import com.makani.collaborator.usecases.CollaboratorCreationUseCase;
@@ -14,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/people")
@@ -50,8 +56,7 @@ public class CollaboratorController implements CollaboratorsApi {
 
     @Override
     public ResponseEntity<GetCollaboratorResponseDTO> getCollaboratorById(Integer collaboratorId) {
-        Optional<GetCollaboratorResponseDTO> response = getCollaboratorByIdUseCase.getCollaboratorId(collaboratorId);
-        return response.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(getCollaboratorByIdUseCase.getCollaboratorId(collaboratorId));
     }
 
     @Override

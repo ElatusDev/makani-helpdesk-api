@@ -26,11 +26,10 @@ public class GetCollaboratorByIdUseCase {
         this.modelMapper = modelMapper;
     }
 
-    public Optional<GetCollaboratorResponseDTO> getCollaboratorId(Integer collaboratorId) {
+    public GetCollaboratorResponseDTO getCollaboratorId(Integer collaboratorId) {
           Optional<CollaboratorDataModel> queryResult = repository.findById(collaboratorId);
           if(queryResult.isPresent()) {
-              return queryResult.map(collaboratorDataModel ->
-                      modelMapper.map(collaboratorDataModel, GetCollaboratorResponseDTO.class));
+              return modelMapper.map(queryResult.get(), GetCollaboratorResponseDTO.class);
           } else {
               throw new CollaboratorNotFoundException(String.valueOf(collaboratorId));
           }

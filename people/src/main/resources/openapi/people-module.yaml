@@ -14,13 +14,13 @@ paths:
   /collaborators/{collaboratorId}:
     $ref: "./collaborator.yaml#/paths/~1collaborators~1{collaboratorId}"
   /adultStudents:
-    $ref: './customer.yaml#/paths/~1adultStudents'
+    $ref: './customer.yaml#/paths/~1adult-students'
   /adultStudents/{adultStudentId}:
-    $ref: './customer.yaml#/paths/~1adultStudents~1{adultStudentId}'
+    $ref: './customer.yaml#/paths/~1adult-students~1{adultStudentId}'
   /minorStudents:
-    $ref: './customer.yaml#/paths/~1minorStudents'
+    $ref: './customer.yaml#/paths/~1minor-students'
   /minorStudents/{minorStudentId}:
-    $ref: './customer.yaml#/paths/~1minorStudents~1{minorStudentId}'
+    $ref: './customer.yaml#/paths/~1minor-students~1{minorStudentId}'
   /tutors: # Add Tutor paths
     $ref: './customer.yaml#/paths/~1tutors'
   /tutors/{tutorId}: # Add Tutor paths

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2025 ElatusDev
+ * All rights reserved.
+ *
+ * This code is proprietary and confidential.
+ * Unauthorized copying, distribution, or modification is strictly prohibited.
+ */
 package com.makani.config;
 
 import com.makani.collaborator.interfaceadapters.CollaboratorController;
@@ -9,13 +16,9 @@ import openapi.makani.domain.people.dto.ErrorResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @ControllerAdvice(basePackageClasses= {EmployeeController.class, CollaboratorController.class,
                     AdultStudentController.class})
@@ -77,7 +80,7 @@ public class PeopleControllerAdvice {
         // Construct your ErrorResponseDTO
         ErrorResponseDTO errorResponse = new ErrorResponseDTO();
         // Assuming your ErrorResponseDTO has a setStatusCode and setMessage method
-        errorResponse.setMessage("Validation failed for request. Please check provided data.");
+        errorResponse.setMessage("Validation failed for request. Please check provided data." + ex.getMessage());
         // You might want to add a 'details' field to your ErrorResponseDTO for more specifics
         // errorResponse.setDetails(errors.toString()); // Or format more nicely
 
