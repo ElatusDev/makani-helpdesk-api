@@ -328,16 +328,13 @@ components:
           type: string
           format: byte
           description: Student's profile picture
-        customerAuthId:
-          type: integer
-          description: Student's customer authentication ID
       required:
         - profilePicture
-        - customerAuthId
     AdultStudent:
       allOf:
         - $ref: './commons.yaml#/components/schemas/BasePerson'
         - $ref: '#/components/schemas/BaseStudent'
+        - $ref: '#/components/schemas/CustomerAuth'
     MinorStudent:
       allOf:
         - $ref: '#/components/schemas/BaseStudent'
@@ -381,9 +378,6 @@ components:
     CustomerAuth:
       type: object
       properties:
-        customerAuthId:
-          type: integer
-          description: Customer authentication ID
         provider:
           type: string
           maxLength: 9
@@ -393,7 +387,6 @@ components:
           format: byte
           description: Authentication token
       required:
-        - customerAuthId
         - provider
         - token
     AdultStudentCreationRequest:

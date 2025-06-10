@@ -10,9 +10,7 @@ package com.makani.treasury.membership;
 import com.makani.people.customer.TutorDataModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

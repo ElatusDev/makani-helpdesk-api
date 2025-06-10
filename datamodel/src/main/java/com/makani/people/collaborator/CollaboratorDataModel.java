@@ -8,7 +8,7 @@
 package com.makani.people.collaborator;
 
 import com.makani.security.user.InternalAuthDataModel;
-import com.makani.people.AbstractPerson;
+import com.makani.AbstractPerson;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

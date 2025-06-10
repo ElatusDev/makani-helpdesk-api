@@ -7,7 +7,6 @@
  */
 package com.makani.people.customer;
 
-import com.makani.people.AbstractPerson;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
