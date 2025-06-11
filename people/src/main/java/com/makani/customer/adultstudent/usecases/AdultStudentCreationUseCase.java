@@ -13,6 +13,7 @@ import openapi.makani.domain.people.dto.AdultStudentCreationRequestDTO;
 import openapi.makani.domain.people.dto.AdultStudentCreationResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AdultStudentCreationUseCase {
@@ -25,6 +26,7 @@ public class AdultStudentCreationUseCase {
         this.modelMapper = modelMapper;
     }
 
+    @Transactional
     public AdultStudentCreationResponseDTO create(AdultStudentCreationRequestDTO dto) {
         AdultStudentDataModel model = modelMapper.map(dto, AdultStudentDataModel.class);
         AdultStudentDataModel persisted = adultStudentRepository.save(model);

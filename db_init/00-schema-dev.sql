@@ -2,17 +2,7 @@ DROP SCHEMA IF EXISTS makani_db;
 CREATE SCHEMA makani_db;
 USE makani_db;
 
-DELIMITER //
-CREATE PROCEDURE create_dev_user()
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM mysql.user WHERE User = 'dev' AND Host = '%') THEN
-        CREATE USER 'dev'@'%' IDENTIFIED BY '12345';
-        GRANT ALL PRIVILEGES ON makani_db.* TO 'dev'@'%';
-        FLUSH PRIVILEGES;
-    END IF;
-END //
-DELIMITER ;
-CALL create_dev_user();
+
 
 CREATE TABLE store_product (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -59,7 +49,9 @@ CREATE TABLE schedule (
     schedule_id INT AUTO_INCREMENT PRIMARY KEY,
     schedule_day VARCHAR(9) NOT NULL,
     start_time TIME NOT NULL,
-    end_time TIME NOT NULL
+    end_time TIME NOT NULL,
+    course_id INT NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 
 CREATE TABLE customer_auth (
@@ -136,14 +128,6 @@ CREATE TABLE membership (
     membership_type VARCHAR(10) NOT NULL,
     fee DOUBLE NOT NULL,
     description VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE course_schedule (
-    course_id INT NOT NULL,
-    schedule_id INT NOT NULL,
-    FOREIGN KEY (course_id) REFERENCES course(course_id),
-    FOREIGN KEY (schedule_id) REFERENCES schedule(schedule_id),
-    PRIMARY KEY (course_id, schedule_id)
 );
 
 CREATE TABLE course_available_collaborators (

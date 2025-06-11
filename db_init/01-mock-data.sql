@@ -50,18 +50,53 @@ USE makani_db;
    ('Graphic Design', 'Graphic Design course', 25),
    ('Web Development', 'Web Development course', 25);
 
-   -- Data for schedule (10 rows)
-   INSERT INTO schedule (schedule_day, start_time, end_time) VALUES
-   ('Monday', '10:00:00', '12:00:00'),
-   ('Tuesday', '14:00:00', '16:00:00'),
-   ('Wednesday', '18:00:00', '20:00:00'),
-   ('Thursday', '10:00:00', '12:00:00'),
-   ('Friday', '14:00:00', '16:00:00'),
-   ('Saturday', '10:00:00', '12:00:00'),
-   ('Monday', '14:00:00', '16:00:00'),
-   ('Tuesday', '18:00:00', '20:00:00'),
-   ('Wednesday', '10:00:00', '12:00:00'),
-   ('Thursday', '14:00:00', '16:00:00');
+  INSERT INTO schedule (schedule_day, start_time, end_time, course_id) VALUES
+  -- Monday - Pre-assigned to Courses 1-6
+  ('Monday', '08:00:00', '10:00:00', NULL),  -- Course 1
+  ('Monday', '10:00:00', '12:00:00', NULL),  -- Course 2
+  ('Monday', '12:00:00', '14:00:00', 3),  -- Course 3
+  ('Monday', '16:00:00', '18:00:00', 4),  -- Course 4
+  ('Monday', '18:00:00', '20:00:00', 5),  -- Course 5
+  ('Monday', '20:00:00', '22:00:00', NULL),  -- Course 6
+
+  -- Tuesday - Pre-assigned to Courses 7-10 (first 4 slots)
+  ('Tuesday', '08:00:00', '10:00:00', 7),  -- Course 7
+  ('Tuesday', '10:00:00', '12:00:00', NULL),  -- Course 8
+  ('Tuesday', '12:00:00', '14:00:00', 9),  -- Course 9
+  ('Tuesday', '16:00:00', '18:00:00', NULL), -- Course 10
+
+  -- Tuesday - Remaining slots (unassigned)
+  ('Tuesday', '18:00:00', '20:00:00', NULL),
+  ('Tuesday', '20:00:00', '22:00:00', NULL),
+
+  -- Wednesday - All unassigned
+  ('Wednesday', '08:00:00', '10:00:00', NULL),
+  ('Wednesday', '10:00:00', '12:00:00', 2),
+  ('Wednesday', '12:00:00', '14:00:00', NULL),
+  ('Wednesday', '16:00:00', '18:00:00', NULL),
+  ('Wednesday', '18:00:00', '20:00:00', NULL),
+  ('Wednesday', '20:00:00', '22:00:00', 6),
+
+  -- Thursday - All unassigned
+  ('Thursday', '08:00:00', '10:00:00', NULL),
+  ('Thursday', '10:00:00', '12:00:00', NULL),
+  ('Thursday', '12:00:00', '14:00:00', NULL),
+  ('Thursday', '16:00:00', '18:00:00', 8),
+  ('Thursday', '18:00:00', '20:00:00', NULL),
+  ('Thursday', '20:00:00', '22:00:00', NULL),
+
+  -- Friday - All unassigned
+  ('Friday', '08:00:00', '10:00:00', NULL),
+  ('Friday', '10:00:00', '12:00:00', NULL),
+  ('Friday', '12:00:00', '14:00:00', NULL),
+  ('Friday', '16:00:00', '18:00:00', NULL),
+  ('Friday', '18:00:00', '20:00:00', NULL),
+  ('Friday', '20:00:00', '22:00:00', 10),
+
+  -- Saturday - All unassigned
+  ('Saturday', '08:00:00', '10:00:00', 1),
+  ('Saturday', '10:00:00', '12:00:00', NULL),
+  ('Saturday', '12:00:00', '14:00:00', NULL);
 
    -- Data for customer_auth (10 rows)
    INSERT INTO customer_auth (provider, token) VALUES

@@ -42,4 +42,8 @@ public class ScheduleDataModel implements Serializable {
     private Time startTime;
     @Column(name = "end_time", nullable = false)
     private Time endTime;
+
+    @ManyToOne(fetch = FetchType.LAZY) //
+    @JoinColumn(name = "course_id", nullable = false)
+    private CourseDataModel course;
 }

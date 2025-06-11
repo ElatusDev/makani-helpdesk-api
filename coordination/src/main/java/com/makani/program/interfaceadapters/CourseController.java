@@ -1,14 +1,11 @@
 package com.makani.program.interfaceadapters;
 
 import com.makani.program.usecases.CreateCourseUseCase;
-import io.swagger.v3.oas.annotations.Parameter;
-import jakarta.validation.Valid;
 import openapi.makani.domain.coordination.api.CoursesApi;
 import openapi.makani.domain.coordination.dto.CourseCreationRequestDTO;
 import openapi.makani.domain.coordination.dto.CourseCreationResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

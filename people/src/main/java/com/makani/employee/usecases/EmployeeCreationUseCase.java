@@ -13,6 +13,7 @@ import openapi.makani.domain.people.dto.EmployeeCreationRequestDTO;
 import openapi.makani.domain.people.dto.EmployeeCreationResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeCreationUseCase {
@@ -24,6 +25,7 @@ public class EmployeeCreationUseCase {
         this.modelMapper = modelMapper;
     }
 
+    @Transactional
     public EmployeeCreationResponseDTO create(EmployeeCreationRequestDTO employeeCreateRequest) {
         EmployeeDataModel received =  modelMapper.map(employeeCreateRequest, EmployeeDataModel.class, "employeeMap");
         return modelMapper.map(employeeRepository.save(received), EmployeeCreationResponseDTO.class);

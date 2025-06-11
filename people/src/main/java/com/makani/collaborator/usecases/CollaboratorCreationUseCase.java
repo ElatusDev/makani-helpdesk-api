@@ -13,6 +13,7 @@ import openapi.makani.domain.people.dto.CollaboratorCreationRequestDTO;
 import openapi.makani.domain.people.dto.CollaboratorCreationResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CollaboratorCreationUseCase {
@@ -25,6 +26,7 @@ public class CollaboratorCreationUseCase {
         this.modelMapper = modelMapper;
     }
 
+    @Transactional
     public CollaboratorCreationResponseDTO create(CollaboratorCreationRequestDTO collaboratorCreateRequest) {
         CollaboratorDataModel received =  modelMapper.map(collaboratorCreateRequest, CollaboratorDataModel.class, "collaboratorMap");
         return modelMapper.map(repository.save(received), CollaboratorCreationResponseDTO.class);
