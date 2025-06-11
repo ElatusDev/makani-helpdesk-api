@@ -14,6 +14,13 @@ END //
 DELIMITER ;
 CALL create_dev_user();
 
+CREATE TABLE store_product (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL UNIQUE,
+    description VARCHAR(60),
+    price DECIMAL(10, 2) NOT NULL,
+    stock_quantity INT NOT NULL
+);
 
 CREATE TABLE card_payment_info (
   card_payment_info_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -86,6 +93,27 @@ CREATE TABLE employee (
     internal_auth_id INT NOT NULL,
     birthdate DATE NOT NULL,
     FOREIGN KEY (internal_auth_id) REFERENCES internal_auth(internal_auth_id)
+);
+
+CREATE TABLE store_transaction (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    transaction_datetime DATETIME NOT NULL,
+    transaction_type VARCHAR(30) NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    employee_id INT,
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
+);
+
+CREATE TABLE store_sale_item (
+    sale_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    transaction_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price_at_sale DECIMAL(10, 2) NOT NULL,
+    item_total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (transaction_id) REFERENCES store_transaction(transaction_id),
+    FOREIGN KEY (product_id) REFERENCES store_product(product_id)
 );
 
 CREATE TABLE collaborator (

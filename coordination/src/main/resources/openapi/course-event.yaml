@@ -2,71 +2,6 @@ openapi: 3.0.0
 info:
   title:   Course Event Entity
   version: '1.0.0'
-components:
-  schemas:
-    BaseCourseEvent:
-      type: object
-      properties:
-        date:
-          type: string
-          format: date
-        title:
-          type: string
-          maxLength: 50
-        description:
-          type: string
-          maxLength: 200
-        scheduleId:
-          type: integer
-        courseId:
-          type: integer
-        instructorId:
-          type: integer
-        adultAttendeeIds:
-          type: array
-          items:
-            type: integer
-        minorAttendeeIds:
-          type: array
-          items:
-            type: integer
-      required:
-        - date
-        - title
-        - description
-        - scheduleId
-        - courseId
-        - instructorId
-        - adultAttendeeIds
-        - minorAttendeeIds
-    CourseEventCreateRequest:
-      allOf:
-        - $ref: '#/components/schemas/BaseCourseEvent'
-    CourseEventCreateResponse:
-      type: object
-      properties:
-        courseEventId:
-          type: integer
-          readOnly: true
-      required:
-        - courseEventId
-    GetCourseEventResponse:
-      allOf:
-        - $ref: '#/components/schemas/BaseCourseEvent'
-        - type: object
-          properties:
-            courseEventId:
-              type: integer
-              readOnly: true
-          required:
-            - courseEventId
-    ErrorResponse:
-      type: object
-      properties:
-        message:
-          type: string
-      required:
-        - message
 paths:
   '/course-events':
     post:
@@ -203,3 +138,68 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    BaseCourseEvent:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+          maxLength: 200
+        scheduleId:
+          type: integer
+        courseId:
+          type: integer
+        instructorId:
+          type: integer
+        adultAttendeeIds:
+          type: array
+          items:
+            type: integer
+        minorAttendeeIds:
+          type: array
+          items:
+            type: integer
+      required:
+        - date
+        - title
+        - description
+        - scheduleId
+        - courseId
+        - instructorId
+        - adultAttendeeIds
+        - minorAttendeeIds
+    CourseEventCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseCourseEvent'
+    CourseEventCreateResponse:
+      type: object
+      properties:
+        courseEventId:
+          type: integer
+          readOnly: true
+      required:
+        - courseEventId
+    GetCourseEventResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseCourseEvent'
+        - type: object
+          properties:
+            courseEventId:
+              type: integer
+              readOnly: true
+          required:
+            - courseEventId
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - messag

@@ -7,7 +7,7 @@
  */
 package com.makani.people.customer;
 
-import com.makani.people.AbstractPerson;
+import com.makani.AbstractPerson;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class MinorStudentDataModel extends AbstractPerson implements Serializabl
     @JoinColumn(name = "tutor_id")
     private TutorDataModel tutor;
 
-    @OneToOne(optional = true)
+    @OneToOne(optional = true, cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_auth_id")
     private CustomerAuthDataModel customerAuth;
 

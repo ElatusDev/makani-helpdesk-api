@@ -7,8 +7,6 @@
 */
 package com.makani.coordination.program;
 
-import com.makani.coordination.event.AbstractEvent;
-import com.makani.coordination.event.CourseEventDataModel;
 import com.makani.people.collaborator.CollaboratorDataModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

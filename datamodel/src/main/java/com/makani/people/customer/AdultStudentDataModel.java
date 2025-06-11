@@ -7,7 +7,7 @@
  */
 package com.makani.people.customer;
 
-import com.makani.people.AbstractPerson;
+import com.makani.AbstractPerson;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +39,7 @@ public class AdultStudentDataModel extends AbstractPerson implements Serializabl
     @Column(name = "profile_picture", columnDefinition = "MEDIUMBLOB")
     private Byte[] profilePicture;
 
-    @OneToOne(optional = true)
+    @OneToOne(optional = true, cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_auth_id")
     private CustomerAuthDataModel customerAuth;
 
