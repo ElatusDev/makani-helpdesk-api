@@ -26,7 +26,7 @@ public class GetCollaboratorByIdUseCase {
         this.modelMapper = modelMapper;
     }
 
-    public GetCollaboratorResponseDTO getCollaboratorId(Integer collaboratorId) {
+    public GetCollaboratorResponseDTO get(Integer collaboratorId) {
           Optional<CollaboratorDataModel> queryResult = repository.findById(collaboratorId);
           if(queryResult.isPresent()) {
               return modelMapper.map(queryResult.get(), GetCollaboratorResponseDTO.class);

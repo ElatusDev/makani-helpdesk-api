@@ -56,7 +56,7 @@ public class CollaboratorController implements CollaboratorsApi {
 
     @Override
     public ResponseEntity<GetCollaboratorResponseDTO> getCollaboratorById(Integer collaboratorId) {
-        return ResponseEntity.ok(getCollaboratorByIdUseCase.getCollaboratorId(collaboratorId));
+        return ResponseEntity.ok(getCollaboratorByIdUseCase.get(collaboratorId));
     }
 
     @Override

@@ -2,20 +2,14 @@ openapi: 3.0.0
 info:
   title: Coordination Module API
   version: 1.0.0
+  description: API to manage courses and activities calendar
 components:
   schemas:
-    Schedule:
-      $ref: './schedule.yaml#/components/schemas'
     Course:
       $ref: './course.yaml#/components/schemas'
     CourseEvent:
       $ref: './course-event.yaml#/components/schemas'
-
 paths:
-  /schedules:
-    $ref: './schedule.yaml#/paths/~1schedules'
-  /schedules/{scheduleId}:
-    $ref: './schedule.yaml#/paths/~1schedules~1{scheduleId}'
   /courses:
     $ref: './course.yaml#/paths/~1courses'
   /courses/{courseId}:

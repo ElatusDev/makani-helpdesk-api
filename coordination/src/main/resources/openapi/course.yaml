@@ -1,7 +1,109 @@
 openapi: 3.0.0
 info:
-  title:   Course Entity
+  title:  Course Entity
   version: '1.0.0'
+  description: API for courses
+paths:
+  '/courses':
+    post:
+      operationId: createCourse
+      summary: Create a new course
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseCreationRequest'
+      responses:
+        '201':
+          description: Course created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CourseCreationResponse'
+        '400':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    get:
+      summary: Get all courses
+      operationId: getCourses
+      responses:
+        '200':
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCourseResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  '/courses/{courseId}':
+    get:
+      operationId: getCourseById
+      summary: Get a course by ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCourseResponse'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      operationId: deleteCourseById
+      summary: Delete a course
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Course deleted successfully
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 components:
   schemas:
     BaseCourse:
@@ -57,139 +159,3 @@ components:
           type: string
       required:
         - message
-paths:
-  '/courses':
-    post:
-      summary: Create a new course
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CourseCreationRequest'
-      responses:
-        '201':
-          description: Course created successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CourseCreationResponse'
-        '400':
-          description: Invalid request data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: An unexpected error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    get:
-      summary: Get all courses
-      responses:
-        '200':
-          description: List of courses
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/GetCourseResponse'
-        '500':
-          description: An unexpected error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-  '/courses/{courseId}':
-    get:
-      summary: Get a course by ID
-      parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Course details
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetCourseResponse'
-        '404':
-          description: Course not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: An unexpected error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    put:
-      summary: Update a course
-      parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CourseCreationRequest'
-      responses:
-        '200':
-          description: Course updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CourseCreationResponse'
-        '400':
-          description: Invalid request data
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: Course not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: An unexpected error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      summary: Delete a course
-      parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '204':
-          description: Course deleted successfully
-        '404':
-          description: Course not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: An unexpected error occurred
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'

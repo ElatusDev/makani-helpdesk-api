@@ -42,12 +42,12 @@ public class EmployeeController implements EmployeesApi {
 
     @Override
     public ResponseEntity<GetEmployeeResponseDTO> getEmployeeById(Integer employeeId) {
-        return ResponseEntity.ok(getEmployeeByIdUseCase.getEmployeeId(employeeId));
+        return ResponseEntity.ok(getEmployeeByIdUseCase.get(employeeId));
     }
 
     @Override
     public ResponseEntity<List<GetEmployeeResponseDTO>> getEmployees() {
-        return ResponseEntity.ok(getAllEmployeesUseCase.getAllEmployees());
+        return ResponseEntity.ok(getAllEmployeesUseCase.getAll());
     }
 
     @Override

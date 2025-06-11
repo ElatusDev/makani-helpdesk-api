@@ -39,7 +39,7 @@ public class AdultStudentDataModel extends AbstractPerson implements Serializabl
     @Column(name = "profile_picture", columnDefinition = "MEDIUMBLOB")
     private Byte[] profilePicture;
 
-    @OneToOne(optional = false, cascade =  CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(optional = true, cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_auth_id")
     private CustomerAuthDataModel customerAuth;
 

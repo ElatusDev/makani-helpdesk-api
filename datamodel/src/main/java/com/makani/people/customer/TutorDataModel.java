@@ -44,7 +44,7 @@ public class TutorDataModel implements Serializable {
     @Column(nullable = true, length = 50, unique = true)
     private String email;
 
-    @OneToOne(optional = true)
+    @OneToOne(optional = true, cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_auth_id")
     private CustomerAuthDataModel customerAuth;
 }

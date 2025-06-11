@@ -26,7 +26,7 @@ public class GetEmployeeByIdUseCase {
         this.modelMapper = modelMapper;
     }
 
-    public GetEmployeeResponseDTO getEmployeeId(Integer employeeId) {
+    public GetEmployeeResponseDTO get(Integer employeeId) {
           Optional<EmployeeDataModel> queryResult = employeeRepository.findByEmployeeId(employeeId);
           if(queryResult.isPresent()) {
               return modelMapper.map(queryResult.get(), GetEmployeeResponseDTO.class, "getEmployeeResponseDtoMap");

@@ -24,7 +24,7 @@ public class GetAllEmployeesUseCase {
         this.modelMapper = modelMapper;
     }
 
-    public List<GetEmployeeResponseDTO> getAllEmployees(){
+    public List<GetEmployeeResponseDTO> getAll(){
         return employeeRepository.findAll()
                 .stream()
                 .map(dataModel -> modelMapper.map(dataModel, GetEmployeeResponseDTO.class))
