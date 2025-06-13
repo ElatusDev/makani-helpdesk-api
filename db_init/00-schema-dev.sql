@@ -50,7 +50,7 @@ CREATE TABLE schedule (
     schedule_day VARCHAR(9) NOT NULL,
     start_time TIME NOT NULL,
     end_time TIME NOT NULL,
-    course_id INT NOT NULL,
+    course_id INT,
     FOREIGN KEY (course_id) REFERENCES course(course_id)
 );
 

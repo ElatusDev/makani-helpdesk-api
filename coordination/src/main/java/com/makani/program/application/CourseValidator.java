@@ -63,15 +63,13 @@ public class CourseValidator {
             throw new ScheduleNotFoundException(missingIds);
         }
 
-        List<Integer> occupiedScheduleIds = foundSchedules.stream()
+        List<String> occupiedScheduleIds = foundSchedules.stream()
                 .filter(this::isAssigned)
-                .map(ScheduleDataModel::getScheduleId)
+                .map(model -> model.getCourse().getName())
                 .toList();
 
         if (!occupiedScheduleIds.isEmpty()) {
-            throw new ScheduleNotAvailableException(occupiedScheduleIds.stream()
-                    .map(String::valueOf)
-                    .collect(Collectors.joining(", ")));
+            throw new ScheduleNotAvailableException(String.join(", ", occupiedScheduleIds));
         }
         return foundSchedules;
     }

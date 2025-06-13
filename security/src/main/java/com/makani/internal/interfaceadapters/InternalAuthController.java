@@ -20,7 +20,7 @@ public class InternalAuthController implements LoginApi {
 
     @Override
     public ResponseEntity<AuthTokenResponseDTO> loginInternal(LoginRequestDTO loginRequestDTO) {
-        return ResponseEntity.ok(internalAuthenticationUseCase.loginEmployee(loginRequestDTO));
+        return ResponseEntity.ok(internalAuthenticationUseCase.login(loginRequestDTO));
     }
 }
 
