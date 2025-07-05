@@ -31,4 +31,7 @@ public class SchedulePersistenceAdapter implements SchedulePersistenceOutputPort
          scheduleRepository.saveAll(schedules);
     }
 
+    public void set() {
+
+    }
 }

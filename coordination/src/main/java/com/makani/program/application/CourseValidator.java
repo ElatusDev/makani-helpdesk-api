@@ -29,7 +29,8 @@ public class CourseValidator {
         List<CollaboratorDataModel> foundCollaborator = collaboratorRepository.findAllById(collaboratorIds);
 
         if (foundCollaborator.size() != collaboratorIds.size()) {
-            Set<Integer> foundIds = foundCollaborator.stream().map(CollaboratorDataModel::getCollaboratorId).collect(Collectors.toSet());
+            Set<Integer> foundIds = foundCollaborator.stream().map(CollaboratorDataModel::getCollaboratorId)
+                                                              .collect(Collectors.toSet());
             String missingIds = collaboratorIds.stream()
                     .filter(id -> !foundIds.contains(id))
                     .map(String::valueOf)

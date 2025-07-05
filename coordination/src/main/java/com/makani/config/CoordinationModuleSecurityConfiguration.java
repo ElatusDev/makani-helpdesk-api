@@ -1,7 +1,6 @@
 package com.makani.config;
 
 
-import com.makani.utilities.ModuleSecurityConfigurator;
 import com.makani.utilities.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

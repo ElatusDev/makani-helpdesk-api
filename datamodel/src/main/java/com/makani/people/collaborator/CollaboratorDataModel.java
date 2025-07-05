@@ -44,7 +44,7 @@ public class CollaboratorDataModel extends AbstractPerson implements Serializabl
     @Column(name = "profile_picture", columnDefinition = "MEDIUMBLOB")
     private Byte[] profilePicture;
 
-    @OneToOne(optional = false, cascade =  CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(optional = false,  cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "internal_auth_id")
     private InternalAuthDataModel internalAuth;
 }
