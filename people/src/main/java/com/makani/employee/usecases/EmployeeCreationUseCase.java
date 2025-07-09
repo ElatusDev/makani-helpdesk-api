@@ -7,6 +7,7 @@
  */
 package com.makani.employee.usecases;
 
+import com.makani.employee.interfaceadapters.EmployeeEncryption;
 import com.makani.people.employee.EmployeeDataModel;
 import com.makani.employee.interfaceadapters.EmployeeRepository;
 import openapi.makani.domain.people.dto.EmployeeCreationRequestDTO;
@@ -17,17 +18,22 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeCreationUseCase {
+    private static final String MAP_NAME = "employeeMap";
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
+    private final EmployeeEncryption encryption;
 
-    public EmployeeCreationUseCase(EmployeeRepository employeeRepository, ModelMapper modelMapper) {
+    public EmployeeCreationUseCase(EmployeeRepository employeeRepository, ModelMapper modelMapper,
+                                   EmployeeEncryption encryption) {
         this.employeeRepository = employeeRepository;
         this.modelMapper = modelMapper;
+        this.encryption = encryption;
     }
 
     @Transactional
     public EmployeeCreationResponseDTO create(EmployeeCreationRequestDTO employeeCreateRequest) {
-        EmployeeDataModel received =  modelMapper.map(employeeCreateRequest, EmployeeDataModel.class, "employeeMap");
-        return modelMapper.map(employeeRepository.save(received), EmployeeCreationResponseDTO.class);
+        EmployeeDataModel received =  modelMapper.map(employeeCreateRequest, EmployeeDataModel.class, MAP_NAME);
+        EmployeeDataModel encrypted = encryption.encrypt(received);
+        return modelMapper.map(employeeRepository.save(encrypted), EmployeeCreationResponseDTO.class);
     }
 }

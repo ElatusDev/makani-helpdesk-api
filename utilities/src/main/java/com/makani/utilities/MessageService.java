@@ -29,6 +29,9 @@ public class MessageService {
     private static final String SCHEDULE_NOT_FOUND = "schedule.not.found";
     private static final String COURSE_COLLABORATOR_NOT_FOUND="course.collaborator.not.assignable";
 
+    // Internal server error
+    private static final String INTERNAL_ERROR_HIGH_SEVERITY = "internal.error.high.severity";
+
     private final MessageSource messageSource;
     private final Locale locale;
     private String adultStudent;
@@ -106,5 +109,9 @@ public class MessageService {
 
     public String getScheduleNotFound(String notFounded) {
         return messageSource.getMessage(SCHEDULE_NOT_FOUND, new Object[]{notFounded}, locale);
+    }
+
+    public String getInternalErrorHighSeverity(){
+        return messageSource.getMessage(INTERNAL_ERROR_HIGH_SEVERITY, null, locale);
     }
 }

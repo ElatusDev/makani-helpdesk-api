@@ -7,6 +7,7 @@
  */
 package com.makani.collaborator.usecases;
 
+import com.makani.collaborator.interfaceadapters.CollaboratorEncryption;
 import com.makani.people.collaborator.CollaboratorDataModel;
 import com.makani.collaborator.interfaceadapters.CollaboratorRepository;
 import openapi.makani.domain.people.dto.CollaboratorCreationRequestDTO;
@@ -17,18 +18,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CollaboratorCreationUseCase {
+    private static final String TYPE_MAP = "collaboratorMap";
 
     private final CollaboratorRepository repository;
     private final ModelMapper modelMapper;
+    private final CollaboratorEncryption encryption;
 
-    public CollaboratorCreationUseCase(CollaboratorRepository repository, ModelMapper modelMapper) {
+    public CollaboratorCreationUseCase(CollaboratorRepository repository,
+                                       ModelMapper modelMapper,
+                                       CollaboratorEncryption encryption) {
         this.repository = repository;
         this.modelMapper = modelMapper;
+        this.encryption = encryption;
     }
 
     @Transactional
     public CollaboratorCreationResponseDTO create(CollaboratorCreationRequestDTO collaboratorCreateRequest) {
-        CollaboratorDataModel received =  modelMapper.map(collaboratorCreateRequest, CollaboratorDataModel.class, "collaboratorMap");
-        return modelMapper.map(repository.save(received), CollaboratorCreationResponseDTO.class);
+        CollaboratorDataModel received =  modelMapper.map(collaboratorCreateRequest, CollaboratorDataModel.class, TYPE_MAP);
+        CollaboratorDataModel encrypted = encryption.encrypt(received);
+        return modelMapper.map(repository.save(encrypted), CollaboratorCreationResponseDTO.class);
     }
 }

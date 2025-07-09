@@ -35,13 +35,13 @@ public class TutorDataModel implements Serializable {
     @Column(name = "tutor_id")
     private Integer tutorId;
 
-    @Column(name = "first_name", nullable = false, length = 30)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name", nullable = false, length = 30)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column(nullable = false, length = 15, unique = true)
+    @Column(nullable = false, unique = true)
     private String phone;
-    @Column(nullable = true, length = 50, unique = true)
+    @Column(unique = true)
     private String email;
 
     @OneToOne(optional = true, cascade =  CascadeType.ALL, orphanRemoval = true)

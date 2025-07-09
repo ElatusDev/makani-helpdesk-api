@@ -7,6 +7,7 @@
  */
 package com.makani.customer.adultstudent.usecases;
 
+import com.makani.customer.adultstudent.interfaceadapters.AdultStudentEncryption;
 import com.makani.people.customer.AdultStudentDataModel;
 import com.makani.customer.adultstudent.interfaceadapters.AdultStudentRepository;
 import openapi.makani.domain.people.dto.AdultStudentCreationRequestDTO;
@@ -19,17 +20,21 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdultStudentCreationUseCase {
     private final AdultStudentRepository adultStudentRepository;
     private final ModelMapper modelMapper;
+    private final AdultStudentEncryption encryption;
 
     public AdultStudentCreationUseCase(AdultStudentRepository adultStudentRepository,
-                                       ModelMapper modelMapper) {
+                                       ModelMapper modelMapper,
+                                       AdultStudentEncryption encryption) {
         this.adultStudentRepository = adultStudentRepository;
         this.modelMapper = modelMapper;
+        this.encryption = encryption;
     }
 
     @Transactional
     public AdultStudentCreationResponseDTO create(AdultStudentCreationRequestDTO dto) {
-        AdultStudentDataModel model = modelMapper.map(dto, AdultStudentDataModel.class);
-        AdultStudentDataModel persisted = adultStudentRepository.save(model);
+        AdultStudentDataModel received = modelMapper.map(dto, AdultStudentDataModel.class);
+        AdultStudentDataModel encrypted = encryption.encrypt(received);
+        AdultStudentDataModel persisted = adultStudentRepository.save(encrypted);
         return modelMapper.map(persisted, AdultStudentCreationResponseDTO.class);
     }
 }

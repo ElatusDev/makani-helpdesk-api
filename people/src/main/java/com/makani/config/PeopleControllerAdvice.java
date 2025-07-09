@@ -12,6 +12,8 @@ import com.makani.customer.adultstudent.interfaceadapters.AdultStudentController
 import com.makani.employee.interfaceadapters.EmployeeController;
 import com.makani.exception.*;
 import com.makani.utilities.MessageService;
+import com.makani.utilities.exceptions.DecryptionException;
+import com.makani.utilities.exceptions.EncryptionException;
 import openapi.makani.domain.people.dto.ErrorResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -77,13 +79,15 @@ public class PeopleControllerAdvice {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
-        // Construct your ErrorResponseDTO
         ErrorResponseDTO errorResponse = new ErrorResponseDTO();
-        // Assuming your ErrorResponseDTO has a setStatusCode and setMessage method
         errorResponse.setMessage("Validation failed for request. Please check provided data." + ex.getMessage());
-        // You might want to add a 'details' field to your ErrorResponseDTO for more specifics
-        // errorResponse.setDetails(errors.toString()); // Or format more nicely
-
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({EncryptionException.class , DecryptionException.class})
+    public ResponseEntity<ErrorResponseDTO> handleEncryptionException(){
+        ErrorResponseDTO errorResponse  = new ErrorResponseDTO();
+        errorResponse.setMessage(messageService.getInternalErrorHighSeverity());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
