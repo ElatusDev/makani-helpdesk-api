@@ -138,30 +138,30 @@ USE makani_db;
    ('Hourly', 22.00);
 
    -- Data for employee (10 rows)
-   INSERT INTO employee (first_name, last_name, email, phone, address, zip_code, employee_type, internal_auth_id, birthdate) VALUES
-   ('Alice', 'Johnson', 'alice.j@example.com', '123-456-7890', '123 Main St', '12345', 'Full-time', 1, '1990-05-15'),
-   ('Bob', 'Williams', 'bob.w@example.com', '987-654-3210', '456 Oak Ave', '54321', 'Part-time', 2, '1985-10-20'),
-   ('Charlie', 'Brown', 'charlie.b@example.com', '111-222-3333', '789 Pine Ln', '67890', 'Contract', 3, '1992-08-01'),
-   ('David', 'Davis', 'david.d@example.com', '444-555-6666', '101 Elm St', '13579', 'Full-time', 4, '1988-02-28'),
-   ('Emily', 'Wilson', 'emily.w@example.com', '777-888-9999', '202 Maple Dr', '97531', 'Part-time', 5, '1995-11-10'),
-   ('Frank', 'Miller', 'frank.m@example.com', '123-987-4560', '321 Cedar Rd', '24680', 'Contract', 6, '1991-07-05'),
-   ('Grace', 'Moore', 'grace.m@example.com', '456-123-7890', '654 Willow Ct', '80201', 'Full-time', 7, '1987-04-12'),
-   ('Henry', 'Taylor', 'henry.t@example.com', '789-456-3210', '987 Birch St', '30309', 'Part-time', 8, '1993-09-22'),
-   ('Ivy', 'Anderson', 'ivy.a@example.com', '111-999-2222', '111 Spruce Ave', '10001', 'Contract', 9, '1996-06-30'),
-   ('Jack', 'Thomas', 'jack.t@example.com', '222-333-4444', '222 Oakwood Blvd', '20002', 'Full-time', 10, '1989-01-18');
+   INSERT INTO employee (employee_id, first_name, last_name, email, phone, address, zip_code, employee_type, internal_auth_id, birthdate) VALUES
+   (1, 'Alice', 'Johnson', 'alice.j@example.com', '123-456-7890', '123 Main St', '12345', 'Full-time', 1, '1990-05-15'),
+   (2, 'Bob', 'Williams', 'bob.w@example.com', '987-654-3210', '456 Oak Ave', '54321', 'Part-time', 2, '1985-10-20'),
+   (3, 'Charlie', 'Brown', 'charlie.b@example.com', '111-222-3333', '789 Pine Ln', '67890', 'Contract', 3, '1992-08-01'),
+   (4, 'David', 'Davis', 'david.d@example.com', '444-555-6666', '101 Elm St', '13579', 'Full-time', 4, '1988-02-28'),
+   (5, 'Emily', 'Wilson', 'emily.w@example.com', '777-888-9999', '202 Maple Dr', '97531', 'Part-time', 5, '1995-11-10'),
+   (6, 'Frank', 'Miller', 'frank.m@example.com', '123-987-4560', '321 Cedar Rd', '24680', 'Contract', 6, '1991-07-05'),
+   (7, 'Grace', 'Moore', 'grace.m@example.com', '456-123-7890', '654 Willow Ct', '80201', 'Full-time', 7, '1987-04-12'),
+   (8, 'Henry', 'Taylor', 'henry.t@example.com', '789-456-3210', '987 Birch St', '30309', 'Part-time', 8, '1993-09-22'),
+   (9, 'Ivy', 'Anderson', 'ivy.a@example.com', '111-999-2222', '111 Spruce Ave', '10001', 'Contract', 9, '1996-06-30'),
+   (10, 'Jack', 'Thomas', 'jack.t@example.com', '222-333-4444', '222 Oakwood Blvd', '20002', 'Full-time', 10, '1989-01-18');
 
    -- Data for collaborator (10 rows)
-   INSERT INTO collaborator (first_name, last_name, email, phone, address, zip_code, internal_auth_id, skills, profile_picture, birthdate) VALUES
-   ('Karen', 'White', 'karen.w@example.com', '333-444-5555', '333 Pinecrest Ln', '33333', 1, 'Painting, Drawing', NULL, '1980-03-25'),
-   ('Liam', 'Hall', 'liam.h@example.com', '444-333-2222', '444 River Rd', '44444', 2, 'Sculpture', NULL, '1976-11-08'),
-   ('Mia', 'Young', 'mia.y@example.com', '555-666-7777', '555 Lakeview Dr', '55555', 3, 'Digital Art, Animation', NULL, '1983-09-18'),
-   ('Noah', 'King', 'noah.k@example.com', '666-555-4444', '666 Forest Ave', '66666', 4, 'Photography', NULL, '1979-06-12'),
-   ('Olivia', 'Wright', 'olivia.w@example.com', '777-111-2222', '777 Hilltop Ct', '77777', 5, 'Creative Writing', NULL, '1985-02-03'),
-   ('Peter', 'Green', 'peter.g@example.com', '888-222-3333', '888 Meadow Ln', '88888', 6, 'Music Theory', NULL, '1981-12-21'),
-   ('Quinn', 'Adams', 'quinn.a@example.com', '999-333-1111', '999 Valley Rd', '99999', 7, 'Dance', NULL, '1986-10-09'),
-   ('Ryan', 'Nelson', 'ryan.n@example.com', '101-202-3030', '101 Mountain View', '10101', 8, 'Acting', NULL, '1982-08-16'),
-   ('Sophia', 'Carter', 'sophia.c@example.com', '202-303-4040', '202 Sunset Blvd', '20202', 9, 'Graphic Design', NULL, '1987-05-04'),
-   ('Thomas', 'Roberts', 'thomas.r@example.com', '303-404-5050', '303 Ocean Dr', '30303', 10, 'Web Development', NULL, '1984-01-11');
+   INSERT INTO collaborator (collaborator_id, first_name, last_name, email, phone, address, zip_code, internal_auth_id, skills, profile_picture, birthdate) VALUES
+   (1, 'Karen', 'White', 'karen.w@example.com', '333-444-5555', '333 Pinecrest Ln', '33333', 1, 'Painting, Drawing', NULL, '1980-03-25'),
+   (2, 'Liam', 'Hall', 'liam.h@example.com', '444-333-2222', '444 River Rd', '44444', 2, 'Sculpture', NULL, '1976-11-08'),
+   (3, 'Mia', 'Young', 'mia.y@example.com', '555-666-7777', '555 Lakeview Dr', '55555', 3, 'Digital Art, Animation', NULL, '1983-09-18'),
+   (4, 'Noah', 'King', 'noah.k@example.com', '666-555-4444', '666 Forest Ave', '66666', 4, 'Photography', NULL, '1979-06-12'),
+   (5, 'Olivia', 'Wright', 'olivia.w@example.com', '777-111-2222', '777 Hilltop Ct', '77777', 5, 'Creative Writing', NULL, '1985-02-03'),
+   (6, 'Peter', 'Green', 'peter.g@example.com', '888-222-3333', '888 Meadow Ln', '88888', 6, 'Music Theory', NULL, '1981-12-21'),
+   (7, 'Quinn', 'Adams', 'quinn.a@example.com', '999-333-1111', '999 Valley Rd', '99999', 7, 'Dance', NULL, '1986-10-09'),
+   (8, 'Ryan', 'Nelson', 'ryan.n@example.com', '101-202-3030', '101 Mountain View', '10101', 8, 'Acting', NULL, '1982-08-16'),
+   (9, 'Sophia', 'Carter', 'sophia.c@example.com', '202-303-4040', '202 Sunset Blvd', '20202', 9, 'Graphic Design', NULL, '1987-05-04'),
+   (10, 'Thomas', 'Roberts', 'thomas.r@example.com', '303-404-5050', '303 Ocean Dr', '30303', 10, 'Web Development', NULL, '1984-01-11');
 
    -- Data for membership (10 rows)
    INSERT INTO membership (membership_id, membership_type, fee, description) VALUES
@@ -204,16 +204,16 @@ USE makani_db;
 
    -- Data for tutor (10 rows)
     INSERT INTO tutor (first_name, last_name, email, phone, customer_auth_id) VALUES
-    ('Liam', 'Baker', 'liam.baker@example.com', '111-222-3333', 1),
-    ('Olivia', 'Clark', 'olivia.c@example.com', '222-333-4444', 2),
-    ('Noah', 'Davis', 'noah.d@example.com', '333-444-5555', 3),
-    ('Emma', 'Evans', 'emma.e@example.com', '444-555-6666', 4),
-    ('Jackson', 'Foster', 'jackson.f@example.com', '555-666-7777', 5),
-    ('Sophia', 'Green', 'sophia.g@example.com', '666-777-8888', 6),
-    ('Aiden', 'Hill', 'aiden.h@example.com', '777-888-9999', 7),
-    ('Ava', 'King', 'ava.k@example.com', '888-999-0000', 8),
-    ('Lucas', 'Lewis', 'lucas.l@example.com', '999-000-1111', 9),
-    ('Mia', 'Moore', 'mia.m@example.com', '000-111-2222', 10);
+    (1,'Liam', 'Baker', 'liam.baker@example.com', '111-222-3333', 1),
+    (2, 'Olivia', 'Clark', 'olivia.c@example.com', '222-333-4444', 2),
+    (3, 'Noah', 'Davis', 'noah.d@example.com', '333-444-5555', 3),
+    (4, 'Emma', 'Evans', 'emma.e@example.com', '444-555-6666', 4),
+    (5, 'Jackson', 'Foster', 'jackson.f@example.com', '555-666-7777', 5),
+    (6, 'Sophia', 'Green', 'sophia.g@example.com', '666-777-8888', 6),
+    (7, 'Aiden', 'Hill', 'aiden.h@example.com', '777-888-9999', 7),
+    (8, 'Ava', 'King', 'ava.k@example.com', '888-999-0000', 8),
+    (9, 'Lucas', 'Lewis', 'lucas.l@example.com', '999-000-1111', 9),
+    (10, 'Mia', 'Moore', 'mia.m@example.com', '000-111-2222', 10);
 
    -- Data for minor_student (10 rows)
    INSERT INTO minor_student (minor_student_id, first_name, last_name, email, phone, address, zip_code, customer_auth_id, tutor_id, profile_picture, birthdate) VALUES
