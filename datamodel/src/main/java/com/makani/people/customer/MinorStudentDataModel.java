@@ -36,7 +36,7 @@ public class MinorStudentDataModel extends AbstractPerson implements Serializabl
     @Column(name = "minor_student_id")
     private Integer minorStudentId;
     @Lob
-    @Column(name = "profile_picture", columnDefinition = "MEDIUMBLOB")
+    @Column(name = "encrypted_profile_picture", columnDefinition = "MEDIUMBLOB")
     private Byte[] profilePicture;
 
     @OneToOne(optional = false)

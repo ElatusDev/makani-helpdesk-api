@@ -1,6 +1,6 @@
 package com.makani.utilities.mock;
 
-import com.makani.utilities.AESGCMEncryptionService;
+import com.makani.utilities.interfaceadapters.AESGCMEncryptionService;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

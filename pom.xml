@@ -29,6 +29,8 @@
         <jjwt.version>0.12.6</jjwt.version>
         <mercadopago.sdk.version>2.5.0</mercadopago.sdk.version>
         <lombok.version>1.18.30</lombok.version>
+        <commons.codec.version>1.18.0</commons.codec.version>
+        <libphonenumber.version>9.0.9</libphonenumber.version>
 
         <sonar.organization>elatusdev</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -145,6 +147,16 @@
             </dependency>
 
             <!-- Utilities -->
+            <dependency>
+                <groupId>com.googlecode.libphonenumber</groupId>
+                <artifactId>libphonenumber</artifactId>
+                <version>${libphonenumber.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons.codec.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper</artifactId>

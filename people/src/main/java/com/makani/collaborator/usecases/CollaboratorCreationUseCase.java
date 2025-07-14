@@ -7,9 +7,9 @@
  */
 package com.makani.collaborator.usecases;
 
-import com.makani.collaborator.interfaceadapters.CollaboratorEncryption;
 import com.makani.people.collaborator.CollaboratorDataModel;
 import com.makani.collaborator.interfaceadapters.CollaboratorRepository;
+import com.makani.utilities.interfaceadapters.HashingService;
 import openapi.makani.domain.people.dto.CollaboratorCreationRequestDTO;
 import openapi.makani.domain.people.dto.CollaboratorCreationResponseDTO;
 import org.modelmapper.ModelMapper;
@@ -22,20 +22,26 @@ public class CollaboratorCreationUseCase {
 
     private final CollaboratorRepository repository;
     private final ModelMapper modelMapper;
-    private final CollaboratorEncryption encryption;
+    private final HashingService hashingService;
 
     public CollaboratorCreationUseCase(CollaboratorRepository repository,
                                        ModelMapper modelMapper,
-                                       CollaboratorEncryption encryption) {
+                                       HashingService hashingService) {
         this.repository = repository;
         this.modelMapper = modelMapper;
-        this.encryption = encryption;
+        this.hashingService = hashingService;
     }
 
     @Transactional
-    public CollaboratorCreationResponseDTO create(CollaboratorCreationRequestDTO collaboratorCreateRequest) {
-        CollaboratorDataModel received =  modelMapper.map(collaboratorCreateRequest, CollaboratorDataModel.class, TYPE_MAP);
-        CollaboratorDataModel encrypted = encryption.encrypt(received);
-        return modelMapper.map(repository.save(encrypted), CollaboratorCreationResponseDTO.class);
+    public CollaboratorCreationResponseDTO create(CollaboratorCreationRequestDTO dto) {
+        CollaboratorDataModel received =  modelMapper.map(dto, CollaboratorDataModel.class, TYPE_MAP);
+
+
+        String normalizedEmail = hashingService.normalizeEmail(received.getPersonPII().getEmail());
+        received.getPersonPII().setEmailHash(hashingService.generateHash(normalizedEmail));
+        String normalizedPhone = hashingService.normalizePhoneNumber(received.getPersonPII().getPhone());
+        received.getPersonPII().setPhoneHash(normalizedPhone);
+
+        return modelMapper.map(repository.save(received), CollaboratorCreationResponseDTO.class);
     }
 }

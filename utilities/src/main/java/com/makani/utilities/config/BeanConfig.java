@@ -1,5 +1,6 @@
 package com.makani.utilities.config;
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,7 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import java.util.Locale;
 
 @Configuration
-public class MessageSourceConfig {
+public class BeanConfig {
     public static final String LOCALE_LANGUAGE = "es-MX";
 
     @Bean
@@ -24,5 +25,9 @@ public class MessageSourceConfig {
         messageSource.setCacheSeconds(-1);
         messageSource.setDefaultLocale(Locale.forLanguageTag(LOCALE_LANGUAGE));
         return messageSource;
+    }
+
+    public PhoneNumberUtil phoneNumberUtil(){
+        return PhoneNumberUtil.getInstance();
     }
 }

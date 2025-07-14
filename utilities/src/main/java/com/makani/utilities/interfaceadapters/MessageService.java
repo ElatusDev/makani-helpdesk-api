@@ -1,6 +1,6 @@
-package com.makani.utilities;
+package com.makani.utilities.interfaceadapters;
 
-import com.makani.utilities.config.MessageSourceConfig;
+import com.makani.utilities.config.BeanConfig;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class MessageService {
 
     public MessageService(MessageSource messageSource) {
         this.messageSource = messageSource;
-        this.locale = Locale.forLanguageTag(MessageSourceConfig.LOCALE_LANGUAGE);
+        this.locale = Locale.forLanguageTag(BeanConfig.LOCALE_LANGUAGE);
     }
 
     @PostConstruct

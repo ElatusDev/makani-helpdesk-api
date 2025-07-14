@@ -21,6 +21,12 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope> <!-- or omit scope if needed -->
         </dependency>
+        <dependency>
+            <groupId>com.makani</groupId>
+            <artifactId>utilities</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

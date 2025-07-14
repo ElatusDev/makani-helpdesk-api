@@ -1,4 +1,4 @@
-package com.makani.utilities;
+package com.makani.utilities.interfaceadapters;
 
 import com.makani.utilities.exceptions.DecryptionException;
 import com.makani.utilities.exceptions.EncryptionException;

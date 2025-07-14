@@ -11,7 +11,7 @@ import com.makani.collaborator.interfaceadapters.CollaboratorController;
 import com.makani.customer.adultstudent.interfaceadapters.AdultStudentController;
 import com.makani.employee.interfaceadapters.EmployeeController;
 import com.makani.exception.*;
-import com.makani.utilities.MessageService;
+import com.makani.utilities.interfaceadapters.MessageService;
 import com.makani.utilities.exceptions.DecryptionException;
 import com.makani.utilities.exceptions.EncryptionException;
 import openapi.makani.domain.people.dto.ErrorResponseDTO;

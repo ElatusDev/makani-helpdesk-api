@@ -7,6 +7,7 @@
  */
 package com.makani.people.customer;
 
+import com.makani.utilities.interfaceadapters.StringEncryptor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,14 +36,26 @@ public class TutorDataModel implements Serializable {
     @Column(name = "tutor_id")
     private Integer tutorId;
 
-    @Column(name = "first_name", nullable = false)
+    @Convert(converter = StringEncryptor.class)
+    @Column(name = "encrypted_first_name", nullable = false)
     private String firstName;
-    @Column(name = "last_name", nullable = false)
+
+    @Convert(converter = StringEncryptor.class)
+    @Column(name = "encrypted_last_name", nullable = false)
     private String lastName;
-    @Column(nullable = false, unique = true)
+
+    @Convert(converter = StringEncryptor.class)
+    @Column(name = "encrypted_phone", nullable = false)
     private String phone;
-    @Column(unique = true)
+
+    @Convert(converter = StringEncryptor.class)
+    @Column(name = "encrypted_email")
     private String email;
+
+    @Column(name = "email_hash", nullable = false, length = 64, unique = true)
+    private String emailHash;
+    @Column(name = "phone_hash", nullable = false, length = 64, unique = true)
+    private String phoneHash;
 
     @OneToOne(optional = true, cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_auth_id")
