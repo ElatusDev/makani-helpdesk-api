@@ -121,7 +121,7 @@ components:
           type: array
           items:
             type: integer
-        availableInstructorIds:
+        availableCollaboratorIds:
           type: array
           items:
             type: integer
@@ -130,7 +130,7 @@ components:
         - description
         - maxCapacity
         - timeTableIds
-        - availableInstructorIds
+        - availableCollaboratorIds
     CourseCreationRequest:
       allOf:
         - $ref: '#/components/schemas/BaseCourse'

@@ -39,8 +39,8 @@ public class StoreTransactionDataModel implements Serializable {
     @Column(name = "transaction_type", nullable = false, length = 30)
     private String transactionType;
 
-    @Column(name = "total_amount", nullable = false, precision = 10, scale = 2)
-    private BigDecimal totalAmount;
+    @Column(name = "total_amount", nullable = false)
+    private Double totalAmount;
 
     @Column(name = "payment_method", nullable = false, length = 50)
     private String paymentMethod;

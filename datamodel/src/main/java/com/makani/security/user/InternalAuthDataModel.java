@@ -27,13 +27,13 @@ public class InternalAuthDataModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "internal_auth_id")
     private Integer internalAuthId;
-    @Lob
-    @Column(name = "username_token",nullable = false, columnDefinition = "TEXT")
-    private String usernameToken;
-    @Lob
-    @Column(name = "password_token",nullable = false, columnDefinition = "TEXT")
-    private String passwordToken;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(name = "encrypted_username",nullable = false)
+    private String username;
+
+    @Column(name = "encrypted_password",nullable = false)
+    private String password;
+
+    @Column(name ="encrypted_role", nullable = false)
     private String role;
 }

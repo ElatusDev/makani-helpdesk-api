@@ -35,13 +35,13 @@ public class MapperModelConfig {
             protected void configure() {
                 map(source.getBirthDate(), destination.getBirthDate());
 
-                assert source.getEmployeeAuth() != null;
-                map(source.getEmployeeAuth().getUsernameToken(), destination.getInternalAuth().getUsernameToken());
-                map(source.getEmployeeAuth().getPasswordToken(), destination.getInternalAuth().getPasswordToken());
+                assert source.getInternalAuth() != null;
+                map(source.getInternalAuth().getUsername(), destination.getInternalAuth().getUsername());
+                map(source.getInternalAuth().getPassword(), destination.getInternalAuth().getPassword());
             }
         };
 
-        PropertyMap<EmployeeDataModel, GetEmployeeResponseDTO> getEmployeeResponseDtoMap = new PropertyMap<>() {
+        PropertyMap<EmployeeDataModel, GetEmployeeResponseDTO> getEmployeeMap = new PropertyMap<>() {
             protected void configure() {
                 map(source.getBirthDate(), destination.getBirthDate());
             }
@@ -51,13 +51,12 @@ public class MapperModelConfig {
             protected void configure() {
                 map(source.getBirthDate(), destination.getBirthDate());
 
-                assert source.getEmployeeAuth() != null;
-                map(source.getEmployeeAuth().getUsernameToken(), destination.getInternalAuth().getUsernameToken());
-                map(source.getEmployeeAuth().getPasswordToken(), destination.getInternalAuth().getPasswordToken());
+                assert source.getInternalAuth() != null;
+                map(source.getInternalAuth().getUsername(), destination.getInternalAuth().getUsername());
+                map(source.getInternalAuth().getPassword(), destination.getInternalAuth().getPassword());
             }
         };
 
-        modelMapper.addMappings(getEmployeeResponseDtoMap);
         modelMapper.addMappings(employeeMap);
         modelMapper.addMappings(collaboratorMap);
         return modelMapper;

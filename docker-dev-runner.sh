@@ -4,6 +4,8 @@
 COMPOSE_FILE="docker-compose.dev.yml" # The name of your docker-compose.yml file
 DB_INIT_DIR="./db_init"          # Directory containing database initialization scripts
 APP_SERVICE_NAME="makani-helpdesk-api" # Name of your application service\
+DB_SERVICE_NAME="makani-mariadb" # Define DB service name for clarity
+
 # --- Functions ---
 
 # Function to update database (using initialization scripts)
@@ -21,17 +23,40 @@ update_db_init() {
     fi
 
     # Validate and remove volume if it exists
-    volume_name="makanihelpdeskapi_db_data"
+    volume_name="makani-helpdesk-api_db_data"
     if docker volume ls --filter name="$volume_name" | grep -q "$volume_name"; then
         echo "Removing existing volume: $volume_name"
         docker volume rm "$volume_name"
     else
-        echo "Volume '$volume_name' does not exist."
+        echo "Volume '$volume_name' does not exist. check naming, volume should always be present"
     fi
 
     echo "--- Starting database with fresh volume ---"
-    docker-compose -f "$COMPOSE_FILE" up --build --force-recreate -d makani-mariadb
-    echo "--- Database updated (using init scripts) ---"
+    docker-compose -f "$COMPOSE_FILE" up --build --force-recreate -d "$DB_SERVICE_NAME"
+
+    # --- Wait for MariaDB to become healthy/initialized ---
+        echo "Waiting for MariaDB container to start and initialize (up to 5 seconds)..."
+        # Check if a healthcheck is defined in your docker-compose.dev.yml for makani-mariadb
+        # If not, the 'healthy' status won't be available, and you might need to rely more on sleep and logs.
+
+        START_TIME=$(date +%s)
+        TIMEOUT=5 # Max seconds to wait for DB to be healthy/ready
+
+        # Loop to check container status and health
+        while true; do
+            CURRENT_TIME=$(date +%s)
+            ELAPSED_TIME=$((CURRENT_TIME - START_TIME))
+
+            if [ "$ELAPSED_TIME" -ge "$TIMEOUT" ]; then
+                echo "Error: MariaDB did not become healthy/ready within $TIMEOUT seconds."
+                echo "Last known status of $DB_SERVICE_NAME:"
+                docker-compose -f "$COMPOSE_FILE" ps "$DB_SERVICE_NAME"
+                echo "--- Displaying MariaDB logs (last 50 lines) for debugging ---"
+                docker logs "$DB_SERVICE_NAME" | tail -n 50
+                exit 1
+            fi
+        done
+        echo "--- Database updated (using init scripts) ---"
 }
 
 run_dev() {

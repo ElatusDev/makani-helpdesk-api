@@ -29,10 +29,11 @@ public class EmployeeDataModel extends AbstractPerson implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private Integer employeeId;
+
     @Column(name = "employee_type", nullable = false, length = 50)
     private String employeeType;
 
-    @OneToOne(optional = false, cascade =  CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(optional = false, cascade =  CascadeType.PERSIST, orphanRemoval = true)
     @JoinColumn(name = "internal_auth_id")
     private InternalAuthDataModel internalAuth;
 }

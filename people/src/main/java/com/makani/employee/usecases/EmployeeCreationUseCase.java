@@ -7,25 +7,48 @@
  */
 package com.makani.employee.usecases;
 
+import com.makani.PersonPIIDataModel;
 import com.makani.people.employee.EmployeeDataModel;
 import com.makani.employee.interfaceadapters.EmployeeRepository;
+import com.makani.utilities.interfaceadapters.HashingService;
+import com.makani.utilities.interfaceadapters.PiiNormalizer;
 import openapi.makani.domain.people.dto.EmployeeCreationRequestDTO;
 import openapi.makani.domain.people.dto.EmployeeCreationResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeCreationUseCase {
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
+    private final HashingService hashingService;
+    private final PiiNormalizer piiNormalizer;
 
-    public EmployeeCreationUseCase(EmployeeRepository employeeRepository, ModelMapper modelMapper) {
+    public static final String MAP_NAME = "employeeMap";
+
+    public EmployeeCreationUseCase(EmployeeRepository employeeRepository,
+                                   ModelMapper modelMapper,
+                                   HashingService hashingService,
+                                   PiiNormalizer piiNormalizer) {
         this.employeeRepository = employeeRepository;
         this.modelMapper = modelMapper;
+        this.hashingService = hashingService;
+        this.piiNormalizer = piiNormalizer;
     }
 
-    public EmployeeCreationResponseDTO create(EmployeeCreationRequestDTO employeeCreateRequest) {
-        EmployeeDataModel received =  modelMapper.map(employeeCreateRequest, EmployeeDataModel.class, "employeeMap");
+    @Transactional
+    public EmployeeCreationResponseDTO create(EmployeeCreationRequestDTO dto)  {
+        final PersonPIIDataModel personPIIDataModel = modelMapper.map(dto, PersonPIIDataModel.class);
+        final EmployeeDataModel received =  modelMapper.map(dto, EmployeeDataModel.class, MAP_NAME);
+        received.setPersonPII(personPIIDataModel);
+
+        String normalizedEmail = piiNormalizer.normalizeEmail(received.getPersonPII().getEmail());
+        received.getPersonPII().setEmailHash(hashingService.generateHash(normalizedEmail));
+
+        String normalizedPhone = piiNormalizer.normalizePhoneNumber(received.getPersonPII().getPhone());
+        received.getPersonPII().setPhoneHash(hashingService.generateHash(normalizedPhone));
+
         return modelMapper.map(employeeRepository.save(received), EmployeeCreationResponseDTO.class);
     }
 }

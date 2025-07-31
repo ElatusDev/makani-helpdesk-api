@@ -43,16 +43,16 @@ public class EmailDataModel implements Serializable {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 150)
     private String sender;
 
     @ElementCollection
     @CollectionTable(name = "email_recipients", joinColumns = @JoinColumn(name = "email_id"))
-    @Column(name = "recipients", columnDefinition = "TEXT")
+    @Column(name = "recipient_email", nullable = false, length = 150)
     private List<String> recipients;
 
     @ElementCollection
     @CollectionTable(name = "email_attachments", joinColumns = @JoinColumn(name = "email_id"))
-    @Column(name = "attachments", columnDefinition = "TEXT")
+    @Column(name = "attachment_url", nullable = false, columnDefinition = "TEXT")
     private List<String> attachments;
 }

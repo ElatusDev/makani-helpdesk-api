@@ -130,7 +130,7 @@ components:
         - $ref: '#/components/schemas/BaseCollaborator'
         - type: object
           properties:
-            employeeAuth:
+            internalAuth:
               $ref: './commons.yaml#/components/schemas/InternalAuth'
     CollaboratorCreationResponse:
       type: object

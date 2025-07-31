@@ -1,14 +1,16 @@
-package com.makani.utilities;
+package com.makani.utilities.interfaceadapters;
 
+import com.makani.utilities.config.BeanConfig;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
 
 @Service
 public class MessageService {
+
+    //      people
     private static final String ENTITY_NOT_FOUND = "entity.not.found";
     private static final String ADULT_STUDENT_ENTITY = "entity.adult.student";
     private static final String EMPLOYEE_ENTITY = "entity.employee";
@@ -19,6 +21,17 @@ public class MessageService {
     private static final String ENTITY_DELETE_NOT_ALLOWED = "entity.delete.not.allowed";
     private static final String INVALID_UNKNOWN_DATA_REQUEST = "invalid.unknown.data.request";
 
+    //      security
+    private static final String INVALID_LOGIN = "invalid.login";
+
+    //      coordination
+    private static final String SCHEDULE_NOT_AVAILABLE = "schedule.not.available";
+    private static final String SCHEDULE_NOT_FOUND = "schedule.not.found";
+    private static final String COURSE_COLLABORATOR_NOT_FOUND="course.collaborator.not.assignable";
+
+    // Internal server error
+    private static final String INTERNAL_ERROR_HIGH_SEVERITY = "internal.error.high.severity";
+
     private final MessageSource messageSource;
     private final Locale locale;
     private String adultStudent;
@@ -27,7 +40,7 @@ public class MessageService {
 
     public MessageService(MessageSource messageSource) {
         this.messageSource = messageSource;
-        this.locale = LocaleContextHolder.getLocale();
+        this.locale = Locale.forLanguageTag(BeanConfig.LOCALE_LANGUAGE);
     }
 
     @PostConstruct
@@ -80,5 +93,25 @@ public class MessageService {
 
     public String getInvalidUnknownDataRequest() {
         return messageSource.getMessage(INVALID_UNKNOWN_DATA_REQUEST, null, locale);
+    }
+
+    public String getInvalidLogin() {
+        return messageSource.getMessage(INVALID_LOGIN, null, locale);
+    }
+
+    public String getScheduleNotAvailable(String conflicting) {
+        return messageSource.getMessage(SCHEDULE_NOT_AVAILABLE, new Object[] {conflicting}, locale);
+    }
+
+    public String getCourseCollaboratorNotFound(String notFounded) {
+        return messageSource.getMessage(COURSE_COLLABORATOR_NOT_FOUND, new Object[]{notFounded}, locale);
+    }
+
+    public String getScheduleNotFound(String notFounded) {
+        return messageSource.getMessage(SCHEDULE_NOT_FOUND, new Object[]{notFounded}, locale);
+    }
+
+    public String getInternalErrorHighSeverity(){
+        return messageSource.getMessage(INTERNAL_ERROR_HIGH_SEVERITY, null, locale);
     }
 }

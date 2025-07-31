@@ -5,10 +5,28 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.makani</groupId>
-        <artifactId>MakaniHelpDeskAPI</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <artifactId>makani-helpdesk-api</artifactId>
+        <version>1.0</version>
     </parent>
 
     <artifactId>datamodel</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope> <!-- or omit scope if needed -->
+        </dependency>
+        <dependency>
+            <groupId>com.makani</groupId>
+            <artifactId>utilities</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>

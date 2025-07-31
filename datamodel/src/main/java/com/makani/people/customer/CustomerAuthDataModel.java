@@ -34,6 +34,7 @@ public class CustomerAuthDataModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_auth_id")
     private Integer customerAuthId;
+
     @Column(nullable = false, length = 9)
     private String provider;
     @Lob

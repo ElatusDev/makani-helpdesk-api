@@ -8,6 +8,7 @@
 package com.makani.employee.usecases;
 
 import com.makani.employee.interfaceadapters.EmployeeRepository;
+import com.makani.people.employee.EmployeeDataModel;
 import openapi.makani.domain.people.dto.GetEmployeeResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -25,9 +26,12 @@ public class GetAllEmployeesUseCase {
     }
 
     public List<GetEmployeeResponseDTO> getAll(){
-        return employeeRepository.findAll()
-                .stream()
-                .map(dataModel -> modelMapper.map(dataModel, GetEmployeeResponseDTO.class))
+       return employeeRepository.findAll().stream()
+                .map(dataModel -> {
+                    GetEmployeeResponseDTO dto = modelMapper.map(dataModel.getPersonPII(), GetEmployeeResponseDTO.class);
+                     modelMapper.map(dataModel, dto, "getEmployeeMap");
+                    return dto;
+                })
                 .toList();
     }
 }

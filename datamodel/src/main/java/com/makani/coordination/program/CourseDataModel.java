@@ -8,15 +8,7 @@
 package com.makani.coordination.program;
 
 import com.makani.people.collaborator.CollaboratorDataModel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,12 +43,8 @@ public class CourseDataModel implements Serializable {
     @Column(name = "max_capacity", nullable = false)
     private Integer maxCapacity;
 
-    @ManyToMany
-    @JoinTable(
-            name = "course_schedule",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "schedule_id")
-    )
+    @OneToMany
+    @JoinColumn(name = "course_id")
     private List<ScheduleDataModel> timeTable;
 
     @ManyToMany
