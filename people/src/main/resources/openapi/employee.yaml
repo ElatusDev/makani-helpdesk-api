@@ -129,7 +129,7 @@ components:
         - $ref: './commons.yaml#/components/schemas/BasePerson'
         - type: object
           properties:
-            employeeAuth:
+            internalAuth:
               $ref: './commons.yaml#/components/schemas/InternalAuth'
     EmployeeCreationResponse:
       type: object

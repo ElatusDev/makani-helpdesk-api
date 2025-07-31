@@ -47,7 +47,8 @@ public class EmployeeController implements EmployeesApi {
 
     @Override
     public ResponseEntity<List<GetEmployeeResponseDTO>> getEmployees() {
-        return ResponseEntity.ok(getAllEmployeesUseCase.getAll());
+        List<GetEmployeeResponseDTO> list = getAllEmployeesUseCase.getAll();
+        return ResponseEntity.ok(list);
     }
 
     @Override

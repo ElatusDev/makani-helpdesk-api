@@ -33,6 +33,9 @@ components:
           type: string
           maxLength: 8
           description: Employee's zip code
+        employeeType:
+          type: string
+          description: Type of employees
       required:
         - firstName
         - lastName
@@ -41,23 +44,20 @@ components:
         - phone
         - address
         - zipCode
+        - employeeType
     InternalAuth:
       type: object
       properties:
-        employeeType:
+        username:
           type: string
-          description: Type of employees and collaborators
-        usernameToken:
+          description: Username for authentication
+        password:
           type: string
-          description: Username token for authentication
-        passwordToken:
-          type: string
-          description: Password token for authentication
+          description: Password for authentication
         role:
           type: string
           description: authorization role
       required:
-        - employeeType
         - usernameToken
         - passwordToken
         - role

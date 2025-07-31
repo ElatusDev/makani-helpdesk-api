@@ -23,13 +23,13 @@ public class InternalAuthenticationUseCase {
     }
 
     public AuthTokenResponseDTO login(LoginRequestDTO dto) {
-        InternalAuthDataModel auth = repository.findByUsernameToken(dto.getUsername())
-                .filter(user -> dto.getPassword().equals(user.getPasswordToken()))
+        InternalAuthDataModel auth = repository.findByUsername(dto.getUsername())
+                .filter(user -> dto.getPassword().equals(user.getPassword()))
                 .orElseThrow(InvalidLoginException::new);
 
         Map<String,Object> claims = new HashMap<>();
         claims.put("Has role", auth.getRole());
-        return new AuthTokenResponseDTO(jwtTokenProvider.createToken(auth.getUsernameToken(), claims));
+        return new AuthTokenResponseDTO(jwtTokenProvider.createToken(auth.getUsername(), claims));
     }
 
 }

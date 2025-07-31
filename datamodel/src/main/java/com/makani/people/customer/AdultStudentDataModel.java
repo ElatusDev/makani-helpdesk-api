@@ -35,6 +35,7 @@ public class AdultStudentDataModel extends AbstractPerson implements Serializabl
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "adult_student_id")
     private Integer adultStudentId;
+
     @Lob
     @Column(name = "encrypted_profile_picture", columnDefinition = "MEDIUMBLOB")
     private Byte[] profilePicture;

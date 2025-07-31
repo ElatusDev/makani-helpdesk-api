@@ -7,10 +7,7 @@
  */
 package com.makani;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +18,9 @@ import java.sql.Date;
 @MappedSuperclass
 public abstract class AbstractPerson {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_pii_id")
-    private PersonPII personPII;
+    private PersonPIIDataModel personPII;
 
     @Column(name ="birthdate", nullable = false)
     private Date birthDate;

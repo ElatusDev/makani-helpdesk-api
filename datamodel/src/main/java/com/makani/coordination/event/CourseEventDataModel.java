@@ -50,14 +50,14 @@ public class CourseEventDataModel extends AbstractEvent implements Serializable 
 
     @ManyToMany
     @JoinTable(
-            name = "course_event_attendees",
+            name = "course_event_adult_student_attendees",
             joinColumns = @JoinColumn(name = "course_event_id"),
             inverseJoinColumns = @JoinColumn(name = "adult_student_id")
     )
     private List<AdultStudentDataModel> adultAttendees;
     @ManyToMany
     @JoinTable(
-            name = "course_event_attendees",
+            name = "course_event_minor_student_attendees",
             joinColumns = @JoinColumn(name = "course_event_id"),
             inverseJoinColumns = @JoinColumn(name = "minor_student_id")
     )

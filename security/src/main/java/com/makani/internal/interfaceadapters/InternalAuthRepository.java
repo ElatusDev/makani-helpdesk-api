@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface InternalAuthRepository extends JpaRepository<InternalAuthDataModel, Integer> {
-    Optional<InternalAuthDataModel> findByUsernameToken(String usernameToken);
+    Optional<InternalAuthDataModel> findByUsername(String username);
 }

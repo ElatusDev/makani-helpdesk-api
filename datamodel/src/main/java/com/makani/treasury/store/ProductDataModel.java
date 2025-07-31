@@ -35,8 +35,8 @@ public class ProductDataModel implements Serializable {
     @Column(name = "description", length = 255)
     private String description;
 
-    @Column(name = "price", nullable = false, precision = 10, scale = 2) // Precision for currency
-    private BigDecimal price;
+    @Column(name = "price", nullable = false) // Precision for currency
+    private Double price;
 
     @Column(name = "stock_quantity", nullable = false)
     private Integer stockQuantity;

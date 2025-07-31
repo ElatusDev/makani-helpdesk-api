@@ -17,10 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "person_pii")
-public class PersonPII {
+public class PersonPIIDataModel {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_pii_id")
     private Integer personPiiId;
 
@@ -37,7 +37,7 @@ public class PersonPII {
     private String email;
 
     @Convert(converter = StringEncryptor.class)
-    @Column(name = "encrypted_phone", nullable = false)
+    @Column(name = "encrypted_phone_number", nullable = false)
     private String phone;
 
     @Convert(converter = StringEncryptor.class)
@@ -50,6 +50,6 @@ public class PersonPII {
 
     @Column(name = "email_hash", length = 64, nullable = false, unique = true)
     private String emailHash;
-    @Column(name = "phone_hash", length = 64, nullable = false, unique = true)
+    @Column(name = "phone_number_hash", length = 64, nullable = false, unique = true)
     private String phoneHash;
 }

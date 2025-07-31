@@ -19,7 +19,8 @@ public class BeanConfig {
         messageSource.setBasenames(
                 "classpath:messages/people_messages",
                 "classpath:messages/security_messages",
-                "classpath:messages/coordination_messages"
+                "classpath:messages/coordination_messages",
+                "classpath:messages/utilities_messages"
         );
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setCacheSeconds(-1);
@@ -27,7 +28,8 @@ public class BeanConfig {
         return messageSource;
     }
 
-    public PhoneNumberUtil phoneNumberUtil(){
+    @Bean
+    public PhoneNumberUtil phoneUtil(){
         return PhoneNumberUtil.getInstance();
     }
 }

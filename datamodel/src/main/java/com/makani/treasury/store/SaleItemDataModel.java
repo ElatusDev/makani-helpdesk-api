@@ -40,9 +40,9 @@ public class SaleItemDataModel implements Serializable {
     @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "unit_price_at_sale", nullable = false, precision = 10, scale = 2)
-    private BigDecimal unitPriceAtSale;
+    @Column(name = "unit_price_at_sale", nullable = false)
+    private Double unitPriceAtSale;
 
-    @Column(name = "item_total", nullable = false, precision = 10, scale = 2)
-    private BigDecimal itemTotal;
+    @Column(name = "item_total", nullable = false)
+    private Double itemTotal;
 }

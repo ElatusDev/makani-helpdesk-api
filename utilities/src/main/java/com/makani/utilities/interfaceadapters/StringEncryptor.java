@@ -2,6 +2,9 @@ package com.makani.utilities.interfaceadapters;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+import org.springframework.stereotype.Component;
+
+@Component
 @Converter
 public class StringEncryptor implements AttributeConverter<String, String> { // Note: String -> String
 
@@ -16,6 +19,7 @@ public class StringEncryptor implements AttributeConverter<String, String> { // 
         if (attribute == null) {
             return null;
         }
+
         return encryptionService.encrypt(attribute);
     }
 
@@ -24,6 +28,7 @@ public class StringEncryptor implements AttributeConverter<String, String> { // 
         if (dbData == null) {
             return null;
         }
+
         return encryptionService.decrypt(dbData);
     }
 }

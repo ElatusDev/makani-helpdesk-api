@@ -24,14 +24,14 @@ public class InternalAuthorizationUseCase implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<InternalAuthDataModel> result =  repository.findByUsernameToken(username);
+        Optional<InternalAuthDataModel> result =  repository.findByUsername(username);
         if(result.isPresent()) {
             InternalAuthDataModel internalAuth = result.get();
             String role = internalAuth.getRole();
             List<GrantedAuthority> list = new ArrayList<>();
             list.add(new SimpleGrantedAuthority("ROLE_" + role));
             return new User(
-                    internalAuth.getUsernameToken(),
+                    internalAuth.getUsername(),
                     "",
                     true,
                     true,
