@@ -7,6 +7,8 @@
  */
 package com.makani.people.customer;
 
+import com.makani.AbstractPerson;
+import com.makani.coordination.event.AbstractEvent;
 import com.makani.utilities.interfaceadapters.StringEncryptor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +29,7 @@ import java.io.Serializable;
 @Component
 @Entity
 @Table(name = "tutor")
-public class TutorDataModel implements Serializable {
+public class TutorDataModel extends AbstractPerson implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -35,27 +37,6 @@ public class TutorDataModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tutor_id")
     private Integer tutorId;
-
-    @Convert(converter = StringEncryptor.class)
-    @Column(name = "encrypted_first_name", nullable = false)
-    private String firstName;
-
-    @Convert(converter = StringEncryptor.class)
-    @Column(name = "encrypted_last_name", nullable = false)
-    private String lastName;
-
-    @Convert(converter = StringEncryptor.class)
-    @Column(name = "encrypted_phone", nullable = false)
-    private String phone;
-
-    @Convert(converter = StringEncryptor.class)
-    @Column(name = "encrypted_email")
-    private String email;
-
-    @Column(name = "email_hash", nullable = false, length = 64, unique = true)
-    private String emailHash;
-    @Column(name = "phone_hash", nullable = false, length = 64, unique = true)
-    private String phoneHash;
 
     @OneToOne(optional = true, cascade =  CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "customer_auth_id")

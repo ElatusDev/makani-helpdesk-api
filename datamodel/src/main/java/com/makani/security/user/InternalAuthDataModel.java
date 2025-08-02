@@ -1,5 +1,6 @@
 package com.makani.security.user;
 
+import com.makani.utilities.interfaceadapters.StringEncryptor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,12 +29,15 @@ public class InternalAuthDataModel implements Serializable {
     @Column(name = "internal_auth_id")
     private Integer internalAuthId;
 
+    @Convert(converter = StringEncryptor.class)
     @Column(name = "encrypted_username",nullable = false)
     private String username;
 
+    @Convert(converter = StringEncryptor.class)
     @Column(name = "encrypted_password",nullable = false)
     private String password;
 
+    @Convert(converter = StringEncryptor.class)
     @Column(name ="encrypted_role", nullable = false)
     private String role;
 }

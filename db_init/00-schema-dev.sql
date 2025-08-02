@@ -155,13 +155,11 @@ CREATE TABLE adult_student (
 
 CREATE TABLE tutor (
     tutor_id INT AUTO_INCREMENT PRIMARY KEY,
-    encrypted_first_name VARCHAR(255) NOT NULL,
-    encrypted_last_name VARCHAR(255) NOT NULL,
-    encrypted_phone VARCHAR(255) NOT NULL,
-    encrypted_email VARCHAR(255),
-    email_hash VARCHAR(64) NOT NULL UNIQUE,
-    phone_hash VARCHAR(64) NOT NULL UNIQUE,
+    birthdate DATE NOT NULL,
     customer_auth_id INT,
+    person_pii_id INT NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (person_pii_id) REFERENCES person_pii(person_pii_id),
     FOREIGN KEY (customer_auth_id) REFERENCES customer_auth(customer_auth_id)
 );
 
