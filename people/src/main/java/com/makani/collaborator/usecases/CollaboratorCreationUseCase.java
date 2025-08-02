@@ -19,12 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CollaboratorCreationUseCase {
-    private static final String TYPE_MAP = "collaboratorMap";
+
 
     private final CollaboratorRepository repository;
     private final ModelMapper modelMapper;
     private final HashingService hashingService;
     private final PiiNormalizer piiNormalizer;
+
+    public static final String TYPE_MAP = "collaboratorMap";
 
     public CollaboratorCreationUseCase(CollaboratorRepository repository,
                                        ModelMapper modelMapper,
