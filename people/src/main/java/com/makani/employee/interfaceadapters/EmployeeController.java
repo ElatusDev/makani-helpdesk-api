@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/people")
+@RequestMapping("/v1/people")
 public class EmployeeController implements EmployeesApi {
 
     private final GetEmployeeByIdUseCase getEmployeeByIdUseCase;

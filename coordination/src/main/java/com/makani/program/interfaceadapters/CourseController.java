@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/coordination")
+@RequestMapping("/v1/coordination")
 public class CourseController implements CoursesApi {
     private final CreateCourseUseCase createCourseUseCase;
 

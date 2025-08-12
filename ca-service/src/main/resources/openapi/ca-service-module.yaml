@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Certificate Authority Service
+  version: 1.0.0
+  description: API for requesting and managing certificates for other microservices.
+tags:
+  - name: Certificate Authority
+    description: API for requesting and managing certificates
+
+paths:
+  /ca/sign-cert:
+    post:
+      summary: Signs a Certificate Signing Request (CSR)
+      operationId: signCertificate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CertificateRequestDTO'
+      responses:
+        '200':
+          description: Certificate signed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CertificateResponseDTO'
+        '400':
+          description: Invalid request data or CSR
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /ca/ca.crt:
+    get:
+      summary: Retrieves the Root CA certificate
+      operationId: getCaCertificate
+      responses:
+        '200':
+          description: Root CA certificate retrieved successfully
+          content:
+            application/json: # Returning the certificate as plain text
+              schema:
+                type: string
+        '500':
+          description: An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    CertificateRequestDTO:
+      type: object
+      description: DTO for requesting a new signed certificate
+      properties:
+        commonName:
+          type: string
+          description: The Common Name (CN) for the new certificate
+          example: "makani-api"
+        organization:
+          type: string
+          description: The Organization (O) for the new certificate
+          example: "Makani Academy"
+        certificateSigningRequest:
+          type: string
+          description: The Base64 encoded Certificate Signing Request (CSR)
+      required:
+        - commonName
+        - organization
+        - certificateSigningRequest
+
+    CertificateResponseDTO:
+      type: object
+      description: DTO for the signed certificate response
+      properties:
+        signedCertificate:
+          type: string
+          description: The Base64 encoded signed certificate (.crt file)
+        caCertificate:
+          type: string
+          description: The Base64 encoded root CA certificate (.crt file)
+      required:
+        - signedCertificate
+        - caCertificate
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+      required:
+        - message

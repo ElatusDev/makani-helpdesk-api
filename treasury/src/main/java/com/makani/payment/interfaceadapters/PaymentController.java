@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/treasury")
+@RequestMapping("/v1/treasury")
 public class PaymentController {
     private final RequestPaymentUseCase requestPaymentUseCase;
 

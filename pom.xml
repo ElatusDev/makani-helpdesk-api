@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.4.5</version>
+        <relativePath/>
+    </parent>
+
     <groupId>com.makani</groupId>
     <artifactId>makani-helpdesk-api</artifactId>
     <version>1.0</version>
@@ -13,16 +20,14 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <openapi.generator.version>7.12.0</openapi.generator.version>
+        <spring-boot.version>3.4.5</spring-boot.version>
+        <openapi.generator.version>7.14.0</openapi.generator.version>
         <cucumber.version>7.21.1</cucumber.version>
         <mockito.version>5.15.2</mockito.version>
         <mariadb.version>3.5.2</mariadb.version>
         <byte.buddy.agent.version>1.15.11</byte.buddy.agent.version>
         <maven.surefire.version>3.5.2</maven.surefire.version>
         <maven.clean.plugin.version>3.4.1</maven.clean.plugin.version>
-        <microprofile.openapi.version>4.0.2</microprofile.openapi.version>
-        <jersey.version>3.1.10</jersey.version>
-        <swaggerui.version>5.20.0</swaggerui.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <jakarta.servlet-api.version>6.1.0</jakarta.servlet-api.version>
         <modelmapper.version>3.2.2</modelmapper.version>
@@ -31,6 +36,10 @@
         <lombok.version>1.18.30</lombok.version>
         <commons.codec.version>1.18.0</commons.codec.version>
         <libphonenumber.version>9.0.9</libphonenumber.version>
+        <snakeyaml.version>2.4</snakeyaml.version>
+        <jackson.dataform.yaml.version>2.19.0</jackson.dataform.yaml.version>
+        <jackson.core.version>2.19.2</jackson.core.version>
+        <commons-io.version>2.19.0</commons-io.version>
 
         <sonar.organization>elatusdev</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -38,12 +47,6 @@
         <github.token>${env.GITHUB_TOKEN}</github.token>
     </properties>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.5</version>
-        <relativePath/>
-    </parent>
 
     <modules>
         <module>communication</module>
@@ -54,7 +57,35 @@
         <module>security</module>
         <module>datamodel</module>
         <module>utilities</module>
+        <module>ca-service</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>ca-service</id>
+            <modules>
+                <module>ca-service</module> </modules>
+            <activation>
+            </activation>
+        </profile>
+
+        <profile>
+            <id>default-all</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>communication</module>
+                <module>coordination</module>
+                <module>people</module>
+                <module>treasury</module>
+                <module>application</module>
+                <module>security</module>
+                <module>datamodel</module>
+                <module>utilities</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <dependencyManagement>
         <dependencies>
@@ -227,11 +258,6 @@
                 <version>2.7.0</version>
             </dependency>
             <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.16.1</version>
-            </dependency>
-            <dependency>
                 <groupId>org.codehaus.plexus</groupId>
                 <artifactId>plexus-utils</artifactId>
                 <version>3.5.1</version>
@@ -273,6 +299,60 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-yaml</artifactId>
+                <version>${jackson.dataform.yaml.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-guava</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-joda</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -392,9 +472,17 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
                     <configuration>
                         <mainClass>com.makani.Main</mainClass>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

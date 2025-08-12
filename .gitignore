@@ -8,6 +8,7 @@ treasury/target/
 security/target/
 datamodel/target/
 utilities/target/
+ca-service/target/
 
 ### docker related ###
 .env
@@ -26,4 +27,5 @@ treasury/*.iml
 security/*.iml
 datamodel/*.iml
 utilities/*.iml
+ca-service/*.iml
 

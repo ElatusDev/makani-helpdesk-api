@@ -5,6 +5,7 @@ info:
 paths:
   '/course-events':
     post:
+      operationId: createCourseEvent
       summary: Create a new course event
       requestBody:
         required: true
@@ -33,6 +34,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     get:
       summary: Get all course events
+      operationId: getAllCourseEvent
       responses:
         '200':
           description: List of course events
@@ -50,6 +52,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
   '/course-events/{courseEventId}':
     get:
+      operationId: getCourseEventById
       summary: Get a course event by ID
       parameters:
         - name: courseEventId
@@ -78,6 +81,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     put:
       summary: Update a course event
+      operationId: updateCourseEvent
       parameters:
         - name: courseEventId
           in: path
@@ -117,6 +121,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     delete:
       summary: Delete a course event
+      operationId: deleteCourseEventById
       parameters:
         - name: courseEventId
           in: path

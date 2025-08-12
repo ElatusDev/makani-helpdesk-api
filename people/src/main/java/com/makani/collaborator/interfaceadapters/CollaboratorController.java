@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/people")
+@RequestMapping("/v1/people")
 public class CollaboratorController implements CollaboratorsApi {
 
     private final GetAllCollaboratorsUseCase getAllCollaboratorsUseCase;
