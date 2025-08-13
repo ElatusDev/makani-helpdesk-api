@@ -12,15 +12,6 @@ CA_SERVICE_NAME="makani-ca"
 run_local() {
   SPRING_PROFILES_ACTIVE="local"
 
-  echo "--- Running application in LOCAL mode (for IDE debugging) ---"
-  if [ -f .env ]; then
-    echo "Loading local environment variables..."
-    export $(grep -v '^#' .env | xargs)
-    echo "Environment variables loaded."
-  else
-    echo "Error: .env file not found. Please create it."
-  fi
-
   # Check for DB container
     if ! docker-compose -f "$COMPOSE_FILE" ps "$DB_SERVICE_NAME" | grep -q "$DB_SERVICE_NAME"; then
         _start_db
@@ -50,7 +41,6 @@ _start_db() {
         docker volume rm "$volume_name"
     fi
 
-
     docker-compose -f "$COMPOSE_FILE" up --build --force-recreate -d "$DB_SERVICE_NAME"
     echo "Waiting for MariaDB to be ready (up to 10 seconds)..."
     sleep 10
@@ -58,6 +48,8 @@ _start_db() {
     echo "--- Displaying MariaDB initialization logs (this may take a moment) ---"
     docker-compose -f "$COMPOSE_FILE" logs -f "$DB_SERVICE_NAME" & # Run in the background
     LOG_PID=$! # Capture the PID of the logs command
+    sleep 5
+    kill "$LOG_PID"
 }
 
 _start_redis() {
@@ -79,20 +71,41 @@ _start_redis() {
 _start_ca() {
     echo "--- Starting Certificate Authority service ---"
     local volume_name="makani-helpdesk-api_ca_certs"
-    if docker-compose -f "$COMPOSE_FILE" ps -q "$CA_SERVICE_NAME" | grep -q .; then
-        echo "Stopping and removing existing container: $CA_SERVICE_NAME"
-        docker-compose -f "$COMPOSE_FILE" stop "$CA_SERVICE_NAME"
-        docker-compose -f "$COMPOSE_FILE" rm -f "$CA_SERVICE_NAME"
-    fi
-    if docker volume ls --filter name="$volume_name" | grep -q "$volume_name"; then
+
+    # The 'up --force-recreate' flag handles removing the old container,
+    # so we only need to check for and remove the volume explicitly.
+    if docker volume ls --filter name="$volume_name" -q | grep -q .; then
         echo "Removing existing CA volume: $volume_name"
         docker volume rm "$volume_name"
     fi
+
+    # Start the CA service, forcing a rebuild and recreation
     docker-compose -f "$COMPOSE_FILE" up --build --force-recreate -d "$CA_SERVICE_NAME"
+
     echo "Waiting for CA service to generate certificate..."
 
-    docker-compose -f "$COMPOSE_FILE" logs "$CA_SERVICE_NAME" | grep "certificate and key have been generated";
-    echo "CA service is up and certificate is ready."
+    # Use a while loop to wait for the specific log message.
+    # The `grep -m 1` flag is crucial; it tells grep to exit after the first match.
+    # The timeout adds robustness in case of failure.
+    local timeout_seconds=5
+    local start_time=$(date +%s)
+
+    while true; do
+      if docker-compose -f "$COMPOSE_FILE" logs "$CA_SERVICE_NAME" | grep -m 1 "certificate and key have been generated" > /dev/null; then
+        echo "CA service is up and certificate is ready."
+        break
+      fi
+
+      current_time=$(date +%s)
+      elapsed_time=$((current_time - start_time))
+      if [ "$elapsed_time" -ge "$timeout_seconds" ]; then
+        echo "Error: Timed out waiting for the CA service to generate a certificate."
+        docker-compose -f "$COMPOSE_FILE" logs "$CA_SERVICE_NAME"
+        return 1
+      fi
+
+      sleep 1
+    done
 }
 
 # --- Main Functions for runner actions ---

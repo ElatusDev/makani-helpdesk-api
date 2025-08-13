@@ -17,8 +17,8 @@ import java.util.Base64;
 public class AESGCMEncryptionService {
     private static final String AES = "AES";
     private static final String AES_GCM = "AES/GCM/NoPadding";
-    private static final int IV_SIZE = 12; // 96 bits recommended for GCM
-    private static final int TAG_LENGTH = 128; // 128-bit auth tag
+    private static final int IV_SIZE = 12;
+    private static final int TAG_LENGTH = 128;
     private final SecretKeySpec secretKey;
 
     public AESGCMEncryptionService(@Value("${security.encryption-key}") String base64Key) {
@@ -74,7 +74,7 @@ public class AESGCMEncryptionService {
             SecureRandom secureRandom = new SecureRandom();
             secureRandom.nextBytes(iv);
 
-            GCMParameterSpec spec = new GCMParameterSpec(128, iv);
+            GCMParameterSpec spec = new GCMParameterSpec(TAG_LENGTH, iv);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, spec);
             byte[] encrypted = cipher.doFinal(toPrimitive(data));
 
@@ -95,7 +95,7 @@ public class AESGCMEncryptionService {
             secureRandom.nextBytes(iv);
 
 
-            GCMParameterSpec spec = new GCMParameterSpec(128, iv);
+            GCMParameterSpec spec = new GCMParameterSpec(TAG_LENGTH, iv);
             cipher.init(Cipher.ENCRYPT_MODE, secretKey, spec);
             byte[] encrypted = cipher.doFinal(data);
 
@@ -118,7 +118,7 @@ public class AESGCMEncryptionService {
             byteBuffer.get(encrypted);
 
             Cipher cipher = Cipher.getInstance(AES_GCM);
-            GCMParameterSpec spec = new GCMParameterSpec(128, iv);
+            GCMParameterSpec spec = new GCMParameterSpec(TAG_LENGTH, iv);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, spec);
             return toObject(cipher.doFinal(encrypted));
         } catch (Exception e) {
@@ -136,7 +136,7 @@ public class AESGCMEncryptionService {
             byteBuffer.get(encrypted);
 
             Cipher cipher = Cipher.getInstance(AES_GCM);
-            GCMParameterSpec spec = new GCMParameterSpec(128, iv);
+            GCMParameterSpec spec = new GCMParameterSpec(TAG_LENGTH, iv);
             cipher.init(Cipher.DECRYPT_MODE, secretKey, spec);
             return cipher.doFinal(encrypted);
         } catch (Exception e) {

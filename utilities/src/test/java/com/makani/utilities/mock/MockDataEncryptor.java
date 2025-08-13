@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -53,10 +52,6 @@ public class MockDataEncryptor {
             "INSERT INTO internal_auth\\s*\\([^)]*\\)\\s*VALUES\\s*(.+?);",
             Pattern.DOTALL | Pattern.CASE_INSENSITIVE
     );
-
-    // Pattern to extract individual tuples within the VALUES block
-    private static final Pattern TUPLE_PATTERN = Pattern.compile("\\(([^()]*?(?:\\([^()]*\\)[^()]*)*?)\\)(?=,|\\s*;)", Pattern.DOTALL);
-
 
     private static final int EMPLOYEE_ENTITY = 1;
     private static final int COLLABORATOR_ENTITY = 2;

@@ -9,26 +9,13 @@ services:
       - "8080:8080"
     environment:
       SPRING_PROFILES_ACTIVE: dev
+    env_file:
+      - .env
     volumes:
       - ./src:/app/src
       - ./application/src/main/resources:/app/src/main/resources
     command: >
       /bin/bash -c "
-      # 1. Wait for the CA service to be ready and its certificate to exist
-      until [ -f /app/ca_certs/ca.crt ]; do echo 'Waiting for CA cert...'; sleep 2; done;
-      
-      echo '--- Generating application key pair and keystore ---';
-      # 2. Generate a key pair and self-signed certificate for the application
-      keytool -genkeypair -alias $KEY_ALIAS -keyalg RSA -keysize 2048 -storetype PKCS12 \
-      -keystore /app/keystore.p12 -storepass $KEYSTORE_PASS -keypass $KEYSTORE_PASS \
-      -dname 'CN=makani-api, OU=Makani, O=ElatusDev, L=GDL, ST=JALISCO, C=MX' -validity 3650;
-      
-      echo '--- Generating truststore for CA certificate ---';
-      # 3. Create a truststore and import the root CA certificate
-      keytool -importcert -trustcacerts -keystore /app/truststore.p12 -storetype PKCS12 \
-      -storepass $KEYSTORE_PASS -noprompt -alias makani-ca \
-      -file /app/ca_certs/ca.crt;
-      
       echo '--- Starting Spring Boot application ---';
       # 4. Start the application with JVM arguments for SSL/TLS
       java -Dserver.port=8443 \
@@ -62,6 +49,7 @@ services:
       --slow-query-log=1
       --slow-query-log-file=/var/lib/mysql/mariadb-slow.log
       --long-query-time=2
+
   redis:
     image: redis:6-alpine
     container_name: makani-redis
@@ -70,6 +58,7 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+
   makani-ca:
     image: alpine:3.18
     container_name: makani-ca
@@ -78,39 +67,25 @@ services:
     build:
       context: .
       dockerfile: ./ca-service/Dockerfile
+    env_file:
+      - .env
     volumes:
       - ca_certs:/certs # Persist the CA's files
-    # This command uses openssl to generate a self-signed root CA certificate
-    # and private key. It's designed to be non-interactive.
     command: >
       /bin/bash -c "
-      # Wait for the CA service to be ready
-      until [ -f /app/ca_certs/ca.crt ]; do echo 'Waiting for CA cert...'; sleep 2; done;
+      # Ensure KEYSTORE_PASS is at least 6 characters.
+
+      if [ ! -f /certs/ca.crt ]; then
+          echo '--- Generating self-signed root CA certificate and key ---';
+          openssl req -x509 -sha256 -nodes -days 3650 -newkey rsa:2048 -subj '/CN=Makani CA/O=ElatusDev/OU=Makani/L=GDL/ST=JALISCO/C=MX' -keyout /certs/ca.key -out /certs/ca.crt;
+      fi
       
-      echo '--- Generating application key pair and keystore ---';
-      # Create a new key pair and keystore for the application
-      keytool -genkeypair -alias $KEY_ALIAS -keyalg RSA -keysize 2048 -storetype PKCS12 \
-      -keystore /app/keystore.p12 -storepass $KEYSTORE_PASS -keypass $KEYSTORE_PASS \
-      -dname 'CN=makani-api, OU=Makani, O=ElatusDev, L=GDL, ST=JALISCO, C=MX' -validity 3650;
-      
-      echo '--- Generating truststore for CA certificate ---';
-      # Create a truststore and import the root CA certificate
-      keytool -importcert -trustcacerts -keystore /app/truststore.p12 -storetype PKCS12 \
-      -storepass $KEYSTORE_PASS -noprompt -alias makani-ca \
-      -file /app/ca_certs/ca.crt;
-      
-      echo '--- Starting Spring Boot application ---';
-      # Start the application, pointing to the generated keystore and truststore
-      java -Dserver.port=8443 \
-      -Dserver.ssl.enabled=true \
-      -Dserver.ssl.key-store=/app/keystore.p12 \
-      -Dserver.ssl.key-store-type=PKCS12 \
-      -Dserver.ssl.key-store-password=$KEYSTORE_PASS \
-      -Dserver.ssl.key-alias=$KEY_ALIAS \
-      -Dserver.ssl.key-password=$KEYSTORE_PASS \
-      -Djavax.net.ssl.trustStore=/app/truststore.p12 \
-      -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS \
-      -jar /app.jar
+      echo '--- Generating application key pair and truststore ---';
+      keytool -genkeypair -alias $KEY_ALIAS -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore /certs/keystore.p12 -storepass $KEYSTORE_PASS -keypass $KEYSTORE_PASS -dname 'CN=makani-api, OU=Makani, O=ElatusDev, L=GDL, ST=JALISCO, C=MX' -validity 3650;
+      keytool -importcert -trustcacerts -keystore /certs/truststore.p12 -storetype PKCS12 -storepass $KEYSTORE_PASS -noprompt -alias makani-ca -file /certs/ca.crt;
+
+      echo '--- Starting Spring Boot CA application ---';
+      java -Dserver.port=8081 -Dserver.ssl.enabled=true -Dserver.ssl.key-store=/certs/keystore.p12 -Dserver.ssl.key-store-type=PKCS12 -Dserver.ssl.key-store-password=$KEYSTORE_PASS -Dserver.ssl.key-alias=$KEY_ALIAS -Dserver.ssl.key-password=$KEYSTORE_PASS -Djavax.net.ssl.trustStore=/certs/truststore.p12 -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASS -jar /app/ca-service.jar
       "
 volumes:
   db_data: {}
