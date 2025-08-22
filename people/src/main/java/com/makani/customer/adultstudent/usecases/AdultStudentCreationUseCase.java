@@ -9,8 +9,8 @@ package com.makani.customer.adultstudent.usecases;
 
 import com.makani.people.customer.AdultStudentDataModel;
 import com.makani.customer.adultstudent.interfaceadapters.AdultStudentRepository;
-import com.makani.utilities.interfaceadapters.HashingService;
-import com.makani.utilities.interfaceadapters.PiiNormalizer;
+import com.makani.utilities.security.HashingService;
+import com.makani.utilities.security.PiiNormalizer;
 import openapi.makani.domain.people.dto.AdultStudentCreationRequestDTO;
 import openapi.makani.domain.people.dto.AdultStudentCreationResponseDTO;
 import org.modelmapper.ModelMapper;

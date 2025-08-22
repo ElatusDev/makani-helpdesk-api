@@ -8,8 +8,6 @@
 package com.makani.people.customer;
 
 import com.makani.AbstractPerson;
-import com.makani.coordination.event.AbstractEvent;
-import com.makani.utilities.interfaceadapters.StringEncryptor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

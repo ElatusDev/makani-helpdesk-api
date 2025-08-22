@@ -1,6 +1,6 @@
 package com.makani;
 
-import com.makani.utilities.interfaceadapters.StringEncryptor;
+import com.makani.utilities.security.StringEncryptor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

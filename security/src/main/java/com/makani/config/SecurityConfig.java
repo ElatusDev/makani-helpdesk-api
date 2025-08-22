@@ -27,7 +27,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(Set<ModuleSecurityConfigurator> moduleSecurityConfigurators, HttpSecurity http, JwtRequestFilter jwtRequestFilter) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless API
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSourceForLogin()))
                 .authorizeHttpRequests(auth -> {
                     auth
@@ -65,8 +65,8 @@ public class SecurityConfig {
         loginCorsConfig.setAllowedHeaders(List.of("Content-Type"));
         loginCorsConfig.setAllowCredentials(false);
 
-        source.registerCorsConfiguration("/**", defaultCorsConfig);
-        source.registerCorsConfiguration("/security/login/internal", loginCorsConfig);
+        source.registerCorsConfiguration("/v1/**", defaultCorsConfig);
+        source.registerCorsConfiguration("/v1/security/login/internal", loginCorsConfig);
         return source;
     }
 

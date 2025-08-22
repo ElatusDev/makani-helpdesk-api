@@ -11,9 +11,9 @@ import com.makani.collaborator.interfaceadapters.CollaboratorController;
 import com.makani.customer.adultstudent.interfaceadapters.AdultStudentController;
 import com.makani.employee.interfaceadapters.EmployeeController;
 import com.makani.exception.*;
-import com.makani.utilities.interfaceadapters.MessageService;
-import com.makani.utilities.exceptions.DecryptionException;
-import com.makani.utilities.exceptions.EncryptionException;
+import com.makani.utilities.MessageService;
+import com.makani.utilities.exceptions.DecryptionFailureException;
+import com.makani.utilities.exceptions.EncryptionFailureException;
 import openapi.makani.domain.people.dto.ErrorResponseDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -84,7 +84,7 @@ public class PeopleControllerAdvice {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({EncryptionException.class , DecryptionException.class})
+    @ExceptionHandler({EncryptionFailureException.class , DecryptionFailureException.class})
     public ResponseEntity<ErrorResponseDTO> handleEncryptionException(){
         ErrorResponseDTO errorResponse  = new ErrorResponseDTO();
         errorResponse.setMessage(messageService.getInternalErrorHighSeverity());

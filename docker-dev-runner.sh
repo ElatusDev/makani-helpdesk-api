@@ -110,15 +110,8 @@ _start_ca() {
 
 # --- Main Functions for runner actions ---
 
-update_db_init() {
-    echo "--- Use when database schema has changed (DATA LOSS WARNING) ---"
-    _start_db
-}
-
-
 run_dev() {
   SPRING_PROFILES_ACTIVE="dev"
-    echo "--- Running application in DEV mode ---"
 
     # Check for DB container
     if ! docker-compose -f "$COMPOSE_FILE" ps "$DB_SERVICE_NAME" | grep -q "$DB_SERVICE_NAME"; then
@@ -159,7 +152,7 @@ case "$choice" in
       ;;
    2)
       echo "--- Use when database schema has changed (DATA LOSS WARNING) ---"
-      update_db_init
+      _start_db
       ;;
    3)
      echo "---- Run app in LOCAL mode (for IDE debugging)"

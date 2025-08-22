@@ -9,8 +9,8 @@ package com.makani.collaborator.usecases;
 
 import com.makani.people.collaborator.CollaboratorDataModel;
 import com.makani.collaborator.interfaceadapters.CollaboratorRepository;
-import com.makani.utilities.interfaceadapters.HashingService;
-import com.makani.utilities.interfaceadapters.PiiNormalizer;
+import com.makani.utilities.security.HashingService;
+import com.makani.utilities.security.PiiNormalizer;
 import openapi.makani.domain.people.dto.CollaboratorCreationRequestDTO;
 import openapi.makani.domain.people.dto.CollaboratorCreationResponseDTO;
 import org.modelmapper.ModelMapper;

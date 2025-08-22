@@ -78,7 +78,7 @@ CREATE TABLE person_pii (
     encrypted_phone_number VARCHAR(500) NOT NULL,
     encrypted_email VARCHAR(500) NOT NULL,
     encrypted_address VARCHAR(500) NOT NULL,
-    encrypted_zip_code VARCHAR(100) NOT NULL,
+    encrypted_zip_code VARCHAR(500) NOT NULL,
     phone_number_hash VARCHAR(64) NOT NULL UNIQUE,
     email_hash VARCHAR(64) NOT NULL UNIQUE
 );

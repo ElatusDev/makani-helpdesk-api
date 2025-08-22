@@ -11,7 +11,7 @@ import com.makani.exception.CollaboratorNotFoundException;
 import com.makani.exception.ScheduleNotAvailableException;
 import com.makani.exception.ScheduleNotFoundException;
 import com.makani.program.interfaceadapters.CourseController;
-import com.makani.utilities.interfaceadapters.MessageService;
+import com.makani.utilities.MessageService;
 import openapi.makani.domain.coordination.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

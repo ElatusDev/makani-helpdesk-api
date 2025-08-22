@@ -9,7 +9,7 @@ package com.makani.config;
 
 import com.makani.exceptions.InvalidLoginException;
 import com.makani.internal.interfaceadapters.InternalAuthController;
-import com.makani.utilities.interfaceadapters.MessageService;
+import com.makani.utilities.MessageService;
 import openapi.makani.domain.security.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,7 @@
 package com.makani.utilities.healthcheck;
 
+import com.makani.utilities.exceptions.DatabaseConnectionException;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.retry.annotation.EnableRetry;
 
 @Service
 @EnableRetry
+@ConditionalOnBean(DataSource.class)
 public class DatabaseConnectionService {
 
     private final DataSource dataSource;
@@ -37,9 +40,3 @@ public class DatabaseConnectionService {
     }
 }
 
-// Example Custom Exception (optional)
-class DatabaseConnectionException extends RuntimeException {
-    public DatabaseConnectionException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
