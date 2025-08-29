@@ -9,10 +9,10 @@ security/target/
 datamodel/target/
 utilities/target/
 ca-service/target/
+mock-data-service/target/
 
 ### docker related ###
 .env
-mariadb-logs/
 
 ### Mac OS ###
 .DS_Store
@@ -28,4 +28,5 @@ security/*.iml
 datamodel/*.iml
 utilities/*.iml
 ca-service/*.iml
+mock-data-service/*.iml
 

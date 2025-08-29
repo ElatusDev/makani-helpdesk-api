@@ -38,4 +38,7 @@ public class InternalAuthDataModel implements Serializable {
     @Convert(converter = StringEncryptor.class)
     @Column(name ="encrypted_role", nullable = false)
     private String role;
+
+    @Column(name = "username_hash", length = 64, nullable = false, unique = true)
+    private String usernameHash;
 }

@@ -7,10 +7,26 @@ APP_SERVICE_NAME="makani-helpdesk-api"
 DB_SERVICE_NAME="makani-mariadb"
 REDIS_SERVICE_NAME="redis"
 CA_SERVICE_NAME="makani-ca"
+ENV_FILE=".env";
 
 # --- Functions ---
-run_local() {
+
+setup_local() {
   SPRING_PROFILES_ACTIVE="local"
+    if [ -f "$ENV_FILE" ]; then
+        echo "Loading environment variables from $ENV_FILE..."
+
+        # Read each line from the .env file
+        # grep -v '^#' ignores lines that start with a '#' (comments)
+        # xargs ensures that the export command handles lines with whitespace correctly
+        export $(grep -v '^#' "$ENV_FILE" | xargs)
+
+        echo "Environment variables loaded."
+    else
+        echo "Error: $ENV_FILE file not found. Please create it or check the path."
+    fi
+}
+run_local() {
 
   # Check for DB container
     if ! docker-compose -f "$COMPOSE_FILE" ps "$DB_SERVICE_NAME" | grep -q "$DB_SERVICE_NAME"; then
@@ -141,7 +157,8 @@ run_dev() {
 echo "Choose an action:"
 echo "1. Run in DEV mode"
 echo "2. Start DB or Update schema"
-echo "3. Run in local mode (debugging)"
+echo "3. Setup Local Env"
+echo "4. Run in local mode (debugging)"
 echo "q. Quit"
 read -p "Enter your choice: " choice
 
@@ -155,6 +172,9 @@ case "$choice" in
       _start_db
       ;;
    3)
+     setup_local
+     ;;
+   4)
      echo "---- Run app in LOCAL mode (for IDE debugging)"
      run_local
      ;;

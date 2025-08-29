@@ -39,16 +39,22 @@ public class EmployeeCreationUseCase {
 
     @Transactional
     public EmployeeCreationResponseDTO create(EmployeeCreationRequestDTO dto)  {
-        final PersonPIIDataModel personPIIDataModel = modelMapper.map(dto, PersonPIIDataModel.class);
-        final EmployeeDataModel received =  modelMapper.map(dto, EmployeeDataModel.class, MAP_NAME);
-        received.setPersonPII(personPIIDataModel);
-
-        String normalizedEmail = piiNormalizer.normalizeEmail(received.getPersonPII().getEmail());
-        received.getPersonPII().setEmailHash(hashingService.generateHash(normalizedEmail));
-
-        String normalizedPhone = piiNormalizer.normalizePhoneNumber(received.getPersonPII().getPhone());
-        received.getPersonPII().setPhoneHash(hashingService.generateHash(normalizedPhone));
-
+        EmployeeDataModel received = transform(dto);
         return modelMapper.map(employeeRepository.save(received), EmployeeCreationResponseDTO.class);
     }
+
+    public EmployeeDataModel transform(EmployeeCreationRequestDTO dto) {
+        final PersonPIIDataModel personPIIDataModel = modelMapper.map(dto, PersonPIIDataModel.class);
+        final EmployeeDataModel model =  modelMapper.map(dto, EmployeeDataModel.class, MAP_NAME);
+        model.setPersonPII(personPIIDataModel);
+
+        String normalizedEmail = piiNormalizer.normalizeEmail(model.getPersonPII().getEmail());
+        model.getPersonPII().setEmailHash(hashingService.generateHash(normalizedEmail));
+
+        String normalizedPhone = piiNormalizer.normalizePhoneNumber(model.getPersonPII().getPhone());
+        model.getPersonPII().setPhoneHash(hashingService.generateHash(normalizedPhone));
+        return model;
+    }
+
+
 }

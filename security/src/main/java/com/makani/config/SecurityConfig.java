@@ -25,6 +25,7 @@ import java.util.Set;
 public class SecurityConfig {
 
     @Bean
+    @Profile({"dev", "local"})
     public SecurityFilterChain securityFilterChain(Set<ModuleSecurityConfigurator> moduleSecurityConfigurators, HttpSecurity http, JwtRequestFilter jwtRequestFilter) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -67,6 +68,41 @@ public class SecurityConfig {
 
         source.registerCorsConfiguration("/v1/**", defaultCorsConfig);
         source.registerCorsConfiguration("/v1/security/login/internal", loginCorsConfig);
+        return source;
+    }
+
+    @Bean
+    @Profile({"mock-data-service"}) // Use the profile you are activating
+    public SecurityFilterChain securityFilterChainForMockDataService(HttpSecurity http) throws Exception {
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+            .cors(cors -> cors.configurationSource(corsConfigurationSourceForMockDataService()))
+            .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/infra/v1/mock-data/generate/all").permitAll()
+                        .anyRequest().authenticated())
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .formLogin(AbstractHttpConfigurer::disable)
+            .httpBasic(AbstractHttpConfigurer::disable);
+        return http.build();
+    }
+
+    @Bean
+    @Profile({"mock-data-service"})
+    public CorsConfigurationSource corsConfigurationSourceForMockDataService() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        CorsConfiguration defaultCorsConfig = new CorsConfiguration();
+        defaultCorsConfig.setAllowedOriginPatterns(List.of("http://localhost:*", "https://localhost:*"));
+        defaultCorsConfig.setAllowedMethods(List.of("POST"));
+        defaultCorsConfig.setAllowedHeaders(List.of("*"));
+        defaultCorsConfig.setAllowCredentials(false);
+
+        CorsConfiguration loginCorsConfig = new CorsConfiguration();
+        loginCorsConfig.setAllowedOriginPatterns(List.of("http://localhost:*", "https://localhost:*"));
+        loginCorsConfig.setAllowedMethods(List.of("POST"));
+        loginCorsConfig.setAllowedHeaders(List.of("Content-Type"));
+        loginCorsConfig.setAllowCredentials(false);
+
         return source;
     }
 
